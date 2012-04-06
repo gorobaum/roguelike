@@ -1,0 +1,7 @@
+
+/Debug
+/ipch
+*.sdf
+/lib/ugdk.lib
+/lib/ugdk_d.lib
+/lib/ugdk_d.pdb
