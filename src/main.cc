@@ -3,7 +3,7 @@
 #include "game/gamecontroller.h"
 
 int main(int argc, char **argv) {
-	ugdk::Engine::Configuration engine_config;
+	ugdk::Configuration engine_config;
 	engine_config.window_title = "Worst. Game. Ever.";
 	engine_config.window_size = ugdk::Vector2D(800.0, 600.0);
 	engine_config.fullscreen   = false;

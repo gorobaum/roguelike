@@ -16,6 +16,7 @@
     <ClCompile Include="src\game\components\collision.cc" />
     <ClCompile Include="src\game\components\damageable.cc" />
     <ClCompile Include="src\game\components\graphic.cc" />
+    <ClCompile Include="src\game\components\graphic_rectangular.cc" />
     <ClCompile Include="src\game\components\playercontroller.cc" />
     <ClCompile Include="src\game\gamecontroller.cc" />
     <ClCompile Include="src\game\gameobject.cc" />
@@ -31,6 +32,7 @@
     <ClInclude Include="src\game\components\controller.h" />
     <ClInclude Include="src\game\components\damageable.h" />
     <ClInclude Include="src\game\components\graphic.h" />
+    <ClInclude Include="src\game\components\graphic_rectangular.h" />
     <ClInclude Include="src\game\components\idlecontroller.h" />
     <ClInclude Include="src\game\components\playercontroller.h" />
     <ClInclude Include="src\game\gamecontroller.h" />
@@ -64,10 +66,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)include;$(SolutionDir)src;D:\work\vs_visualc\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(SolutionDir)src;$(SolutionDir)externals\sdl1.2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)lib;D:\work\vs_visualc\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)lib;$(SolutionDir)externals\sdl1.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

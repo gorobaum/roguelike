@@ -11,7 +11,7 @@
 #include "game/builders/objectbuilder.h"
 
 #include "game/gameobject.h"
-#include "game/components/graphic.h"
+#include "game/components/graphic_rectangular.h"
 #include "game/components/damageable.h"
 #include "game/components/collision.h"
 #include "game/components/playercontroller.h"
@@ -30,7 +30,7 @@ ObjectBuilder::ObjectBuilder() {
 }
 
 GameObject* ObjectBuilder::BuildHero() {
-	GameObject* hero = new GameObject(new component::Graphic, new component::PlayerController, new component::Collision("Creature"), new component::Damageable(10.0));
+	GameObject* hero = new GameObject(new component::GraphicRectangular(L"@", 2, 2), new component::PlayerController, new component::Collision("Creature"), new component::Damageable(10.0));
 	
 	ugdk::graphic::Drawable* graphic = TEXT_MANAGER()->GetText(L"@");
     //graphic->set_hotspot(ugdk::graphic::Drawable::CENTER);
@@ -38,15 +38,19 @@ GameObject* ObjectBuilder::BuildHero() {
 
 	//TODO: ISSOAQUIÈTESTE
 	hero->occupying_tiles_.push_back(game::GameController::reference_->tiles_[2][2]);
+	hero->occupying_tiles_.push_back(game::GameController::reference_->tiles_[2][3]);
 	hero->occupying_tiles_.push_back(game::GameController::reference_->tiles_[3][2]);
+	hero->occupying_tiles_.push_back(game::GameController::reference_->tiles_[3][3]);
 	game::GameController::reference_->tiles_[2][2]->PushObject(hero);
+    game::GameController::reference_->tiles_[2][3]->PushObject(hero);
 	game::GameController::reference_->tiles_[3][2]->PushObject(hero);
+	game::GameController::reference_->tiles_[3][3]->PushObject(hero);
 
     return hero;
 }
 
 GameObject* ObjectBuilder::BuildEnemy() {
-    GameObject* enemy = new GameObject(new component::Graphic, new component::AiController, new component::Collision("Creature"), new component::Damageable(4.0));
+    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"E", 1, 1), new component::AiController, new component::Collision("Creature"), new component::Damageable(4.0));
 
     ugdk::graphic::Drawable* graphic = TEXT_MANAGER()->GetText(L"D");
     enemy->graphic_component()->node()->set_drawable(graphic);
@@ -55,7 +59,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
 }
 
 GameObject* ObjectBuilder::BuildItem() {
-    GameObject* enemy = new GameObject(new component::Graphic, new component::AiController, new component::Collision("Item"), nullptr);
+    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"I", 1, 1), new component::AiController, new component::Collision("Item"), nullptr);
 
     ugdk::graphic::Drawable* graphic = TEXT_MANAGER()->GetText(L"!");
     enemy->graphic_component()->node()->set_drawable(graphic);

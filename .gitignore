@@ -1,7 +1,11 @@
 
 /Debug
 /ipch
+/data
+/include
+/externals
 *.sdf
+*.opensdf
 /lib/ugdk.lib
 /lib/ugdk_d.lib
 /lib/ugdk_d.pdb

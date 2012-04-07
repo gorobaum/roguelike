@@ -19,7 +19,7 @@ class Graphic {
 
     void Update(double dt, GameObject* owner);
 
-	virtual void NodeLogic(std::list<GameTile*> occupying_tiles_) = 0;
+	virtual void NodeLogic(const std::list<GameTile*>& occupying_tiles_) = 0;
 
           ugdk::graphic::Node* node()       { return node_; }
     const ugdk::graphic::Node* node() const { return node_; }
