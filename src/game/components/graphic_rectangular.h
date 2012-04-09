@@ -18,21 +18,18 @@ class GraphicRectangular : public Graphic {
   typedef game::component::Graphic super;
 
   public:
-    GraphicRectangular(std::wstring visual_representation, int scale_x = 1, int scale_y = 1)
-      : game::component::Graphic(),
-        dimensions_(scale_x,scale_y) {
+    GraphicRectangular(std::wstring visual_representation)
+      : game::component::Graphic() {
         node()->set_drawable(TEXT_MANAGER()->GetText(visual_representation));
-        node()->modifier()->set_scale(dimensions_);
-    };
-    ~GraphicRectangular() { super::~Graphic(); };
+    }
+    ~GraphicRectangular() {};
 
-    void Update(double dt, GameObject* owner);
+    void Update(double dt);
 
 	void NodeLogic(const std::list<GameTile*>& occupying_tiles_);
 
   private:
     ugdk::graphic::Drawable* drawable_;
-    ugdk::Vector2D dimensions_;
 };
 
 } // namespace component

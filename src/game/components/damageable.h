@@ -2,13 +2,14 @@
 #define BADGAME_COMPONENT_DAMAGEABLE_H_
 
 #include <ugdk/graphic.h>
-#include "game.h"
 
 namespace game {
+
+class GameObject;
+
 namespace component {
 
 class Damageable {
-  //typedef ugdk::Scene super;
   public:
     Damageable(double max_life) : current_life_(max_life), max_life_(max_life) {}
     ~Damageable() {}

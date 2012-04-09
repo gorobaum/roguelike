@@ -9,6 +9,7 @@
 #include "game/gamecontroller.h"
 
 #include "game/gameobject.h"
+#include "game/components/controller_player.h"
 #include "game/gametile.h"
 #include "game/components/graphic.h"
 #include "game/builders/objectbuilder.h"
@@ -52,9 +53,9 @@ GameController::GameController() : map_size_(500.0, 500.0), hero_(nullptr) {
 		pos.y += GameTile::TILE_SIZE.y;
 	}
 
-	GameObject* x = hero_ = builder.BuildHero();
-	//x->MoveTo(tiles_[0][0]);
-	this->AddEntity(x);
+	hero_ = builder.BuildHero();
+    hero_->controller_component()->PlaceAt(tiles_[5][6]);
+	this->AddEntity(hero_);
 
     //ugdk::graphic::SolidRectangle* background_rect = new ugdk::graphic::SolidRectangle(map_size_);
     //content_node()->set_drawable(background_rect);

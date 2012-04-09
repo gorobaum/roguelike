@@ -3,9 +3,11 @@
 
 #include <ugdk/graphic.h>
 #include <string>
-#include "game.h"
 
 namespace game {
+
+class GameObject;
+
 namespace component {
 
 class Collision {

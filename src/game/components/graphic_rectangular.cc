@@ -7,12 +7,12 @@
 namespace game {
 namespace component {
 
-void GraphicRectangular::Update(double dt, GameObject* owner) {
-    super::Update(dt, owner);
+void GraphicRectangular::Update(double dt) {
 }
 
 void GraphicRectangular::NodeLogic(const std::list<GameTile*>& occupying_tiles_) {
     occupying_tiles_.front()->node()->AddChild(this->node());
+    node()->modifier()->set_scale(owner_->dimensions());
 }
 
 } // namespace component

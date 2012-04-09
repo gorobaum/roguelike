@@ -10,15 +10,18 @@
 #include "game/components/collision.h"
 #include "game/components/controller.h"
 
+using ugdk::Vector2D;
+
 namespace game {
 
-GameObject::GameObject(component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
+GameObject::GameObject(int scale_x, int scale_y, component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
   : graphic_component_(graphic),
 	controller_component_(controller),
 	collision_component_(collision),
 	damageable_component_(damageable),
 	timed_life_(nullptr),
-	dead_(false) {}
+	dead_(false),
+    dimensions_(Vector2D(scale_x, scale_y)) {}
 
 GameObject::~GameObject() {
     delete graphic_component_;
@@ -28,9 +31,14 @@ GameObject::~GameObject() {
     if(damageable_component_) delete damageable_component_;
 }
 
+void GameObject::Initialize() {
+    this->controller_component_->set_owner(this);
+    this->graphic_component_->set_owner(this);
+}
+
 void GameObject::Update(double dt) {
     controller_component_->Update(dt, this);
-    graphic_component_->Update(dt, this);
+    graphic_component_->Update(dt);
     if(damageable_component_) damageable_component_->Update(dt, this);
     if(timed_life_ && timed_life_->Expired()) Die();
 }
@@ -41,10 +49,6 @@ void GameObject::UpdateNode() {
 		(*xt)->node()->set_drawable(nullptr);
 		(*xt)->set_update_node_flag(false);
 	}
-}
-
-void GameObject::set_world_position(const ugdk::Vector2D& position) {
-    world_position_ = position;
 }
 /*
 GameTile* GameObject::game_tile() {

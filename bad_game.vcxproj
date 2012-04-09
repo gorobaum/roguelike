@@ -12,12 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\builders\objectbuilder.cc" />
-    <ClCompile Include="src\game\components\aicontroller.cc" />
     <ClCompile Include="src\game\components\collision.cc" />
+    <ClCompile Include="src\game\components\controller_ai.cc" />
+    <ClCompile Include="src\game\components\controller_player.cc" />
     <ClCompile Include="src\game\components\damageable.cc" />
     <ClCompile Include="src\game\components\graphic.cc" />
     <ClCompile Include="src\game\components\graphic_rectangular.cc" />
-    <ClCompile Include="src\game\components\playercontroller.cc" />
     <ClCompile Include="src\game\gamecontroller.cc" />
     <ClCompile Include="src\game\gameobject.cc" />
     <ClCompile Include="src\game\gametile.cc" />
@@ -27,14 +27,14 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\game\builders\objectbuilder.h" />
     <ClInclude Include="src\game\component.h" />
-    <ClInclude Include="src\game\components\aicontroller.h" />
     <ClInclude Include="src\game\components\collision.h" />
     <ClInclude Include="src\game\components\controller.h" />
+    <ClInclude Include="src\game\components\controller_ai.h" />
+    <ClInclude Include="src\game\components\controller_player.h" />
     <ClInclude Include="src\game\components\damageable.h" />
     <ClInclude Include="src\game\components\graphic.h" />
     <ClInclude Include="src\game\components\graphic_rectangular.h" />
     <ClInclude Include="src\game\components\idlecontroller.h" />
-    <ClInclude Include="src\game\components\playercontroller.h" />
     <ClInclude Include="src\game\gamecontroller.h" />
     <ClInclude Include="src\game\gameobject.h" />
     <ClInclude Include="src\game\gametile.h" />

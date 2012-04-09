@@ -5,9 +5,11 @@
 #include <vector>
 #include <ugdk/action/scene.h>
 #include <ugdk/time.h>
-#include "game.h"
 
 namespace game {
+
+class GameTile;
+class GameObject;
 
 struct Movement {
 	enum Direction {

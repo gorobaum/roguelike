@@ -7,14 +7,13 @@
 namespace game {
 namespace component {
 
-Graphic::Graphic() : node_(new ugdk::graphic::Node) {}
+Graphic::Graphic() : node_(new ugdk::graphic::Node), owner_(nullptr) {}
 
 Graphic::~Graphic() {
     delete node_;
 }
 
-void Graphic::Update(double dt, GameObject* owner) {
-    node_->modifier()->set_offset(owner->world_position());
+void Graphic::Update(double dt) {
 }
 
 } // namespace component

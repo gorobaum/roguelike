@@ -33,7 +33,7 @@ GameTile::~GameTile() {
 
 void GameTile::UpdateNode() {
 
-	if(update_node_flag_) {
+	if(!update_node_flag_) {
 
 		if(objects_here_.empty()) {
 			node_->set_drawable(ground_);

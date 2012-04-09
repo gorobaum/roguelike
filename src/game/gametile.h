@@ -4,7 +4,8 @@
 #include <list>
 #include <ugdk/graphic.h>
 #include <ugdk/math/vector2D.h>
-#include "game.h"
+
+#include "game/gameobject.h"
 
 namespace game {
 

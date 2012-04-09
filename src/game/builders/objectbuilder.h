@@ -2,9 +2,11 @@
 #define BADGAME_BUILDER_OBJECTBUILDER_H_
 
 #include <ugdk/math/vector2D.h>
-#include "game.h"
 
 namespace game {
+
+class GameObject;
+
 namespace builder {
 
 class ObjectBuilder {

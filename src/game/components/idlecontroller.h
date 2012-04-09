@@ -3,9 +3,11 @@
 
 #include <ugdk/graphic.h>
 #include "game/components/controller.h"
-#include "game.h"
 
 namespace game {
+
+class GameObject;
+
 namespace component {
 
 class IdleController : public Controller {

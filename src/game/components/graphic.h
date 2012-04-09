@@ -5,24 +5,30 @@
 
 #include <ugdk/graphic.h>
 
-#include "game.h"
 #include "game/gametile.h"
 
 namespace game {
+
+class GameObject;
+
 namespace component {
 
 class Graphic {
-  //typedef ugdk::Scene super;
   public:
     Graphic();
     ~Graphic();
 
-    void Update(double dt, GameObject* owner);
+    void set_owner(const GameObject* owner) { owner_ = owner; } 
+
+    virtual void Update(double dt) = 0;
 
 	virtual void NodeLogic(const std::list<GameTile*>& occupying_tiles_) = 0;
 
           ugdk::graphic::Node* node()       { return node_; }
     const ugdk::graphic::Node* node() const { return node_; }
+
+  protected:
+    const GameObject* owner_;
 
   private:
     ugdk::graphic::Node* node_;
