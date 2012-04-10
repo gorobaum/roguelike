@@ -31,18 +31,17 @@ static bool objectIsDead (const GameObject* value) {
     return is_dead;
 }
 
-GameController* GameController::reference_ = nullptr;
+const GameController* GameController::reference_ = nullptr;
 
 GameController::GameController() : map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 	Vector2D pos;
 	builder::ObjectBuilder builder;
-	for(int y = 0; y < 10; ++y) {
+	for(size_t y = 0; y < 10; ++y) {
 		std::vector<GameTile*> vect;
 		pos.x = 0;
-		for(int x = 0; x < 10; ++x) {
+		for(size_t x = 0; x < 10; ++x) {
 			GameTile* gt = new GameTile(x, y);
-			//gt->set_position(x, y);
 			gt->node()->modifier()->set_offset(pos);
 			content_node()->AddChild(gt->node());
 			vect.push_back(gt);
@@ -61,11 +60,11 @@ GameController::GameController() : map_size_(500.0, 500.0), hero_(nullptr) {
     //content_node()->set_drawable(background_rect);
 
     GameObject* enemy = builder.BuildEnemy();
-    //enemy->MoveTo(tiles_[3][3]);
+    enemy->controller_component()->PlaceAt(tiles_[3][3]);
 	this->AddEntity(enemy);
 
 	GameObject* item = builder.BuildItem();
-    //item->MoveTo(tiles_[2][2]);
+    item->controller_component()->PlaceAt(tiles_[2][2]);
 	this->AddEntity(item);
 }
 
@@ -131,15 +130,15 @@ void GameController::AddPendingGameObjects() {
         game_objects_.push_back(new_obj);
         this->AddEntity(new_obj);
 
-        new_obj->set_game_controller(this);
+        //new_obj->set_game_controller(this);
         //new_obj->collision_object()->StartColliding();
     }
     pending_game_objects_.clear();
 }
 
-GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) {
+GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) const {
 	if(tile == nullptr) return tile;
-	int x = tile->x(), y = tile->y();
+	size_t x = tile->x(), y = tile->y();
 	for(auto it = mov.dirs.begin(); it != mov.dirs.end(); ++it) {
 		switch(*it) {
 			case Movement::UP:    --y; break;
@@ -149,8 +148,8 @@ GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mo
 			default: break;
 		}
 	}
-	if(y < 0 || y >= static_cast<int>(tiles_.size())) return NULL;
-	if(x < 0 || x >= static_cast<int>(tiles_[y].size())) return NULL;
+	if(y < 0 || y >= static_cast<size_t>(tiles_.size())) return NULL;
+	if(x < 0 || x >= static_cast<size_t>(tiles_[y].size())) return NULL;
 	return GetTileFromCoordinates(x,y);
 }
 

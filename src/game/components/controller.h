@@ -1,5 +1,5 @@
-#ifndef TOPDOWN_GAME_COMPONENT_CONTROLLER_H_
-#define TOPDOWN_GAME_COMPONENT_CONTROLLER_H_
+#ifndef BADGAME_COMPONENT_CONTROLLER_H_
+#define BADGAME_COMPONENT_CONTROLLER_H_
 
 #include <ugdk/graphic.h>
 
@@ -15,7 +15,7 @@ class Controller {
     Controller() : owner_(nullptr) {}
     ~Controller() {}
 
-    void set_owner(GameObject* owner) { owner_ = owner; } 
+    void set_owner(GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
     virtual void Update(double dt, game::GameObject* owner) = 0;
 
@@ -28,4 +28,4 @@ class Controller {
 } // namespace component
 } // namespace game
 
-#endif // TOPDOWN_GAME_COMPONENT_CONTROLLER_H_
+#endif // BADGAME_COMPONENT_CONTROLLER_H_

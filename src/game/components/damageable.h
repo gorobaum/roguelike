@@ -11,14 +11,19 @@ namespace component {
 
 class Damageable {
   public:
-    Damageable(double max_life) : current_life_(max_life), max_life_(max_life) {}
+    Damageable(double max_life) : owner_(nullptr), current_life_(max_life), max_life_(max_life) {}
     ~Damageable() {}
+
+    void set_owner(GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
     void Update(double dt, GameObject* owner);
 
     void Damage(double damage) { current_life_ -= damage; }
 
     double current_life() const { return current_life_; }
+
+  protected:
+    GameObject* owner_;
 
   private:
     double current_life_;

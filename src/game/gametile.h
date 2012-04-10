@@ -11,7 +11,7 @@ namespace game {
 
 class GameTile  {
   public:
-	GameTile(int x, int y);
+	GameTile(size_t x, size_t y);
 	~GameTile();
 
 	static const ugdk::Vector2D TILE_SIZE;
@@ -25,9 +25,9 @@ class GameTile  {
 	
 	//void Collide(GameObject* obj);
 
-	//void set_position(int x, int y) { x_ = x; y_ = y; }
-	int x() const { return x_; }
-	int y() const { return y_; }
+	//void set_position(size_t x, size_t y) { x_ = x; y_ = y; }
+	size_t x() const { return x_; }
+	size_t y() const { return y_; }
 
 	bool update_node_flag() const { return update_node_flag_; }
 	void set_update_node_flag(const bool value) { update_node_flag_ = value; }
@@ -39,7 +39,7 @@ class GameTile  {
 	std::list<GameObject*> objects_here_;
 	ugdk::graphic::Drawable* ground_;
 
-	int x_, y_;
+	size_t x_, y_;
 
 	bool update_node_flag_;
 };

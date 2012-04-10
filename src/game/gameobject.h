@@ -15,7 +15,7 @@ namespace game {
 class GameObject : public ugdk::Entity {
   typedef ugdk::Entity super;
   public:
-    GameObject(int scale_x, int scale_y, component::Graphic*, component::Controller* controller, component::Collision* collision, component::Damageable* = nullptr);
+    GameObject(size_t scale_x, size_t scale_y, component::Graphic*, component::Controller* controller, component::Collision* collision, component::Damageable* = nullptr);
     ~GameObject();
 
     void Initialize();
@@ -32,8 +32,8 @@ class GameObject : public ugdk::Entity {
     void Die() { dead_ = true; }
     bool dead() const { return dead_; }
 
-    GameController* game_controller() { return game_controller_; }
-    void set_game_controller(GameController* game) { game_controller_ = game; }
+    //GameController* game_controller() { return game_controller_; }
+    //void set_game_controller(GameController* game) { game_controller_ = game; }
 
     void set_timed_life(ugdk::time::TimeAccumulator* timed_life) { timed_life_ = timed_life; }
 
@@ -50,7 +50,6 @@ class GameObject : public ugdk::Entity {
     
     ugdk::time::TimeAccumulator* timed_life_;
     bool dead_;
-    GameController* game_controller_;
 	std::list<GameTile*> occupying_tiles_;
 
 private:

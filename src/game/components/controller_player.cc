@@ -45,10 +45,12 @@ GameTile* ControllerPlayer::PlaceAt(game::GameTile* destination) {
         (*xt)->RemoveObject(this->owner_);
     owner_->occupying_tiles().clear();
 
-    GameController* gamecontroller = game::GameController::reference_;
+    const GameController* gamecontroller = game::GameController::reference_;
 
-    for( int i = 0 ; i < owner_->dimensions().x ; ++i ) {
-        for( int j = 0 ; j < owner_->dimensions().y ; ++j ) {
+
+
+    for( size_t i = 0 ; i < owner_->dimensions().x ; ++i ) {
+        for( size_t j = 0 ; j < owner_->dimensions().y ; ++j ) {
             GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
             owner_->occupying_tiles().push_back(tile);
             tile->PushObject(owner_);

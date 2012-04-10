@@ -7,12 +7,6 @@
 namespace game {
 namespace component {
 
-Graphic::Graphic() : node_(new ugdk::graphic::Node), owner_(nullptr) {}
-
-Graphic::~Graphic() {
-    delete node_;
-}
-
 void Graphic::Update(double dt) {
 }
 

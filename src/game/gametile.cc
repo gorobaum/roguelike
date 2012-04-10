@@ -16,7 +16,7 @@ using ugdk::graphic::SolidRectangle;
 
 const ugdk::Vector2D GameTile::TILE_SIZE = ugdk::Vector2D(32.0, 32.0);
 
-GameTile::GameTile(int x, int y) : node_(new ugdk::graphic::Node) {
+GameTile::GameTile(size_t x, size_t y) : node_(new ugdk::graphic::Node) {
 	/* double z = 0.4;
 	SolidRectangle* rect = new SolidRectangle(TILE_SIZE - ugdk::Vector2D(1));
 	rect->set_color(ugdk::Color(z, z, z)); */

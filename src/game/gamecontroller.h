@@ -22,7 +22,7 @@ struct Movement {
 class GameController : public ugdk::Scene {
   typedef ugdk::Scene super;
   public:
-	static GameController* reference_; //TODO: MANO,NAO.
+	static const GameController* reference_; //TODO: MANO,NAO.
 
     GameController();
     ~GameController();
@@ -33,14 +33,14 @@ class GameController : public ugdk::Scene {
 
     const ugdk::Vector2D& map_size() const { return map_size_; }
 
-	GameTile* GetTileByMovementFromTile(GameTile*, Movement&);
+	GameTile* GetTileByMovementFromTile(GameTile*, Movement&) const;
 	GameTile* GetTileByDirectionFromTile(GameTile* tile, Movement::Direction d) {
 		Movement m;
 		m.dirs.push_back(d);
 		return GetTileByMovementFromTile(tile, m);
 	}
 
-    GameTile* GetTileFromCoordinates(int x, int y) {
+    GameTile* GetTileFromCoordinates(size_t x, size_t y) const {
         if( 0 <= y && y < tiles_.size() && 0 <= x && x < tiles_[y].size() )
             return tiles_[y][x];
         return nullptr;
@@ -55,7 +55,7 @@ class GameController : public ugdk::Scene {
     ugdk::Vector2D map_size_;
     GameObject* hero_;
 	std::vector< std::vector<GameTile*> > tiles_;
-private:
+
     GameObjectList game_objects_;
     GameObjectList pending_game_objects_;
 };

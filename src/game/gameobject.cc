@@ -14,7 +14,7 @@ using ugdk::Vector2D;
 
 namespace game {
 
-GameObject::GameObject(int scale_x, int scale_y, component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
+GameObject::GameObject(size_t scale_x, size_t scale_y, component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
   : graphic_component_(graphic),
 	controller_component_(controller),
 	collision_component_(collision),
@@ -34,6 +34,8 @@ GameObject::~GameObject() {
 void GameObject::Initialize() {
     this->controller_component_->set_owner(this);
     this->graphic_component_->set_owner(this);
+    this->collision_component_->set_owner(this);
+    this->damageable_component_->set_owner(this);
 }
 
 void GameObject::Update(double dt) {
