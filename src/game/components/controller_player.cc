@@ -49,8 +49,9 @@ GameTile* ControllerPlayer::PlaceAt(game::GameTile* destination) {
 
     for( int i = 0 ; i < owner_->dimensions().x ; ++i ) {
         for( int j = 0 ; j < owner_->dimensions().y ; ++j ) {
-            owner_->occupying_tiles().push_back(gamecontroller->tiles_[destination->x()+i][destination->y()+j]);
-            gamecontroller->tiles_[destination->x()+i][destination->y()+j]->PushObject(owner_);
+            GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
+            owner_->occupying_tiles().push_back(tile);
+            tile->PushObject(owner_);
         }
     }
 

@@ -142,16 +142,16 @@ GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mo
 	int x = tile->x(), y = tile->y();
 	for(auto it = mov.dirs.begin(); it != mov.dirs.end(); ++it) {
 		switch(*it) {
-			case Movement::UP:    y--; break;
-			case Movement::DOWN:  y++; break;
-			case Movement::LEFT:  x--; break;
-			case Movement::RIGHT: x++; break;
+			case Movement::UP:    --y; break;
+			case Movement::DOWN:  ++y; break;
+			case Movement::LEFT:  --x; break;
+			case Movement::RIGHT: ++x; break;
 			default: break;
 		}
 	}
 	if(y < 0 || y >= static_cast<int>(tiles_.size())) return NULL;
 	if(x < 0 || x >= static_cast<int>(tiles_[y].size())) return NULL;
-	return tiles_[y][x];
+	return GetTileFromCoordinates(x,y);
 }
 
 } // namespace game

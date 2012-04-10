@@ -40,6 +40,12 @@ class GameController : public ugdk::Scene {
 		return GetTileByMovementFromTile(tile, m);
 	}
 
+    GameTile* GetTileFromCoordinates(int x, int y) {
+        if( 0 <= y && y < tiles_.size() && 0 <= x && x < tiles_[y].size() )
+            return tiles_[y][x];
+        return nullptr;
+    }
+
   private:
     typedef std::list<GameObject*> GameObjectList;
     void HandleCollisions();
@@ -48,7 +54,6 @@ class GameController : public ugdk::Scene {
 
     ugdk::Vector2D map_size_;
     GameObject* hero_;
-public: //TODO: NUKAISSO
 	std::vector< std::vector<GameTile*> > tiles_;
 private:
     GameObjectList game_objects_;
