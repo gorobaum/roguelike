@@ -2,6 +2,7 @@
 /Debug
 /ipch
 *.sdf
+*.suo
 *.opensdf
 /lib/ugdk.lib
 /lib/ugdk_d.lib
