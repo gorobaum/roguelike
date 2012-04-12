@@ -14,7 +14,7 @@ namespace game {
 
 using ugdk::graphic::SolidRectangle;
 
-const ugdk::Vector2D GameTile::TILE_SIZE = ugdk::Vector2D(32.0, 32.0);
+const ugdk::Vector2D GameTile::TILE_SIZE = ugdk::Vector2D(16.0, 16.0);
 
 GameTile::GameTile(size_t x, size_t y) : node_(new ugdk::graphic::Node) {
 	/* double z = 0.4;

@@ -37,10 +37,10 @@ GameController::GameController() : map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 	Vector2D pos;
 	builder::ObjectBuilder builder;
-	for(size_t y = 0; y < 10; ++y) {
+	for(size_t y = 0; y < 15; ++y) {
 		std::vector<GameTile*> vect;
 		pos.x = 0;
-		for(size_t x = 0; x < 10; ++x) {
+		for(size_t x = 0; x < 20; ++x) {
 			GameTile* gt = new GameTile(x, y);
 			gt->node()->modifier()->set_offset(pos);
 			content_node()->AddChild(gt->node());

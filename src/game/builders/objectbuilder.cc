@@ -26,7 +26,7 @@ namespace game {
 namespace builder {
 
 ObjectBuilder::ObjectBuilder() {
-	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 30, 0, 0);
+	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 }
 
 GameObject* ObjectBuilder::BuildHero() {

@@ -4,6 +4,7 @@
 #include <ugdk/base/engine.h>
 #include <ugdk/graphic/textmanager.h>
 #include <ugdk/graphic/drawable/text.h>
+#include <ugdk/graphic/drawable.h>
 
 #include <list>
 
@@ -21,15 +22,13 @@ class GraphicRectangular : public Graphic {
     GraphicRectangular(std::wstring visual_representation)
       : game::component::Graphic() {
         node()->set_drawable(TEXT_MANAGER()->GetText(visual_representation));
+        fwprintf(stderr, L"%c:%lf,%lf\n", visual_representation.c_str(), node()->drawable()->size().x, node()->drawable()->size().y );
     }
     ~GraphicRectangular() {};
 
     void Update(double dt);
 
 	void NodeLogic(const std::list<GameTile*>& occupying_tiles_);
-
-  private:
-    ugdk::graphic::Drawable* drawable_;
 };
 
 } // namespace component
