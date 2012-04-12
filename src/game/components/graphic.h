@@ -5,7 +5,7 @@
 
 #include <ugdk/graphic.h>
 
-#include "game/gametile.h"
+#include "game/base/gametile.h"
 
 namespace game {
 

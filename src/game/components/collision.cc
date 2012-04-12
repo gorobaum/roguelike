@@ -1,6 +1,6 @@
 #include "game/components/collision.h"
 
-#include "game/gameobject.h"
+#include "game/base/gameobject.h"
 
 namespace game {
 namespace component {

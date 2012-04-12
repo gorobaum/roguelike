@@ -10,7 +10,7 @@
 
 #include "game/builders/objectbuilder.h"
 
-#include "game/gameobject.h"
+#include "game/base/gameobject.h"
 #include "game/components/graphic_rectangular.h"
 #include "game/components/damageable.h"
 #include "game/components/collision.h"
@@ -18,9 +18,9 @@
 #include "game/components/controller_ai.h"
 #include "game/components/idlecontroller.h"
 
-#include "game/gamecontroller.h"
+#include "game/base/gamecontroller.h"
 
-#include "game/gametile.h"
+#include "game/base/gametile.h"
 
 namespace game {
 namespace builder {

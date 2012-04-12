@@ -1,6 +1,6 @@
 #include <ugdk/base/engine.h>
 #include <ugdk/graphic/videomanager.h>
-#include "game/gamecontroller.h"
+#include "game/base/gamecontroller.h"
 
 int main(int argc, char **argv) {
 	ugdk::Configuration engine_config;

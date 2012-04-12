@@ -3,7 +3,7 @@
 #include <ugdk/time/timeaccumulator.h>
 #include "game/components/controller_ai.h"
 
-#include "game/gameobject.h"
+#include "game/base/gameobject.h"
 
 namespace game {
 namespace component {

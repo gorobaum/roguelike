@@ -7,9 +7,9 @@
 
 #include "game/components/controller_player.h"
 
-#include "game/gameobject.h"
-#include "game/gamecontroller.h"
-#include "game/gametile.h"
+#include "game/base/gameobject.h"
+#include "game/base/gamecontroller.h"
+#include "game/base/gametile.h"
 #include "game/builders/objectbuilder.h"
 
 namespace game {
