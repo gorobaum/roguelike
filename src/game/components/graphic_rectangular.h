@@ -6,7 +6,6 @@
 
 // External Dependencies
 #include <list>                         // template class
-
 #include <ugdk/base/engine.h>           // needed in the TEXT_MANAGER() macro
 #include <ugdk/graphic/drawable/text.h> // needed for GetText(-)
 #include <ugdk/graphic/node.h>          // needed for set_drawable(-)

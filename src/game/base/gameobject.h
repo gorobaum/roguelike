@@ -6,8 +6,10 @@
 
 // External Dependencies
 #include <list>                 // template class
-
 #include <ugdk/math/vector2D.h> // needed for ???
+
+// Internal Dependencies
+// (none)
 
 // Forward Declarations
 #include <ugdk/time.h>

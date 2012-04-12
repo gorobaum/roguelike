@@ -6,7 +6,6 @@
 
 // External Dependencies
 #include <list>                 // template class
-
 #include <ugdk/graphic/node.h>  // needed for new Node(-)
 
 // Internal Dependencies
