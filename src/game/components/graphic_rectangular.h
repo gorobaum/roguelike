@@ -1,16 +1,22 @@
 #ifndef BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
 #define BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
 
-#include <ugdk/base/engine.h>
-#include <ugdk/graphic/textmanager.h>
-#include <ugdk/graphic/drawable/text.h>
-#include <ugdk/graphic/drawable.h>
-
-#include <list>
-
+// Inheritance
 #include "game/components/graphic.h"
 
-class ugdk::Vector2D;
+// External Dependencies
+#include <list>                         // template class
+
+#include <ugdk/base/engine.h>           // needed in the TEXT_MANAGER() macro
+#include <ugdk/graphic/drawable/text.h> // needed for GetText(-)
+#include <ugdk/graphic/node.h>          // needed for set_drawable(-)
+#include <ugdk/graphic/textmanager.h>   // needed for the TEXT_MANAGER() macro
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
+#include "game/base.h"
 
 namespace game {
 namespace component {
@@ -20,15 +26,14 @@ class GraphicRectangular : public Graphic {
 
   public:
     GraphicRectangular(std::wstring visual_representation)
-      : game::component::Graphic() {
+      : super() {
         node()->set_drawable(TEXT_MANAGER()->GetText(visual_representation));
-        fwprintf(stderr, L"%c:%lf,%lf\n", visual_representation.c_str(), node()->drawable()->size().x, node()->drawable()->size().y );
     }
     ~GraphicRectangular() {};
 
     void Update(double dt);
 
-	void NodeLogic(const std::list<GameTile*>& occupying_tiles_);
+	void NodeLogic(const std::list<game::base::GameTile*>& occupying_tiles);
 };
 
 } // namespace component

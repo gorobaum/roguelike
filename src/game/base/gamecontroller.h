@@ -1,15 +1,22 @@
-#ifndef BADGAME_GAMECONTROLLER_H_
-#define BADGAME_GAMECONTROLLER_H_
+#ifndef BADGAME_BASE_GAMECONTROLLER_H_
+#define BADGAME_BASE_GAMECONTROLLER_H_
 
-#include <list>
-#include <vector>
+// Inheritance
 #include <ugdk/action/scene.h>
-#include <ugdk/time.h>
+
+// External Dependencies
+#include <list>      // template class, also needed for push_back(-)
+#include <vector>    // template class, also needed for size(-)
+
+#include <ugdk/math/vector2D.h>
+
+// Internal Dependencies
+
+// Forward Declarations
+#include "game/base.h"
 
 namespace game {
-
-class GameTile;
-class GameObject;
+namespace base {
 
 struct Movement {
 	enum Direction {
@@ -22,7 +29,7 @@ struct Movement {
 class GameController : public ugdk::Scene {
   typedef ugdk::Scene super;
   public:
-	static const GameController* reference_; //TODO: MANO,NAO.
+	static const GameController* reference_; //TODO: Pelo menos é const neh...
 
     GameController();
     ~GameController();
@@ -47,7 +54,6 @@ class GameController : public ugdk::Scene {
     }
 
   private:
-    typedef std::list<GameObject*> GameObjectList;
     void HandleCollisions();
     void ClearDeadGameObjects();
     void AddPendingGameObjects();
@@ -56,10 +62,11 @@ class GameController : public ugdk::Scene {
     GameObject* hero_;
 	std::vector< std::vector<GameTile*> > tiles_;
 
-    GameObjectList game_objects_;
-    GameObjectList pending_game_objects_;
+    std::list<GameObject*> game_objects_;
+    std::list<GameObject*> pending_game_objects_;
 };
 
+} // namespace base
 } // namespace game
 
-#endif // BADGAME_GAMECONTROLLER_H_
+#endif // BADGAME_BASE_GAMECONTROLLER_H_

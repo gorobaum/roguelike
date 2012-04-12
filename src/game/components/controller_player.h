@@ -1,13 +1,19 @@
 #ifndef BADGAME_COMPONENT_CONTROLLER_PLAYER_H_
 #define BADGAME_COMPONENT_CONTROLLER_PLAYER_H_
 
-#include <ugdk/time.h>
+// Inheritance
 #include "game/components/controller.h"
 
+// External Dependencies
+//#include <ugdk/time.h>    // needed for 
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
+#include "game/base.h"
+
 namespace game {
-
-class GameObject;
-
 namespace component {
 
 class ControllerPlayer : public Controller {
@@ -16,9 +22,9 @@ class ControllerPlayer : public Controller {
     ControllerPlayer() {}
     ~ControllerPlayer() {}
 
-    void Update(double dt, GameObject* owner);
+    void Update(double dt, game::base::GameObject* owner);
 
-    GameTile* PlaceAt(game::GameTile* tile);
+    game::base::GameTile* PlaceAt(game::base::GameTile* tile);
 };
 
 } // namespace component

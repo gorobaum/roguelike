@@ -1,13 +1,20 @@
 #ifndef BADGAME_COMPONENT_CONTROLLER_H_
 #define BADGAME_COMPONENT_CONTROLLER_H_
 
+// Inheritance
+// (none)
+
+// External Dependencies
+// (none)
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
 #include <ugdk/graphic.h>
+#include "game/base.h"
 
 namespace game {
-
-class GameTile;
-class GameObject;
-
 namespace component {
 
 class Controller {
@@ -15,14 +22,14 @@ class Controller {
     Controller() : owner_(nullptr) {}
     ~Controller() {}
 
-    void set_owner(GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
+    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
-    virtual void Update(double dt, game::GameObject* owner) = 0;
+    virtual void Update(double dt, game::base::GameObject* owner) = 0;
 
-    virtual GameTile* PlaceAt(game::GameTile* tile) = 0;
+    virtual game::base::GameTile* PlaceAt(game::base::GameTile* tile) = 0;
 
   protected:
-    GameObject* owner_;
+    game::base::GameObject* owner_;
 };
 
 } // namespace component

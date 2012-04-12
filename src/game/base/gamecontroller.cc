@@ -1,22 +1,33 @@
+// Header File
+#include "game/base/gamecontroller.h"
+
+// External Dependencies
 #include <cstdlib>
+
 #include <ugdk/base/engine.h>
-#include <ugdk/graphic/node.h>
 #include <ugdk/graphic/drawable/solidrectangle.h>
+#include <ugdk/graphic/node.h>
 #include <ugdk/graphic/videomanager.h>
 #include <ugdk/math/vector2D.h>
 #include <ugdk/time/timeaccumulator.h>
 
-#include "game/base/gamecontroller.h"
-
+// Internal Dependencies
 #include "game/base/gameobject.h"
-#include "game/components/controller_player.h"
 #include "game/base/gametile.h"
-#include "game/components/graphic.h"
+
 #include "game/builders/objectbuilder.h"
 
-namespace game {
+#include "game/components/controller_player.h"
+#include "game/components/graphic.h"
 
+// Using
+using std::list;
+using std::vector;
 using ugdk::Vector2D;
+using game::builder::ObjectBuilder;
+
+namespace game {
+namespace base {
 
 static double getRandomNumber(double min, double max) {
     double n = rand();
@@ -33,14 +44,14 @@ static bool objectIsDead (const GameObject* value) {
 
 const GameController* GameController::reference_ = nullptr;
 
-GameController::GameController() : map_size_(500.0, 500.0), hero_(nullptr) {
+GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 	Vector2D pos;
-	builder::ObjectBuilder builder;
+	ObjectBuilder builder;
 	for(size_t y = 0; y < 35; ++y) {
-		std::vector<GameTile*> vect;
+		vector<GameTile*> vect;
 		pos.x = 0;
-		for(size_t x = 0; x < 40; ++x) {
+		for(size_t x = 0; x < 45; ++x) {
 			GameTile* gt = new GameTile(x, y);
 			gt->node()->modifier()->set_offset(pos);
 			content_node()->AddChild(gt->node());
@@ -115,7 +126,7 @@ void GameController::AddGameObject(GameObject* game_object) {
 }
 
 void GameController::ClearDeadGameObjects() {
-    for(GameObjectList::iterator it = game_objects_.begin(); it != game_objects_.end(); ++it) {
+    for(list<GameObject*>::iterator it = game_objects_.begin(); it != game_objects_.end(); ++it) {
         if((*it)->dead())
             RemoveEntity(*it);
     }
@@ -153,4 +164,5 @@ GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mo
 	return GetTileFromCoordinates(x,y);
 }
 
+} // namespace base
 } // namespace game

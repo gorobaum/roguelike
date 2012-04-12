@@ -1,13 +1,19 @@
 #ifndef TOPDOWN_GAME_COMPONENT_IDLECONTROLLER_H_
 #define TOPDOWN_GAME_COMPONENT_IDLECONTROLLER_H_
 
-#include <ugdk/graphic.h>
+// Inheritance
 #include "game/components/controller.h"
 
+// External Dependencies
+// (none)
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
+#include "game/base.h"
+
 namespace game {
-
-class GameObject;
-
 namespace component {
 
 class IdleController : public Controller {
@@ -16,7 +22,7 @@ class IdleController : public Controller {
     IdleController() {}
     ~IdleController() {}
 
-    void Update(double dt, GameObject* owner) {}
+    void Update(double dt, game::base::GameObject* owner) {}
 };
 
 } // namespace component

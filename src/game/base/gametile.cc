@@ -1,22 +1,29 @@
-#include <ugdk/base/engine.h>
-#include <ugdk/graphic/node.h>
-#include <ugdk/graphic/textmanager.h>
-#include <ugdk/graphic/drawable/text.h>
-#include <ugdk/graphic/drawable/solidrectangle.h>
-
+// Header File
 #include "gametile.h"
 
+// External Dependencies
+#include <ugdk/base/engine.h>
+#include <ugdk/graphic/drawable/solidrectangle.h>
+#include <ugdk/graphic/drawable/text.h>
+#include <ugdk/graphic/node.h>
+#include <ugdk/graphic/textmanager.h>
+
+// Internal Dependencies
 #include "game/base/gameobject.h"
-#include "game/components/graphic.h"
 #include "game/components/collision.h"
+#include "game/components/graphic.h"
 
-namespace game {
-
+// Using
+using ugdk::Vector2D;
+using ugdk::graphic::Node;
 using ugdk::graphic::SolidRectangle;
 
-const ugdk::Vector2D GameTile::TILE_SIZE = ugdk::Vector2D(16.0, 16.0);
+namespace game {
+namespace base {
 
-GameTile::GameTile(size_t x, size_t y) : node_(new ugdk::graphic::Node) {
+const Vector2D GameTile::TILE_SIZE = Vector2D(16.0, 16.0);
+
+GameTile::GameTile(size_t x, size_t y) : node_(new Node) {
 	/* double z = 0.4;
 	SolidRectangle* rect = new SolidRectangle(TILE_SIZE - ugdk::Vector2D(1));
 	rect->set_color(ugdk::Color(z, z, z)); */
@@ -75,4 +82,5 @@ void GameTile::Collide(GameObject* obj) {
 		obj->collision_component()->Handle(*it);
 }*/
 
+} // namespace base
 } // namespace game

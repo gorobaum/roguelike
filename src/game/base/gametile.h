@@ -1,13 +1,21 @@
-#ifndef BADGAME_GAMETILE_H_
-#define BADGAME_GAMETILE_H_
+#ifndef BADGAME_BASE_GAMETILE_H_
+#define BADGAME_BASE_GAMETILE_H_
 
-#include <list>
+// Inheritance
+// (none)
+
+// External Dependencies
+#include <list> // template class
+
+// Internal Dependencies
+
+// Forward Declarations
 #include <ugdk/graphic.h>
-#include <ugdk/math/vector2D.h>
-
-#include "game/base/gameobject.h"
+#include <ugdk/math.h>
+#include "game/base.h"
 
 namespace game {
+namespace base {
 
 class GameTile  {
   public:
@@ -44,6 +52,7 @@ class GameTile  {
 	bool update_node_flag_;
 };
 
+} // namespace base
 } // namespace game
 
-#endif // BADGAME_GAMEOBJECT_H_
+#endif // BADGAME_BASE_GAMEOBJECT_H_

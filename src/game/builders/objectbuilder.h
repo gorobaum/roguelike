@@ -1,12 +1,19 @@
 #ifndef BADGAME_BUILDER_OBJECTBUILDER_H_
 #define BADGAME_BUILDER_OBJECTBUILDER_H_
 
-#include <ugdk/math/vector2D.h>
+// Inheritance
+// (none)
+
+// External Dependencies
+// (none)
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
+#include "game/base.h"
 
 namespace game {
-
-class GameObject;
-
 namespace builder {
 
 class ObjectBuilder {
@@ -14,9 +21,9 @@ class ObjectBuilder {
     ObjectBuilder();
     ~ObjectBuilder() {}
 
-    GameObject* BuildHero();
-    GameObject* BuildEnemy();
-    GameObject* BuildItem();
+    game::base::GameObject* BuildHero();
+    game::base::GameObject* BuildEnemy();
+    game::base::GameObject* BuildItem();
 };
 
 } // namespace builder

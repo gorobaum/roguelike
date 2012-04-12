@@ -1,8 +1,14 @@
-#include <ugdk/graphic/node.h>
-
+// Header File
 #include "game/components/graphic.h"
 
-#include "game/base/gameobject.h"
+// External Dependencies
+// (none)
+
+// Internal Dependencies
+// (none)
+
+// Using
+// (none)
 
 namespace game {
 namespace component {

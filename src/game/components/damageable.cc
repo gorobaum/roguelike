@@ -1,6 +1,14 @@
+// Header File
 #include "game/components/damageable.h"
 
+// External Dependencies
+// (none)
+
+// Internal Dependencies
 #include "game/base/gameobject.h"
+
+// Using
+using game::base::GameObject;
 
 namespace game {
 namespace component {

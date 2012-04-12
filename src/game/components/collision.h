@@ -1,13 +1,19 @@
 #ifndef BADGAME_COMPONENT_COLLISION_H_
 #define BADGAME_COMPONENT_COLLISION_H_
 
-#include <ugdk/graphic.h>
-#include <string>
+// Inheritance
+// (none)
+
+// External Dependencies
+#include <string>   // can't forward-declare std::string;
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
+#include "game/base.h"
 
 namespace game {
-
-class GameObject;
-
 namespace component {
 
 class Collision {
@@ -15,14 +21,14 @@ class Collision {
     Collision(std::string collision_class) : owner_(nullptr), collision_class_(collision_class) {}
     ~Collision() {}
 
-    void set_owner(GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
+    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
-	void Update(double dt, GameObject* owner) {};
-	void Handle(GameObject* collider);
+	void Update(double dt, game::base::GameObject* owner) {};
+	void Handle(game::base::GameObject* collider);
 	std::string CollisionClass() { return collision_class_; };
 
   protected:
-    GameObject* owner_;
+    game::base::GameObject* owner_;
 
   private:
     std::string collision_class_;

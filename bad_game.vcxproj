@@ -24,9 +24,11 @@
     <ClCompile Include="src\main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\base.h" />
     <ClInclude Include="src\game\base\gamecontroller.h" />
     <ClInclude Include="src\game\base\gameobject.h" />
     <ClInclude Include="src\game\base\gametile.h" />
+    <ClInclude Include="src\game\builder.h" />
     <ClInclude Include="src\game\builders\objectbuilder.h" />
     <ClInclude Include="src\game\component.h" />
     <ClInclude Include="src\game\components\collision.h" />
@@ -37,7 +39,6 @@
     <ClInclude Include="src\game\components\graphic.h" />
     <ClInclude Include="src\game\components\graphic_rectangular.h" />
     <ClInclude Include="src\game\components\idlecontroller.h" />
-    <ClInclude Include="src\game\game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4378418C-D44E-4D87-87DC-5D8174DE93A7}</ProjectGuid>

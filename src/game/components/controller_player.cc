@@ -1,22 +1,32 @@
+// Header File
+#include "game/components/controller_player.h"
+
+// External Dependencies
 #include <ugdk/base/engine.h>
-#include <ugdk/math/vector2D.h>
 #include <ugdk/graphic/videomanager.h>
 #include <ugdk/input/inputmanager.h>
 #include <ugdk/input/keys.h>
+#include <ugdk/math/vector2D.h>
 #include <ugdk/time/timeaccumulator.h>
 
-#include "game/components/controller_player.h"
-
-#include "game/base/gameobject.h"
+// Internal Dependencies
 #include "game/base/gamecontroller.h"
+#include "game/base/gameobject.h"
 #include "game/base/gametile.h"
 #include "game/builders/objectbuilder.h"
+
+// Using
+using ugdk::input::InputManager;
+using game::base::GameController;
+using game::base::GameObject;
+using game::base::GameTile;
+using game::base::Movement;
 
 namespace game {
 namespace component {
 
 void ControllerPlayer::Update(double dt, GameObject* owner) {
-    ugdk::input::InputManager* input = INPUT_MANAGER();
+    InputManager* input = INPUT_MANAGER();
 
 	GameTile* next_tile = nullptr;
 	Movement mov;
@@ -32,20 +42,20 @@ void ControllerPlayer::Update(double dt, GameObject* owner) {
 
 
 	if(mov.dirs.size() > 0)
-        next_tile = game::GameController::reference_->GetTileByMovementFromTile(owner_->occupying_tiles().front(), mov);
+        next_tile = GameController::reference_->GetTileByMovementFromTile(owner_->occupying_tiles().front(), mov);
 
 	if(next_tile)
 		PlaceAt(next_tile);
 
 }
 
-GameTile* ControllerPlayer::PlaceAt(game::GameTile* destination) {
+GameTile* ControllerPlayer::PlaceAt(GameTile* destination) {
     
     for( auto xt = owner_->occupying_tiles().begin() ; xt != owner_->occupying_tiles().end() ; ++xt )
         (*xt)->RemoveObject(this->owner_);
     owner_->occupying_tiles().clear();
 
-    const GameController* gamecontroller = game::GameController::reference_;
+    const GameController* gamecontroller = GameController::reference_;
 
 
 

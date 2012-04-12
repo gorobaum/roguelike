@@ -1,18 +1,22 @@
-#include <ugdk/time/timeaccumulator.h>
+// Header File
+#include "game/base/gameobject.h"
 
+// External Dependencies
+#include <ugdk/time/timeaccumulator.h>
 #include <ugdk/graphic/node.h>
 
-#include "game/base/gameobject.h"
+// Internal Dependencies
 #include "game/base/gametile.h"
-
-#include "game/components/graphic.h"
-#include "game/components/damageable.h"
 #include "game/components/collision.h"
 #include "game/components/controller.h"
+#include "game/components/damageable.h"
+#include "game/components/graphic.h"
 
+// Using
 using ugdk::Vector2D;
 
 namespace game {
+namespace base {
 
 GameObject::GameObject(size_t scale_x, size_t scale_y, component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
   : graphic_component_(graphic),
@@ -67,4 +71,6 @@ void GameObject::MoveTo(GameTile* tile) {
 	}
 }
 */
+
+} // namespace base
 } // namespace game

@@ -1,16 +1,21 @@
-#ifndef BADGAME_GAMEOBJECT_H_
-#define BADGAME_GAMEOBJECT_H_
+#ifndef BADGAME_BASE_GAMEOBJECT_H_
+#define BADGAME_BASE_GAMEOBJECT_H_
 
-#include <list>
-
+// Inheritance
 #include <ugdk/action/entity.h>
-#include <ugdk/math/vector2D.h>
-#include <ugdk/time.h>
 
+// External Dependencies
+#include <list>                 // template class
+
+#include <ugdk/math/vector2D.h> // needed for ???
+
+// Forward Declarations
+#include <ugdk/time.h>
+#include "game/base.h"
 #include "game/component.h"
-#include "game/base/gamecontroller.h"
 
 namespace game {
+namespace base {
 
 class GameObject : public ugdk::Entity {
   typedef ugdk::Entity super;
@@ -57,6 +62,7 @@ private:
 
 };
 
+} // namespace base
 } // namespace game
 
-#endif // BADGAME_GAMEOBJECT_H_
+#endif // BADGAME_BASE_GAMEOBJECT_H_

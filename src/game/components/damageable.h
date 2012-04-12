@@ -1,12 +1,20 @@
 #ifndef BADGAME_COMPONENT_DAMAGEABLE_H_
 #define BADGAME_COMPONENT_DAMAGEABLE_H_
 
+// Inheritance
+// (none)
+
+// External Dependencies
+// (none)
+
+// Internal Dependencies
+// (none)
+
+// Forward Declarations
 #include <ugdk/graphic.h>
+#include "game/base.h"
 
 namespace game {
-
-class GameObject;
-
 namespace component {
 
 class Damageable {
@@ -14,16 +22,16 @@ class Damageable {
     Damageable(double max_life) : owner_(nullptr), current_life_(max_life), max_life_(max_life) {}
     ~Damageable() {}
 
-    void set_owner(GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
+    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
-    void Update(double dt, GameObject* owner);
+    void Update(double dt, game::base::GameObject* owner);
 
     void Damage(double damage) { current_life_ -= damage; }
 
     double current_life() const { return current_life_; }
 
   protected:
-    GameObject* owner_;
+    game::base::GameObject* owner_;
 
   private:
     double current_life_;
