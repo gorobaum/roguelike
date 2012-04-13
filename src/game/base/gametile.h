@@ -27,8 +27,6 @@ class GameTile  {
 
 	ugdk::graphic::Node* node() const { return node_; }
 
-	void UpdateNode();
-
 	void PushObject(GameObject* obj);
 	void RemoveObject(GameObject* obj);
 	

@@ -10,7 +10,6 @@
 #include <ugdk/graphic/textmanager.h>
 #include <ugdk/graphic/videomanager.h>
 #include <ugdk/math/vector2D.h>
-#include <ugdk/time/timeaccumulator.h>
 
 // Internal Dependencies
 #include "game/base/gamecontroller.h"
@@ -19,9 +18,10 @@
 #include "game/components/collision.h"
 #include "game/components/controller_ai.h"
 #include "game/components/controller_player.h"
+#include "game/components/controller_player.h"
 #include "game/components/damageable.h"
 #include "game/components/graphic_rectangular.h"
-#include "game/components/idlecontroller.h"
+#include "game/components/shape_rectangular.h"
 
 // Using
 using ugdk::graphic::Drawable;
@@ -35,7 +35,7 @@ ObjectBuilder::ObjectBuilder() {
 }
 
 GameObject* ObjectBuilder::BuildHero() {
-	GameObject* hero = new GameObject(2,2, new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::Damageable(10.0));
+    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(2,2), new component::Damageable(10.0));
     hero->Initialize();
 
 	Drawable* graphic = TEXT_MANAGER()->GetText(L"@");
@@ -45,7 +45,7 @@ GameObject* ObjectBuilder::BuildHero() {
 }
 
 GameObject* ObjectBuilder::BuildEnemy() {
-    GameObject* enemy = new GameObject(1,1, new component::GraphicRectangular(L"E"), new component::ControllerAi(), new component::Collision("Creature"), new component::Damageable(4.0));
+    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"E"), new component::ControllerAi(), new component::Collision("Creature"), new component::ShapeRectangular(1,1), new component::Damageable(4.0));
     enemy->Initialize();
 
     Drawable* graphic = TEXT_MANAGER()->GetText(L"D");
@@ -55,7 +55,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
 }
 
 GameObject* ObjectBuilder::BuildItem() {
-    GameObject* enemy = new GameObject(1,1, new component::GraphicRectangular(L"I"), new component::ControllerAi(), new component::Collision("Item"), nullptr);
+    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"I"), new component::ControllerAi(), new component::Collision("Item"), new component::ShapeRectangular(1,1) );
 
     Drawable* graphic = TEXT_MANAGER()->GetText(L"!");
     enemy->graphic_component()->node()->set_drawable(graphic);

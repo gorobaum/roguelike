@@ -7,24 +7,16 @@
 // External Dependencies
 #include <list>                 // template class, also needed for push_back(-)
 #include <vector>               // template class, also needed for size(-)
-#include <ugdk/math/vector2D.h> // needed for ???
+#include <ugdk/math/vector2D.h> // needed for map_size_
 
 // Internal Dependencies
-// (none)
+#include "game/action/movement.h" // needed for Movement::Direction
 
 // Forward Declarations
 #include "game/base.h"
 
 namespace game {
 namespace base {
-
-struct Movement {
-	enum Direction {
-		UP, DOWN, RIGHT, LEFT
-	};
-
-	std::list<Direction> dirs;
-};
 
 class GameController : public ugdk::Scene {
   typedef ugdk::Scene super;
@@ -40,9 +32,9 @@ class GameController : public ugdk::Scene {
 
     const ugdk::Vector2D& map_size() const { return map_size_; }
 
-	GameTile* GetTileByMovementFromTile(GameTile*, Movement&) const;
-	GameTile* GetTileByDirectionFromTile(GameTile* tile, Movement::Direction d) {
-		Movement m;
+	GameTile* GetTileByMovementFromTile(GameTile*, game::action::Movement&) const;
+	GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const {
+		game::action::Movement m;
 		m.dirs.push_back(d);
 		return GetTileByMovementFromTile(tile, m);
 	}

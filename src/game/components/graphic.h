@@ -23,8 +23,7 @@ class Graphic {
     Graphic::Graphic() : owner_(nullptr), node_(new ugdk::graphic::Node()) {}
     Graphic::~Graphic() { delete node_; }
 
-
-    void set_owner(const game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
+    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
     virtual void Update(double dt) = 0;
 
@@ -34,7 +33,7 @@ class Graphic {
     const ugdk::graphic::Node* node() const { return node_; }
 
   protected:
-    const game::base::GameObject* owner_;
+    game::base::GameObject* owner_;
 
   private:
     ugdk::graphic::Node* node_;

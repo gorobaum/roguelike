@@ -19,11 +19,13 @@
     <ClCompile Include="src\game\components\controller_ai.cc" />
     <ClCompile Include="src\game\components\controller_player.cc" />
     <ClCompile Include="src\game\components\damageable.cc" />
-    <ClCompile Include="src\game\components\graphic.cc" />
     <ClCompile Include="src\game\components\graphic_rectangular.cc" />
+    <ClCompile Include="src\game\components\shape_rectangular.cc" />
     <ClCompile Include="src\main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\action.h" />
+    <ClInclude Include="src\game\action\movement.h" />
     <ClInclude Include="src\game\base.h" />
     <ClInclude Include="src\game\base\gamecontroller.h" />
     <ClInclude Include="src\game\base\gameobject.h" />
@@ -34,11 +36,13 @@
     <ClInclude Include="src\game\components\collision.h" />
     <ClInclude Include="src\game\components\controller.h" />
     <ClInclude Include="src\game\components\controller_ai.h" />
+    <ClInclude Include="src\game\components\controller_idle.h" />
     <ClInclude Include="src\game\components\controller_player.h" />
     <ClInclude Include="src\game\components\damageable.h" />
     <ClInclude Include="src\game\components\graphic.h" />
     <ClInclude Include="src\game\components\graphic_rectangular.h" />
-    <ClInclude Include="src\game\components\idlecontroller.h" />
+    <ClInclude Include="src\game\components\shape.h" />
+    <ClInclude Include="src\game\components\shape_rectangular.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4378418C-D44E-4D87-87DC-5D8174DE93A7}</ProjectGuid>

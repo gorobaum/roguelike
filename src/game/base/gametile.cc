@@ -38,21 +38,6 @@ GameTile::~GameTile() {
 	delete node_;
 }
 
-void GameTile::UpdateNode() {
-
-	if(!update_node_flag_) {
-
-		if(objects_here_.empty()) {
-			node_->set_drawable(ground_);
-			update_node_flag_ = false;
-		} else {
-			objects_here_.back()->UpdateNode();
-		}
-
-	}
-
-}
-
 void GameTile::PushObject(GameObject* obj) {
 	/*
 	if (!objects_here_.empty())

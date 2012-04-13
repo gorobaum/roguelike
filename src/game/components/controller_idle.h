@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_CONTROLLER_PLAYER_H_
-#define BADGAME_COMPONENT_CONTROLLER_PLAYER_H_
+#ifndef TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_
+#define TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_
 
 // Inheritance
 #include "game/components/controller.h"
@@ -16,16 +16,16 @@
 namespace game {
 namespace component {
 
-class ControllerPlayer : public Controller {
+class IdleController : public Controller {
   typedef Controller super;
   public:
-    ControllerPlayer() {}
-    ~ControllerPlayer() {}
+    IdleController() {}
+    ~IdleController() {}
 
-    void Update(double dt, game::base::GameObject* owner);
+    void Update(double dt, game::base::GameObject* owner) {}
 };
 
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_CONTROLLER_PLAYER_H_
+#endif // TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_

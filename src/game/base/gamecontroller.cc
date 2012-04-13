@@ -12,19 +12,20 @@
 #include <ugdk/time/timeaccumulator.h>
 
 // Internal Dependencies
+#include "game/action/movement.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
-
 #include "game/builders/objectbuilder.h"
-
 #include "game/components/controller_player.h"
 #include "game/components/graphic.h"
+#include "game/components/shape_rectangular.h"
 
 // Using
 using std::list;
 using std::vector;
 using ugdk::Vector2D;
 using game::builder::ObjectBuilder;
+using game::action::Movement;
 
 namespace game {
 namespace base {
@@ -64,18 +65,18 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	}
 
 	hero_ = builder.BuildHero();
-    hero_->controller_component()->PlaceAt(tiles_[5][6]);
+    hero_->shape_component()->PlaceAt(tiles_[5][6]);
 	this->AddEntity(hero_);
 
     //ugdk::graphic::SolidRectangle* background_rect = new ugdk::graphic::SolidRectangle(map_size_);
     //content_node()->set_drawable(background_rect);
 
     GameObject* enemy = builder.BuildEnemy();
-    enemy->controller_component()->PlaceAt(tiles_[3][3]);
+    enemy->shape_component()->PlaceAt(tiles_[3][3]);
 	this->AddEntity(enemy);
 
 	GameObject* item = builder.BuildItem();
-    item->controller_component()->PlaceAt(tiles_[2][2]);
+    item->shape_component()->PlaceAt(tiles_[2][2]);
 	this->AddEntity(item);
 }
 
@@ -101,7 +102,6 @@ void GameController::HandleCollisions() {
 }
 
 void GameController::Update(double dt) {
-    //HandleCollisions();
     super::Update(dt);
 
     if(hero_ && hero_->dead()) {
@@ -109,6 +109,8 @@ void GameController::Update(double dt) {
         return;
     }
 
+    //TODO: Fix?
+    /*
 	for(auto yt = tiles_.begin(); yt != tiles_.end(); ++yt)
 		for(auto xt = yt->begin(); xt != yt->end(); ++xt)
 			(*xt)->UpdateNode();
@@ -116,6 +118,7 @@ void GameController::Update(double dt) {
 	for(auto yt = tiles_.begin(); yt != tiles_.end(); ++yt)
 		for(auto xt = yt->begin(); xt != yt->end(); ++xt)
 			(*xt)->set_update_node_flag(false);
+    */
 
     ClearDeadGameObjects();
     AddPendingGameObjects();

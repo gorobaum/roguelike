@@ -7,6 +7,7 @@ namespace component {
 class Graphic;
 class Controller;
 class Collision;
+class Shape;
 class Damageable;
 
 } // namespace component

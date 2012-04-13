@@ -21,8 +21,7 @@ namespace game {
 namespace component {
 
 class GraphicRectangular : public Graphic {
-  typedef game::component::Graphic super;
-
+  typedef Graphic super;
   public:
     GraphicRectangular(std::wstring visual_representation)
       : super() {

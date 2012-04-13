@@ -1,5 +1,6 @@
 // External Dependencies
-#include <ugdk/base/engine.h>           // needed for various functions, includes <ugdk/base/configuration.h>
+#include <ugdk/base/engine.h>           // needed for engine
+#include <ugdk/base/configuration.h>    // needed for engine_config, also implicit from engine.h
 #include <ugdk/graphic/videomanager.h>  // needed for SetVSync(-)
 
 // Internal Dependencies

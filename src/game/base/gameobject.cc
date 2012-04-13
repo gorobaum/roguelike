@@ -10,6 +10,7 @@
 #include "game/components/collision.h"
 #include "game/components/controller.h"
 #include "game/components/damageable.h"
+#include "game/components/shape.h"
 #include "game/components/graphic.h"
 
 // Using
@@ -18,20 +19,19 @@ using ugdk::Vector2D;
 namespace game {
 namespace base {
 
-GameObject::GameObject(size_t scale_x, size_t scale_y, component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Damageable* damageable)  
+GameObject::GameObject(component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Shape* shape, component::Damageable* damageable)  
   : graphic_component_(graphic),
 	controller_component_(controller),
 	collision_component_(collision),
+    shape_component_(shape),
 	damageable_component_(damageable),
-	timed_life_(nullptr),
-	dead_(false),
-    dimensions_(Vector2D(scale_x, scale_y)) {}
+	dead_(false) {}
 
 GameObject::~GameObject() {
-    delete graphic_component_;
+    delete    graphic_component_;
 	delete controller_component_;
-	delete collision_component_;
-    if(timed_life_) delete timed_life_;
+	delete  collision_component_;
+    delete      shape_component_;
     if(damageable_component_) delete damageable_component_;
 }
 
@@ -46,15 +46,6 @@ void GameObject::Update(double dt) {
     controller_component_->Update(dt, this);
     graphic_component_->Update(dt);
     if(damageable_component_) damageable_component_->Update(dt, this);
-    if(timed_life_ && timed_life_->Expired()) Die();
-}
-
-void GameObject::UpdateNode() {
-	this->graphic_component_->NodeLogic(occupying_tiles_);
-	for(auto xt = occupying_tiles_.begin(); xt != occupying_tiles_.end(); ++xt) {
-		(*xt)->node()->set_drawable(nullptr);
-		(*xt)->set_update_node_flag(false);
-	}
 }
 /*
 GameTile* GameObject::game_tile() {

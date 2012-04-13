@@ -26,8 +26,6 @@ class Controller {
 
     virtual void Update(double dt, game::base::GameObject* owner) = 0;
 
-    virtual game::base::GameTile* PlaceAt(game::base::GameTile* tile) = 0;
-
   protected:
     game::base::GameObject* owner_;
 };

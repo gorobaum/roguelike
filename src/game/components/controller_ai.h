@@ -12,7 +12,6 @@
 
 // Forward Declarations
 #include <ugdk/graphic.h>
-#include <ugdk/time.h>
 #include "game/base.h"
 
 namespace game {
@@ -22,16 +21,10 @@ class ControllerAi : public Controller {
   typedef Controller super;
 
   public:
-    ControllerAi::ControllerAi() : timer_(new ugdk::time::TimeAccumulator(0)) {}
-    ~ControllerAi() { delete timer_; }
+    ControllerAi::ControllerAi() : super() {}
+    ~ControllerAi() {}
 
     void Update(double dt, game::base::GameObject* owner);
-
-    game::base::GameTile* PlaceAt(game::base::GameTile* tile) { return tile; } //TODO: Fazer essa função fazer algo.
-
-  private:
-    static const double VELOCITY, MIN_WAIT, MAX_WAIT;
-    ugdk::time::TimeAccumulator* timer_;
 };
 
 } // namespace component

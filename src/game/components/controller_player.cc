@@ -20,7 +20,7 @@ using ugdk::input::InputManager;
 using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
-using game::base::Movement;
+using game::action::Movement;
 
 namespace game {
 namespace component {
@@ -40,34 +40,14 @@ void ControllerPlayer::Update(double dt, GameObject* owner) {
     else if(input->KeyPressed(ugdk::input::K_DOWN) || input->KeyDown(ugdk::input::K_s))
 		mov.dirs.push_back(Movement::DOWN);
 
-
+    //TODO: Fix
+    /*
 	if(mov.dirs.size() > 0)
         next_tile = GameController::reference_->GetTileByMovementFromTile(owner_->occupying_tiles().front(), mov);
 
 	if(next_tile)
-		PlaceAt(next_tile);
+		PlaceAt(next_tile);*/
 
-}
-
-GameTile* ControllerPlayer::PlaceAt(GameTile* destination) {
-    
-    for( auto xt = owner_->occupying_tiles().begin() ; xt != owner_->occupying_tiles().end() ; ++xt )
-        (*xt)->RemoveObject(this->owner_);
-    owner_->occupying_tiles().clear();
-
-    const GameController* gamecontroller = GameController::reference_;
-
-
-
-    for( size_t i = 0 ; i < owner_->dimensions().x ; ++i ) {
-        for( size_t j = 0 ; j < owner_->dimensions().y ; ++j ) {
-            GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
-            owner_->occupying_tiles().push_back(tile);
-            tile->PushObject(owner_);
-        }
-    }
-
-    return destination; //TODO: make use of this. (implement PlaceAt(...) deflecting or failing).
 }
 
 } // namespace component
