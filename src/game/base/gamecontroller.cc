@@ -79,7 +79,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     AddPendingGameObjects();
 
     // Place them on the map.
-    hero_->shape_component()->PlaceAt(tiles_[5][6]);
+    hero_->shape_component()->PlaceAt(tiles_[15][15]);
     enemy->shape_component()->PlaceAt(tiles_[3][3]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
 }
@@ -98,9 +98,6 @@ void GameController::Update(double dt) {
 
     ClearDeadGameObjects();
     AddPendingGameObjects();
-    
-    for(auto it = game_objects_.begin(); it != game_objects_.end(); ++it)
-        (*it)->Update(dt);
 }
 
 void GameController::AddGameObject(GameObject* game_object) {

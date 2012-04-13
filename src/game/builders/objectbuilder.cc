@@ -35,7 +35,7 @@ ObjectBuilder::ObjectBuilder() {
 }
 
 GameObject* ObjectBuilder::BuildHero() {
-    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(3,3), new component::Damageable(10.0));
+    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(2,2), new component::Damageable(10.0));
     hero->Initialize();
 
 	Drawable* graphic = TEXT_MANAGER()->GetText(L"@");
@@ -45,7 +45,7 @@ GameObject* ObjectBuilder::BuildHero() {
 }
 
 GameObject* ObjectBuilder::BuildEnemy() {
-    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"E"), new component::ControllerAi(), new component::Collision("Creature"), new component::ShapeRectangular(1,1), new component::Damageable(4.0));
+    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"E"), new component::ControllerAi(), new component::Collision("Creature"), new component::ShapeRectangular(5,6), new component::Damageable(4.0));
     enemy->Initialize();
 
     Drawable* graphic = TEXT_MANAGER()->GetText(L"D");

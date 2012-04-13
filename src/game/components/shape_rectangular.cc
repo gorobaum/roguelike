@@ -22,6 +22,8 @@ namespace component {
 
 GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     
+    if(destination == nullptr) return nullptr;
+
     for( auto xt = occupying_tiles_.begin() ; xt != occupying_tiles_.end() ; ++xt )
         (*xt)->RemoveObject(this->owner_);
     occupying_tiles_.clear();
