@@ -17,7 +17,6 @@ namespace component {
 
 void GraphicRectangular::Update(double dt) {
     /* animation stuff goes here */
-    NodeLogic(owner_->shape_component()->occupying_tiles());
 }
 
 void GraphicRectangular::NodeLogic(const list<GameTile*>& occupying_tiles) {

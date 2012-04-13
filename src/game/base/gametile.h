@@ -20,10 +20,10 @@ namespace base {
 
 class GameTile  {
   public:
+	static const ugdk::Vector2D TILE_SIZE;
+
 	GameTile(size_t x, size_t y);
 	~GameTile();
-
-	static const ugdk::Vector2D TILE_SIZE;
 
 	ugdk::graphic::Node* node() const { return node_; }
 

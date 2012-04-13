@@ -5,7 +5,6 @@
 #include "game/components/shape.h"
 
 // External Dependencies
-#include <list>                 // template class
 #include <ugdk/math/vector2D.h> // needed for dimensions_
 
 // Internal Dependencies

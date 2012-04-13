@@ -3,23 +3,18 @@
 
 // External Dependencies
 #include <ugdk/base/engine.h>
-#include <ugdk/graphic/videomanager.h>
 #include <ugdk/input/inputmanager.h>
 #include <ugdk/input/keys.h>
 #include <ugdk/math/vector2D.h>
-#include <ugdk/time/timeaccumulator.h>
 
 // Internal Dependencies
-#include "game/base/gamecontroller.h"
 #include "game/base/gameobject.h"
-#include "game/base/gametile.h"
 #include "game/builders/objectbuilder.h"
+#include "game/components/shape.h"
 
 // Using
 using ugdk::input::InputManager;
-using game::base::GameController;
 using game::base::GameObject;
-using game::base::GameTile;
 using game::action::Movement;
 
 namespace game {
@@ -28,7 +23,6 @@ namespace component {
 void ControllerPlayer::Update(double dt) {
     InputManager* input = INPUT_MANAGER();
 
-	GameTile* next_tile = nullptr;
 	Movement mov;
 
     if(input->KeyPressed(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_d))
@@ -40,14 +34,8 @@ void ControllerPlayer::Update(double dt) {
     else if(input->KeyPressed(ugdk::input::K_DOWN) || input->KeyDown(ugdk::input::K_s))
 		mov.dirs.push_back(Movement::DOWN);
 
-    //TODO: Fix
-    /*
-	if(mov.dirs.size() > 0)
-        next_tile = GameController::reference_->GetTileByMovementFromTile(owner_->occupying_tiles().front(), mov);
-
-	if(next_tile)
-		PlaceAt(next_tile);*/
-
+    if(mov.dirs.size() > 0)
+        owner_->shape_component()->Move(mov);
 }
 
 } // namespace component

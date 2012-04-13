@@ -35,7 +35,7 @@ ObjectBuilder::ObjectBuilder() {
 }
 
 GameObject* ObjectBuilder::BuildHero() {
-    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(2,2), new component::Damageable(10.0));
+    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(3,3), new component::Damageable(10.0));
     hero->Initialize();
 
 	Drawable* graphic = TEXT_MANAGER()->GetText(L"@");

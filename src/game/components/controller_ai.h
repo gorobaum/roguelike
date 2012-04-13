@@ -11,7 +11,6 @@
 // (none)
 
 // Forward Declarations
-#include <ugdk/graphic.h>
 #include "game/base.h"
 
 namespace game {
