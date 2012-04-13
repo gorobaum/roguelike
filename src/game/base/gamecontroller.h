@@ -20,8 +20,10 @@ namespace base {
 
 class GameController : public ugdk::Scene {
   typedef ugdk::Scene super;
+  static const GameController* reference_;
+
   public:
-	static const GameController* reference_; //TODO: Pelo menos é const neh...
+    static const GameController* reference() { return reference_; }
 
     GameController();
     ~GameController();
@@ -32,21 +34,21 @@ class GameController : public ugdk::Scene {
 
     const ugdk::Vector2D& map_size() const { return map_size_; }
 
-	GameTile* GetTileByMovementFromTile(GameTile*, game::action::Movement&) const;
+    GameTile* GetTileFromCoordinates(size_t x, size_t y) const {
+        if( 0 <= y && y < tiles_.size() && 0 <= x && x < tiles_[y].size() )
+            return tiles_[y][x];
+        return nullptr;
+    }
+	GameTile* GetTileByMovementFromTile(GameTile* tile, game::action::Movement&) const;
 	GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const {
 		game::action::Movement m;
 		m.dirs.push_back(d);
 		return GetTileByMovementFromTile(tile, m);
 	}
 
-    GameTile* GetTileFromCoordinates(size_t x, size_t y) const {
-        if( 0 <= y && y < tiles_.size() && 0 <= x && x < tiles_[y].size() )
-            return tiles_[y][x];
-        return nullptr;
-    }
 
   private:
-    void HandleCollisions();
+	void HandleCollisions();
     void ClearDeadGameObjects();
     void AddPendingGameObjects();
 

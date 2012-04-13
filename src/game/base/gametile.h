@@ -36,9 +36,6 @@ class GameTile  {
 	size_t x() const { return x_; }
 	size_t y() const { return y_; }
 
-	bool update_node_flag() const { return update_node_flag_; }
-	void set_update_node_flag(const bool value) { update_node_flag_ = value; }
-
 	ugdk::graphic::Node* node() { return node_; }
 
   private:
@@ -47,8 +44,6 @@ class GameTile  {
 	ugdk::graphic::Drawable* ground_;
 
 	size_t x_, y_;
-
-	bool update_node_flag_;
 };
 
 } // namespace base

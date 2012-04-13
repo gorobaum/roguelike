@@ -13,9 +13,9 @@ using game::base::GameObject;
 namespace game {
 namespace component {
 
-void Damageable::Update(double dt, GameObject* owner) {
+void Damageable::Update(double dt) {
     if(current_life_ < 0.0) {
-        owner->Die();
+        owner_->Die();
     }
 }
 

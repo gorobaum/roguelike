@@ -24,7 +24,7 @@ class ControllerAi : public Controller {
     ControllerAi::ControllerAi() : super() {}
     ~ControllerAi() {}
 
-    void Update(double dt, game::base::GameObject* owner);
+    void Update(double dt);
 };
 
 } // namespace component

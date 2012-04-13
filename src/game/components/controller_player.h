@@ -22,7 +22,7 @@ class ControllerPlayer : public Controller {
     ControllerPlayer() {}
     ~ControllerPlayer() {}
 
-    void Update(double dt, game::base::GameObject* owner);
+    void Update(double dt);
 };
 
 } // namespace component

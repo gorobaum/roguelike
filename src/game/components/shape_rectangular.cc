@@ -9,6 +9,7 @@
 #include "game/base/gamecontroller.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
+#include "game/components/graphic.h"
 
 // Using
 using game::action::Movement;
@@ -25,7 +26,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
         (*xt)->RemoveObject(this->owner_);
     occupying_tiles_.clear();
 
-    const GameController* gamecontroller = GameController::reference_;
+    const GameController* gamecontroller = GameController::reference();
 
     for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
         for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
@@ -35,11 +36,13 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
         }
     }
 
+    this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
+
     return destination; //TODO: make use of this. (implement PlaceAt(...) deflecting or failing).
 }
 
 GameTile* ShapeRectangular::Move(Movement& mov) {
-    const GameController* gamecontroller = GameController::reference_;
+    const GameController* gamecontroller = GameController::reference();
     return PlaceAt(gamecontroller->GetTileByMovementFromTile(occupying_tiles().front(), mov));
 }
 

@@ -16,11 +16,12 @@ namespace game {
 namespace component {
 
 void GraphicRectangular::Update(double dt) {
+    /* animation stuff goes here */
 }
 
 void GraphicRectangular::NodeLogic(const list<GameTile*>& occupying_tiles) {
-    occupying_tiles.front()->node()->AddChild(this->node());
     node()->modifier()->set_scale(static_cast<ShapeRectangular*>(owner_->shape_component())->dimensions());
+    occupying_tiles.front()->node()->AddChild(this->node());
 }
 
 } // namespace component

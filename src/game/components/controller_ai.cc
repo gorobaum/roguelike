@@ -21,7 +21,8 @@ static double getRandomNumber(double min, double max) {
     return min + (max - min) * (n / RAND_MAX);
 }
 
-void ControllerAi::Update(double dt, GameObject* owner) {
+void ControllerAi::Update(double dt) {
+
 }
 
 } // namespace component

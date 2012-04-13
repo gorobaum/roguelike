@@ -24,7 +24,7 @@ class Damageable {
 
     void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
-    void Update(double dt, game::base::GameObject* owner);
+    void Update(double dt);
 
     void Damage(double damage) { current_life_ -= damage; }
 

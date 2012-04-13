@@ -24,7 +24,7 @@ class Controller {
 
     void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
-    virtual void Update(double dt, game::base::GameObject* owner) = 0;
+    virtual void Update(double dt) = 0;
 
   protected:
     game::base::GameObject* owner_;

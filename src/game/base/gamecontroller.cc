@@ -66,18 +66,21 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 
 	hero_ = builder.BuildHero();
     hero_->shape_component()->PlaceAt(tiles_[5][6]);
-	this->AddEntity(hero_);
+	this->AddGameObject(hero_);
 
     //ugdk::graphic::SolidRectangle* background_rect = new ugdk::graphic::SolidRectangle(map_size_);
     //content_node()->set_drawable(background_rect);
 
     GameObject* enemy = builder.BuildEnemy();
     enemy->shape_component()->PlaceAt(tiles_[3][3]);
-	this->AddEntity(enemy);
+	this->AddGameObject(enemy);
 
+    //TODO: Fix
+    /*
 	GameObject* item = builder.BuildItem();
     item->shape_component()->PlaceAt(tiles_[2][2]);
-	this->AddEntity(item);
+	this->AddGameObject(item);
+    */
 }
 
 GameController::~GameController() {
@@ -108,6 +111,9 @@ void GameController::Update(double dt) {
         Finish();
         return;
     }
+
+    for(auto it = game_objects_.begin(); it != game_objects_.end(); ++it)
+        (*it)->Update(dt);
 
     //TODO: Fix?
     /*
@@ -143,15 +149,12 @@ void GameController::AddPendingGameObjects() {
             this->content_node()->AddChild(new_obj->graphic_component()->node());
         game_objects_.push_back(new_obj);
         this->AddEntity(new_obj);
-
-        //new_obj->set_game_controller(this);
-        //new_obj->collision_object()->StartColliding();
     }
     pending_game_objects_.clear();
 }
 
 GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) const {
-	if(tile == nullptr) return tile;
+	if(tile == nullptr) return nullptr;
 	size_t x = tile->x(), y = tile->y();
 	for(auto it = mov.dirs.begin(); it != mov.dirs.end(); ++it) {
 		switch(*it) {
@@ -162,8 +165,8 @@ GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mo
 			default: break;
 		}
 	}
-	if(y < 0 || y >= static_cast<size_t>(tiles_.size())) return NULL;
-	if(x < 0 || x >= static_cast<size_t>(tiles_[y].size())) return NULL;
+	if(y < 0 || y >= static_cast<size_t>(tiles_.size())) return nullptr;
+	if(x < 0 || x >= static_cast<size_t>(tiles_[y].size())) return nullptr;
 	return GetTileFromCoordinates(x,y);
 }
 

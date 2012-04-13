@@ -25,7 +25,7 @@ using game::action::Movement;
 namespace game {
 namespace component {
 
-void ControllerPlayer::Update(double dt, GameObject* owner) {
+void ControllerPlayer::Update(double dt) {
     InputManager* input = INPUT_MANAGER();
 
 	GameTile* next_tile = nullptr;
