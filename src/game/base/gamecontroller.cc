@@ -48,7 +48,8 @@ const GameController* GameController::reference_ = nullptr;
 GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 	Vector2D pos;
-	ObjectBuilder builder;
+    ObjectBuilder builder; // Initializes the font.
+
 	for(size_t y = 0; y < 35; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
@@ -64,44 +65,27 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 		pos.y += GameTile::TILE_SIZE.y;
 	}
 
-	hero_ = builder.BuildHero();
-    hero_->shape_component()->PlaceAt(tiles_[5][6]);
-	this->AddGameObject(hero_);
-
-    //ugdk::graphic::SolidRectangle* background_rect = new ugdk::graphic::SolidRectangle(map_size_);
-    //content_node()->set_drawable(background_rect);
-
+    // Build the basic instances
+    hero_ = builder.BuildHero();
+	AddGameObject(hero_);
     GameObject* enemy = builder.BuildEnemy();
-    enemy->shape_component()->PlaceAt(tiles_[3][3]);
-	this->AddGameObject(enemy);
-
-    //TODO: Fix
-    /*
+	AddGameObject(enemy);
 	GameObject* item = builder.BuildItem();
+	AddGameObject(item);
+
+    // Add them to the Scene.
+    // AddPendingGameObjects(-) reparents the nodes to the root node,
+    //   so we need to call it before placing them on the map.
+    AddPendingGameObjects();
+
+    // Place them on the map.
+    hero_->shape_component()->PlaceAt(tiles_[5][6]);
+    enemy->shape_component()->PlaceAt(tiles_[3][3]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
-	this->AddGameObject(item);
-    */
 }
 
 GameController::~GameController() {
     if(hero_ != nullptr) delete hero_;
-}
-
-void GameController::HandleCollisions() {
-/*    std::list<CollisionInstance> collision_list;
-    
-    // Update objects positions in CollisionManager
-    pyramidworks::collision::CollisionManager::reference()->Update();
-
-    GameObjectList::iterator i;
-    for (i = game_objects_.begin(); i != game_objects_.end(); ++i)
-        (*i)->collision_object()->SearchCollisions(collision_list);
-
-    std::list<CollisionInstance>::iterator it;
-    for(it = collision_list.begin(); it != collision_list.end(); ++it) {
-        it->first->Handle(it->second);
-    }
-*/
 }
 
 void GameController::Update(double dt) {
@@ -112,22 +96,11 @@ void GameController::Update(double dt) {
         return;
     }
 
-    for(auto it = game_objects_.begin(); it != game_objects_.end(); ++it)
-        (*it)->Update(dt);
-
-    //TODO: Fix?
-    /*
-	for(auto yt = tiles_.begin(); yt != tiles_.end(); ++yt)
-		for(auto xt = yt->begin(); xt != yt->end(); ++xt)
-			(*xt)->UpdateNode();
-
-	for(auto yt = tiles_.begin(); yt != tiles_.end(); ++yt)
-		for(auto xt = yt->begin(); xt != yt->end(); ++xt)
-			(*xt)->set_update_node_flag(false);
-    */
-
     ClearDeadGameObjects();
     AddPendingGameObjects();
+    
+    for(auto it = game_objects_.begin(); it != game_objects_.end(); ++it)
+        (*it)->Update(dt);
 }
 
 void GameController::AddGameObject(GameObject* game_object) {

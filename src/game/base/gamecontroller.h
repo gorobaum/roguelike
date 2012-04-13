@@ -48,16 +48,16 @@ class GameController : public ugdk::Scene {
 
 
   private:
-	void HandleCollisions();
     void ClearDeadGameObjects();
     void AddPendingGameObjects();
+    
+    std::list<GameObject*> pending_game_objects_;
+    std::list<GameObject*> game_objects_;
 
     ugdk::Vector2D map_size_;
-    GameObject* hero_;
 	std::vector< std::vector<GameTile*> > tiles_;
 
-    std::list<GameObject*> game_objects_;
-    std::list<GameObject*> pending_game_objects_;
+    GameObject* hero_;
 };
 
 } // namespace base

@@ -24,9 +24,6 @@ namespace base {
 const Vector2D GameTile::TILE_SIZE = Vector2D(16.0, 16.0);
 
 GameTile::GameTile(size_t x, size_t y) : node_(new Node) {
-	/* double z = 0.4;
-	SolidRectangle* rect = new SolidRectangle(TILE_SIZE - ugdk::Vector2D(1));
-	rect->set_color(ugdk::Color(z, z, z)); */
 	ground_ = TEXT_MANAGER()->GetText(L".");
 	node_->set_drawable(ground_);
 	x_ = x;

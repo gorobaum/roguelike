@@ -55,12 +55,13 @@ GameObject* ObjectBuilder::BuildEnemy() {
 }
 
 GameObject* ObjectBuilder::BuildItem() {
-    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"I"), new component::ControllerAi(), new component::Collision("Item"), new component::ShapeRectangular(1,1) );
+    GameObject* item = new GameObject(new component::GraphicRectangular(L"I"), new component::ControllerAi(), new component::Collision("Item"), new component::ShapeRectangular(1,1) );
+    item->Initialize();
 
     Drawable* graphic = TEXT_MANAGER()->GetText(L"!");
-    enemy->graphic_component()->node()->set_drawable(graphic);
+    item->graphic_component()->node()->set_drawable(graphic);
 
-    return enemy;
+    return item;
 }
 
 } // namespace builder

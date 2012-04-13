@@ -36,11 +36,11 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Initialize() {
-    this->controller_component_->set_owner(this);
-    this->graphic_component_->set_owner(this);
-    this->collision_component_->set_owner(this);
-    this->shape_component_->set_owner(this);
-    this->damageable_component_->set_owner(this);
+    controller_component_->set_owner(this);
+    graphic_component_->set_owner(this);
+    collision_component_->set_owner(this);
+    shape_component_->set_owner(this);
+    if(damageable_component_) damageable_component_->set_owner(this);
 }
 
 void GameObject::Update(double dt) {
