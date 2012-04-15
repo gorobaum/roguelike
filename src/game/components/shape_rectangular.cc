@@ -21,17 +21,32 @@ namespace game {
 namespace component {
 
 GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
-    
-    if(destination == nullptr) return nullptr;
+
+    const GameController* gamecontroller = GameController::reference();
+
+    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
+                                     destination->x()+static_cast<size_t>(dimensions_.x)-1,
+                                     destination->y()+static_cast<size_t>(dimensions_.y)-1
+                                 ) == nullptr ) {
+        return occupying_tiles_.front();
+    }
+
+    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
+        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
+            if( gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j) == nullptr )
+                return occupying_tiles_.front();
+        }
+    }
+
 
     for( auto xt = occupying_tiles_.begin() ; xt != occupying_tiles_.end() ; ++xt )
         (*xt)->RemoveObject(this->owner_);
     occupying_tiles_.clear();
 
-    const GameController* gamecontroller = GameController::reference();
 
-    for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
-        for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
+
+    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
+        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
             GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
             occupying_tiles_.push_back(tile);
             tile->PushObject(owner_);
@@ -40,7 +55,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
 
     this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
 
-    return destination; //TODO: make use of this. (implement PlaceAt(...) deflecting or failing).
+    return destination; //TODO: check for collisions, 
 }
 
 GameTile* ShapeRectangular::Move(Movement& mov) {

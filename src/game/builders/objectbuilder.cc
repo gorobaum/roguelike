@@ -2,7 +2,7 @@
 #include "game/builders/objectbuilder.h"
 
 // External Dependencies
-// (none)
+#include <string>
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
@@ -35,8 +35,8 @@ GameObject* ObjectBuilder::BuildHero() {
         new   ControllerPlayer(hero),
         new          Collision(hero, "Creature"),
         new         Damageable(hero, 10.0),
-        new   ShapeRectangular(hero, 2,2),
-        new GraphicRectangular(hero, L"@")
+        new   ShapeRectangular(hero, 2, 2),
+        new GraphicRectangular(hero, L"@", 3.0)
     );
 
     return hero;
@@ -50,7 +50,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
         new          Collision(enemy, "Creature"),
         new         Damageable(enemy, 4.0),
         new   ShapeRectangular(enemy, 5, 6),
-        new GraphicRectangular(enemy, L"E")
+        new GraphicRectangular(enemy, L"E", 2.0)
     );
 
     return enemy;
@@ -64,7 +64,7 @@ GameObject* ObjectBuilder::BuildItem() {
         new          Collision(item, "Item"),
         nullptr,
         new   ShapeRectangular(item, 1, 1),
-        new GraphicRectangular(item, L"i")
+        new GraphicRectangular(item, L"i", 1.0)
     );
 
     return item;

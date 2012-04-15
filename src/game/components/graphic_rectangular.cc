@@ -2,10 +2,7 @@
 #include "game/components/graphic_rectangular.h"
 
 // External Dependencies
-#include <ugdk/base/engine.h>           // needed in the TEXT_MANAGER() macro
-#include <ugdk/graphic/drawable/text.h> // needed for GetText(-)
-#include <ugdk/graphic/node.h>          // needed for set_drawable(-)
-#include <ugdk/graphic/textmanager.h>   // needed for the TEXT_MANAGER() macro
+#include <ugdk/graphic/node.h>
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
@@ -21,9 +18,8 @@ using game::base::GameTile;
 namespace game {
 namespace component {
 
-GraphicRectangular::GraphicRectangular(GameObject* owner, wstring visual_representation) : super(owner) {
-    node()->set_drawable(TEXT_MANAGER()->GetText(visual_representation));
-}
+GraphicRectangular::GraphicRectangular(GameObject* owner, wstring visual_representation, double zindex)
+  : super(owner, visual_representation, zindex) {}
 GraphicRectangular::~GraphicRectangular() {}
 
 void GraphicRectangular::Update(double dt) {

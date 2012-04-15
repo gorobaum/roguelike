@@ -1,17 +1,17 @@
-#ifndef BADGAME_COMPONENT_GRAPHIC_H_
+﻿#ifndef BADGAME_COMPONENT_GRAPHIC_H_
 #define BADGAME_COMPONENT_GRAPHIC_H_
 
 // Inheritance
 #include "game/components/componentbase.h"
 
 // External Dependencies
-#include <list>                 // template class
-#include <ugdk/graphic/node.h>  // needed for new Node(-)
+#include <list> // template class
 
 // Internal Dependencies
 // (none)
 
 // Forward Declarations
+#include <ugdk/graphic.h>
 #include "game/base.h"
 
 namespace game {
@@ -20,8 +20,8 @@ namespace component {
 class Graphic : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Graphic::Graphic(game::base::GameObject* owner) : super(owner), node_(new ugdk::graphic::Node()) {}
-    Graphic::~Graphic() { delete node_; }
+    Graphic(game::base::GameObject* owner, std::wstring visual_representation, double zindex);
+    ~Graphic();
 
     virtual void Update(double dt) = 0;
 

@@ -1,4 +1,4 @@
-#ifndef BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
+﻿#ifndef BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
 #define BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
 
 // Inheritance
@@ -19,7 +19,7 @@ namespace component {
 class GraphicRectangular : public Graphic {
   typedef Graphic super;
   public:
-    GraphicRectangular(game::base::GameObject* owner, std::wstring visual_representation);
+    GraphicRectangular(game::base::GameObject* owner, std::wstring visual_representation, double zindex);
     ~GraphicRectangular();
 
     void Update(double dt);

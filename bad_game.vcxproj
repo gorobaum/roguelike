@@ -20,6 +20,7 @@
     <ClCompile Include="src\game\components\controller_idle.cc" />
     <ClCompile Include="src\game\components\controller_player.cc" />
     <ClCompile Include="src\game\components\damageable.cc" />
+    <ClCompile Include="src\game\components\graphic.cc" />
     <ClCompile Include="src\game\components\graphic_rectangular.cc" />
     <ClCompile Include="src\game\components\shape_rectangular.cc" />
     <ClCompile Include="src\main.cc" />
