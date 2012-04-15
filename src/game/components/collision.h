@@ -19,8 +19,9 @@ namespace component {
 class Collision : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Collision(game::base::GameObject* owner, std::string collision_class);
-    ~Collision();
+    Collision(game::base::GameObject* owner, std::string collision_class)
+      : super(owner), collision_class_(collision_class) {}
+    ~Collision() {}
 
 	void Update(double dt);
 
