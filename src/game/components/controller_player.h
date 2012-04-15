@@ -19,7 +19,7 @@ namespace component {
 class ControllerPlayer : public Controller {
   typedef Controller super;
   public:
-    ControllerPlayer() {}
+    ControllerPlayer(game::base::GameObject* owner) : super(owner) {}
     ~ControllerPlayer() {}
 
     void Update(double dt);

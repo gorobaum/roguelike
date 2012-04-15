@@ -2,11 +2,9 @@
 #include "game/base/gameobject.h"
 
 // External Dependencies
-#include <ugdk/time/timeaccumulator.h>
-#include <ugdk/graphic/node.h>
+// (none)
 
 // Internal Dependencies
-#include "game/base/gametile.h"
 #include "game/components/collision.h"
 #include "game/components/controller.h"
 #include "game/components/damageable.h"
@@ -14,55 +12,51 @@
 #include "game/components/graphic.h"
 
 // Using
-using ugdk::Vector2D;
+using game::component::Collision;
+using game::component::Controller;
+using game::component::Damageable;
+using game::component::Graphic;
+using game::component::Shape;
 
 namespace game {
 namespace base {
 
-GameObject::GameObject(component::Graphic* graphic, component::Controller* controller, component::Collision* collision, component::Shape* shape, component::Damageable* damageable)  
-  : graphic_component_(graphic),
-	controller_component_(controller),
-	collision_component_(collision),
-    shape_component_(shape),
-	damageable_component_(damageable),
+GameObject::GameObject()
+  : super(),
+	controller_component_(nullptr),
+	collision_component_(nullptr),
+	damageable_component_(nullptr),
+    shape_component_(nullptr),
+    graphic_component_(nullptr),
 	dead_(false) {}
 
 GameObject::~GameObject() {
-    delete    graphic_component_;
-	delete controller_component_;
-	delete  collision_component_;
-    delete      shape_component_;
+	if(controller_component_) delete controller_component_;
+	if(collision_component_)  delete  collision_component_;
     if(damageable_component_) delete damageable_component_;
+    if(shape_component_)      delete      shape_component_;
+    if(graphic_component_)    delete    graphic_component_;
 }
 
-void GameObject::Initialize() {
-    controller_component_->set_owner(this);
-    graphic_component_->set_owner(this);
-    collision_component_->set_owner(this);
-    shape_component_->set_owner(this);
-    if(damageable_component_) damageable_component_->set_owner(this);
+void GameObject::Initialize(
+        Controller* controller_component,
+        Collision*   collision_component,
+        Damageable* damageable_component,
+        Shape*           shape_component,
+        Graphic*       graphic_component ) {
+
+    controller_component_ = controller_component;
+    collision_component_  =  collision_component;
+    damageable_component_ = damageable_component;
+    shape_component_      =      shape_component;
+    graphic_component_    =    graphic_component;
 }
 
 void GameObject::Update(double dt) {
-    controller_component_->Update(dt);
-    graphic_component_->Update(dt);
+    if(controller_component_) controller_component_->Update(dt);
     if(damageable_component_) damageable_component_->Update(dt);
+    if(graphic_component_)       graphic_component_->Update(dt);
 }
-/*
-GameTile* GameObject::game_tile() {
-	if(tile_ == NULL) return NULL;
-	return tile_;
-}*/
-/*
-void GameObject::MoveTo(GameTile* tile) {
-	if(tile_) tile_->RemoveObject(this);
-	if(tile) {
-		tile_ = tile;
-		tile_->Collide(this);
-		tile_->PushObject(this);
-	}
-}
-*/
 
 } // namespace base
 } // namespace game

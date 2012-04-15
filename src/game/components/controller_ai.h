@@ -20,7 +20,7 @@ class ControllerAi : public Controller {
   typedef Controller super;
 
   public:
-    ControllerAi::ControllerAi() : super() {}
+    ControllerAi::ControllerAi(game::base::GameObject* owner) : super(owner) {}
     ~ControllerAi() {}
 
     void Update(double dt);

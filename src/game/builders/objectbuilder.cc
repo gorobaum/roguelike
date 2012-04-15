@@ -2,64 +2,70 @@
 #include "game/builders/objectbuilder.h"
 
 // External Dependencies
-#include <ugdk/base/engine.h>
-#include <ugdk/base/resourcemanager.h>
-#include <ugdk/graphic/drawable/solidrectangle.h>
-#include <ugdk/graphic/drawable/text.h>
-#include <ugdk/graphic/node.h>
-#include <ugdk/graphic/textmanager.h>
-#include <ugdk/graphic/videomanager.h>
-#include <ugdk/math/vector2D.h>
+// (none)
 
 // Internal Dependencies
-#include "game/base/gamecontroller.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
-#include "game/components/collision.h"
 #include "game/components/controller_ai.h"
+#include "game/components/controller_idle.h"
 #include "game/components/controller_player.h"
-#include "game/components/controller_player.h"
+#include "game/components/collision.h"
 #include "game/components/damageable.h"
-#include "game/components/graphic_rectangular.h"
 #include "game/components/shape_rectangular.h"
+#include "game/components/graphic_rectangular.h"
 
 // Using
-using ugdk::graphic::Drawable;
 using game::base::GameObject;
+using game::component::Collision;
+using game::component::ControllerAi;
+using game::component::ControllerIdle;
+using game::component::ControllerPlayer;
+using game::component::Damageable;
+using game::component::GraphicRectangular;
+using game::component::ShapeRectangular;
 
 namespace game {
 namespace builder {
 
-ObjectBuilder::ObjectBuilder() {
-	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
-}
-
 GameObject* ObjectBuilder::BuildHero() {
-    GameObject* hero = new GameObject(new component::GraphicRectangular(L"@"), new component::ControllerPlayer(), new component::Collision("Creature"), new component::ShapeRectangular(2,2), new component::Damageable(10.0));
-    hero->Initialize();
 
-	Drawable* graphic = TEXT_MANAGER()->GetText(L"@");
-    hero->graphic_component()->node()->set_drawable(graphic);
+    GameObject* hero = new GameObject();
+    hero->Initialize(
+        new   ControllerPlayer(hero),
+        new          Collision(hero, "Creature"),
+        new         Damageable(hero, 10.0),
+        new   ShapeRectangular(hero, 2,2),
+        new GraphicRectangular(hero, L"@")
+    );
 
     return hero;
 }
 
 GameObject* ObjectBuilder::BuildEnemy() {
-    GameObject* enemy = new GameObject(new component::GraphicRectangular(L"E"), new component::ControllerAi(), new component::Collision("Creature"), new component::ShapeRectangular(5,6), new component::Damageable(4.0));
-    enemy->Initialize();
 
-    Drawable* graphic = TEXT_MANAGER()->GetText(L"D");
-    enemy->graphic_component()->node()->set_drawable(graphic);
+    GameObject* enemy = new GameObject();
+    enemy->Initialize(
+        new       ControllerAi(enemy),
+        new          Collision(enemy, "Creature"),
+        new         Damageable(enemy, 4.0),
+        new   ShapeRectangular(enemy, 5, 6),
+        new GraphicRectangular(enemy, L"E")
+    );
 
     return enemy;
 }
 
 GameObject* ObjectBuilder::BuildItem() {
-    GameObject* item = new GameObject(new component::GraphicRectangular(L"I"), new component::ControllerAi(), new component::Collision("Item"), new component::ShapeRectangular(1,1) );
-    item->Initialize();
 
-    Drawable* graphic = TEXT_MANAGER()->GetText(L"!");
-    item->graphic_component()->node()->set_drawable(graphic);
+    GameObject* item = new GameObject();
+    item->Initialize(
+        new     ControllerIdle(item),
+        new          Collision(item, "Item"),
+        nullptr,
+        new   ShapeRectangular(item, 1, 1),
+        new GraphicRectangular(item, L"i")
+    );
 
     return item;
 }

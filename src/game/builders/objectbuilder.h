@@ -18,7 +18,7 @@ namespace builder {
 
 class ObjectBuilder {
   public:
-    ObjectBuilder();
+    ObjectBuilder() {}
     ~ObjectBuilder() {}
 
     game::base::GameObject* BuildHero();

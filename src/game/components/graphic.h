@@ -2,7 +2,7 @@
 #define BADGAME_COMPONENT_GRAPHIC_H_
 
 // Inheritance
-// (none)
+#include "game/components/componentbase.h"
 
 // External Dependencies
 #include <list>                 // template class
@@ -17,12 +17,11 @@
 namespace game {
 namespace component {
 
-class Graphic {
+class Graphic : public ComponentBase {
+  typedef ComponentBase super;
   public:
-    Graphic::Graphic() : owner_(nullptr), node_(new ugdk::graphic::Node()) {}
+    Graphic::Graphic(game::base::GameObject* owner) : super(owner), node_(new ugdk::graphic::Node()) {}
     Graphic::~Graphic() { delete node_; }
-
-    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
 
     virtual void Update(double dt) = 0;
 
@@ -30,9 +29,6 @@ class Graphic {
 
           ugdk::graphic::Node* node()       { return node_; }
     const ugdk::graphic::Node* node() const { return node_; }
-
-  protected:
-    game::base::GameObject* owner_;
 
   private:
     ugdk::graphic::Node* node_;

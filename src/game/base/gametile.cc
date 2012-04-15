@@ -3,20 +3,16 @@
 
 // External Dependencies
 #include <ugdk/base/engine.h>
-#include <ugdk/graphic/drawable/solidrectangle.h>
 #include <ugdk/graphic/drawable/text.h>
 #include <ugdk/graphic/node.h>
 #include <ugdk/graphic/textmanager.h>
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
-#include "game/components/collision.h"
-#include "game/components/graphic.h"
 
 // Using
 using ugdk::Vector2D;
 using ugdk::graphic::Node;
-using ugdk::graphic::SolidRectangle;
 
 namespace game {
 namespace base {
@@ -58,11 +54,6 @@ void GameTile::RemoveObject(GameObject* obj) {
 		node_->set_drawable(ground_);
 	*/
 }
-/*
-void GameTile::Collide(GameObject* obj) {
-	for (std::list<GameObject*>::iterator it = objects_.begin(); it != objects_.end(); ++it)
-		obj->collision_component()->Handle(*it);
-}*/
 
 } // namespace base
 } // namespace game

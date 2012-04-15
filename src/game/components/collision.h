@@ -2,10 +2,10 @@
 #define BADGAME_COMPONENT_COLLISION_H_
 
 // Inheritance
-// (none)
+#include "game/components/componentbase.h"
 
 // External Dependencies
-#include <string>   // can't forward-declare std::string;
+#include <string>   // can't forward-declare std::wstring;
 
 // Internal Dependencies
 // (none)
@@ -16,19 +16,17 @@
 namespace game {
 namespace component {
 
-class Collision {
+class Collision : public ComponentBase {
+  typedef ComponentBase super;
   public:
-    Collision(std::string collision_class) : owner_(nullptr), collision_class_(collision_class) {}
-    ~Collision() {}
+    Collision(game::base::GameObject* owner, std::string collision_class);
+    ~Collision();
 
-    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
+	void Update(double dt);
 
-	void Update(double dt, game::base::GameObject* owner) {};
 	void Handle(game::base::GameObject* collider);
-	std::string CollisionClass() { return collision_class_; };
 
-  protected:
-    game::base::GameObject* owner_;
+	const std::string CollisionClass() const { return collision_class_; };
 
   private:
     std::string collision_class_;

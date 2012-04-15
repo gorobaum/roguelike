@@ -21,28 +21,45 @@ namespace base {
 class GameObject : public ugdk::Entity {
   typedef ugdk::Entity super;
   public:
-    GameObject(component::Graphic*, component::Controller* controller, component::Collision* collision, component::Shape* shape, component::Damageable* = nullptr);
+    GameObject();
     ~GameObject();
 
-    void Initialize();
+    void Initialize(
+        game::component::Controller* controller_component,
+
+        game::component::Collision*   collision_component,
+        game::component::Damageable* damageable_component,
+        game::component::Shape*           shape_component,
+
+        game::component::Graphic*       graphic_component
+    );
 
     void Update(double dt);
+    
+          component::Controller* controller_component()       { return controller_component_; }
+    const component::Controller* controller_component() const { return controller_component_; }
 
-    component::Graphic*       graphic_component() { return    graphic_component_; }
-    component::Controller* controller_component() { return controller_component_; }
-    component::Damageable* damageable_component() { return damageable_component_; }
-    component::Shape*           shape_component() { return      shape_component_; }
-	component::Collision*   collision_component() { return  collision_component_; }
+	      component::Collision*   collision_component()       { return  collision_component_; }
+	const component::Collision*   collision_component() const { return  collision_component_; }
+          component::Damageable* damageable_component()       { return damageable_component_; }
+    const component::Damageable* damageable_component() const { return damageable_component_; }
+          component::Shape*           shape_component()       { return      shape_component_; }
+    const component::Shape*           shape_component() const { return      shape_component_; }
+
+          component::Graphic*       graphic_component()       { return    graphic_component_; }
+    const component::Graphic*       graphic_component() const { return    graphic_component_; }
 
     void Die() { dead_ = true; }
     bool dead() const { return dead_; }
 
   private:
-    component::Graphic*       graphic_component_;
     component::Controller* controller_component_;
+
     component::Collision*   collision_component_;
-    component::Shape*           shape_component_;
     component::Damageable* damageable_component_;
+    component::Shape*           shape_component_;
+
+    component::Graphic*       graphic_component_;
     
     bool dead_;
 };

@@ -2,7 +2,7 @@
 #define BADGAME_COMPONENT_SHAPE_H_
 
 // Inheritance
-// (none)
+#include "game/components/componentbase.h"
 
 // External Dependencies
 #include <list> // template class
@@ -16,12 +16,13 @@
 namespace game {
 namespace component {
 
-class Shape {
+class Shape : public ComponentBase {
+  typedef ComponentBase super;
   public:
-    Shape(size_t size_class = 10) : owner_(nullptr), size_class_(size_class) {}
+    Shape(game::base::GameObject* owner, size_t size_class = 10)
+      : super(owner), size_class_(size_class) {}
     ~Shape() {}
 
-    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
     void set_size_class(size_t size_class) { size_class = size_class_; }
 
     size_t size_class() const { return size_class_; }
@@ -32,7 +33,6 @@ class Shape {
     virtual game::base::GameTile* Step(game::action::Movement::Direction dir) = 0;
 
   protected:
-    game::base::GameObject* owner_;
     size_t size_class_;
 	std::list<game::base::GameTile*> occupying_tiles_;
 };

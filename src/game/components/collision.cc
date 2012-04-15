@@ -5,17 +5,26 @@
 // (none)
 
 // Internal Dependencies
-#include "game/base/gameobject.h"
+// (none)
 
 // Using
+using std::string;
 using game::base::GameObject;
 
 namespace game {
 namespace component {
 
-	//void Collision::Update(double dt, GameObject* owner) {}
-	void Collision::Handle(GameObject* collider) {
-	}
+Collision::Collision(GameObject* owner, string collision_class)
+  : super(owner), collision_class_(collision_class) {}
+Collision::~Collision() {}
+
+void Collision::Update(double dt) {
+
+}
+
+void Collision::Handle(GameObject* collider) {
+
+}
 
 } // namespace component
 } // namespace game

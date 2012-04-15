@@ -1,17 +1,15 @@
 // Header File
-#include "game/base/gameobject.h"
+#include "game/components/controller_ai.h"
 
 // External Dependencies
 #include <cmath>
 #include <cstdlib>
 
-#include <ugdk/time/timeaccumulator.h>
-
 // Internal Dependencies
-#include "game/components/controller_ai.h"
+// (none)
 
 // Using
-using game::base::GameObject;
+// (none)
 
 namespace game {
 namespace component {

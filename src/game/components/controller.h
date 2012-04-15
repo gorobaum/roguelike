@@ -2,7 +2,7 @@
 #define BADGAME_COMPONENT_CONTROLLER_H_
 
 // Inheritance
-// (none)
+#include "game/components/componentbase.h"
 
 // External Dependencies
 // (none)
@@ -16,17 +16,13 @@
 namespace game {
 namespace component {
 
-class Controller {
+class Controller : public ComponentBase {
+  typedef ComponentBase super;
   public:
-    Controller() : owner_(nullptr) {}
+    Controller(game::base::GameObject* owner) : super(owner) {}
     ~Controller() {}
 
-    void set_owner(game::base::GameObject* owner) { owner_ = owner; } //TODO: Mudar para ser no construtor
-
     virtual void Update(double dt) = 0;
-
-  protected:
-    game::base::GameObject* owner_;
 };
 
 } // namespace component

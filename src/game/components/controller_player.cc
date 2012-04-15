@@ -5,11 +5,9 @@
 #include <ugdk/base/engine.h>
 #include <ugdk/input/inputmanager.h>
 #include <ugdk/input/keys.h>
-#include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
-#include "game/builders/objectbuilder.h"
 #include "game/components/shape.h"
 
 // Using

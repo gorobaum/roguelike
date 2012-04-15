@@ -5,7 +5,7 @@
 // (none)
 
 // External Dependencies
-// (none)
+#include <list> // template class
 
 // Internal Dependencies
 // (none)

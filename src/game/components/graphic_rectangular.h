@@ -5,11 +5,7 @@
 #include "game/components/graphic.h"
 
 // External Dependencies
-#include <list>                         // template class
-#include <ugdk/base/engine.h>           // needed in the TEXT_MANAGER() macro
-#include <ugdk/graphic/drawable/text.h> // needed for GetText(-)
-#include <ugdk/graphic/node.h>          // needed for set_drawable(-)
-#include <ugdk/graphic/textmanager.h>   // needed for the TEXT_MANAGER() macro
+#include <list> // template class
 
 // Internal Dependencies
 // (none)
@@ -23,11 +19,8 @@ namespace component {
 class GraphicRectangular : public Graphic {
   typedef Graphic super;
   public:
-    GraphicRectangular(std::wstring visual_representation)
-      : super() {
-        node()->set_drawable(TEXT_MANAGER()->GetText(visual_representation));
-    }
-    ~GraphicRectangular() {};
+    GraphicRectangular(game::base::GameObject* owner, std::wstring visual_representation);
+    ~GraphicRectangular();
 
     void Update(double dt);
 

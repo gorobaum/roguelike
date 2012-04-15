@@ -8,13 +8,13 @@
 #include "game/base/gameobject.h"
 
 // Using
-using game::base::GameObject;
+// (none)
 
 namespace game {
 namespace component {
 
 void Damageable::Update(double dt) {
-    if(current_life_ < 0.0) {
+    if(current_life_ <= 0.0) {
         owner_->Die();
     }
 }

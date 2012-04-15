@@ -16,13 +16,13 @@
 namespace game {
 namespace component {
 
-class IdleController : public Controller {
+class ControllerIdle : public Controller {
   typedef Controller super;
   public:
-    IdleController() {}
-    ~IdleController() {}
+    ControllerIdle(game::base::GameObject* owner) : super(owner) {}
+    ~ControllerIdle() {}
 
-    void Update(double dt) {}
+    void Update(double dt);
 };
 
 } // namespace component

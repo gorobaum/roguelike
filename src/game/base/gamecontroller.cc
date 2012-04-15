@@ -4,7 +4,9 @@
 // External Dependencies
 #include <cstdlib>
 #include <ugdk/base/engine.h>
+#include <ugdk/graphic/drawable/text.h>
 #include <ugdk/graphic/node.h>
+#include <ugdk/graphic/textmanager.h>
 #include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
@@ -43,8 +45,10 @@ const GameController* GameController::reference_ = nullptr;
 
 GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
-	Vector2D pos;
-    ObjectBuilder builder; // Also initializes the font.
+
+	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
+
+	Vector2D pos = Vector2D();
 
 	for(size_t y = 0; y < 35; ++y) {
 		vector<GameTile*> vect;
@@ -60,6 +64,9 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 		tiles_.push_back(vect);
 		pos.y += GameTile::TILE_SIZE.y;
 	}
+
+
+    ObjectBuilder builder = ObjectBuilder();
 
     // Build the basic instances
     hero_ = builder.BuildHero();
