@@ -3,13 +3,9 @@
 
 // External Dependencies
 #include <cstdlib>
-
 #include <ugdk/base/engine.h>
-#include <ugdk/graphic/drawable/solidrectangle.h>
 #include <ugdk/graphic/node.h>
-#include <ugdk/graphic/videomanager.h>
 #include <ugdk/math/vector2D.h>
-#include <ugdk/time/timeaccumulator.h>
 
 // Internal Dependencies
 #include "game/action/movement.h"
@@ -48,7 +44,7 @@ const GameController* GameController::reference_ = nullptr;
 GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 	Vector2D pos;
-    ObjectBuilder builder; // Initializes the font.
+    ObjectBuilder builder; // Also initializes the font.
 
 	for(size_t y = 0; y < 35; ++y) {
 		vector<GameTile*> vect;

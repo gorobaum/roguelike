@@ -18,7 +18,7 @@
 namespace game {
 namespace base {
 
-class GameTile  {
+class GameTile {
   public:
 	static const ugdk::Vector2D TILE_SIZE;
 
