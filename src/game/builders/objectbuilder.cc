@@ -49,7 +49,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
         new       ControllerAi(enemy),
         new          Collision(enemy, "Creature"),
         new         Damageable(enemy, 4.0),
-        new   ShapeRectangular(enemy, 5, 6),
+        new   ShapeRectangular(enemy, 5, 6, 20),
         new GraphicRectangular(enemy, L"E", 2.0)
     );
 
@@ -63,7 +63,7 @@ GameObject* ObjectBuilder::BuildItem() {
         new     ControllerIdle(item),
         new          Collision(item, "Item"),
         nullptr,
-        new   ShapeRectangular(item, 1, 1),
+        new   ShapeRectangular(item, 1, 1, 1),
         new GraphicRectangular(item, L"i", 1.0)
     );
 

@@ -49,7 +49,6 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
-
 	for(size_t y = 0; y < 35; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
@@ -65,7 +64,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 		pos.y += GameTile::TILE_SIZE.y;
 	}
 
-
+    // Time for hard-coded awesomeness to start!
     ObjectBuilder builder = ObjectBuilder();
 
     // Build the basic instances
@@ -88,7 +87,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 }
 
 GameController::~GameController() {
-    if(hero_ != nullptr) delete hero_;
+    if(hero_) delete hero_;
 }
 
 void GameController::Update(double dt) {

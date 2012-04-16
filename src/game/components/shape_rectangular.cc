@@ -12,6 +12,7 @@
 #include "game/components/graphic.h"
 
 // Using
+using std::list;
 using game::action::Movement;
 using game::base::GameController;
 using game::base::GameObject;
@@ -24,6 +25,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
 
     const GameController* gamecontroller = GameController::reference();
 
+    // Check for out of bounds.
     if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
                                      destination->x()+static_cast<size_t>(dimensions_.x)-1,
                                      destination->y()+static_cast<size_t>(dimensions_.y)-1
@@ -31,10 +33,12 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
         return occupying_tiles_.front();
     }
 
+    // Check for impassable stuff.
     for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
         for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
-            if( gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j) == nullptr )
-                return occupying_tiles_.front();
+            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
+            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot )
+                if((*ot)->shape_component()->size_class() >= this->size_class() + 1 ) return occupying_tiles_.front();
         }
     }
 
@@ -55,18 +59,32 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
 
     this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
 
-    return destination; //TODO: check for collisions, 
+    return destination; //TODO: check for logic collisions.
 }
 
 GameTile* ShapeRectangular::Move(Movement& mov) {
-    const GameController* gamecontroller = GameController::reference();
-    return PlaceAt(gamecontroller->GetTileByMovementFromTile(occupying_tiles().front(), mov));
+    // Steps the movement one direction at a time, aborts on nullptr or returns the last Step(-).
+
+    // for with lookahead.
+    /*
+    auto di = mov.dirs.begin();
+    for(  ; di != mov.dirs.end() && (++di) != mov.dirs.end() ; ++di ) {
+        --di;
+        if( Step(*di) == nullptr ) return nullptr;
+    }
+    return Step(*di);
+    */
+    for( list<Movement::Direction>::iterator di = mov.dirs.begin() ; di != mov.dirs.end() ; ++di )
+        if( Step(*di) == nullptr ) return nullptr;
+
+    return occupying_tiles_.front();
 }
 
 GameTile* ShapeRectangular::Step(Movement::Direction dir) {
-    Movement mov;
-    mov.dirs.push_back(dir);
-    return Move(mov);
+    const GameController* gamecontroller = GameController::reference();
+
+    GameTile* destination = gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), dir);
+    return PlaceAt(destination);
 }
 
 } // namespace component

@@ -37,6 +37,7 @@ class GameTile {
 	size_t y() const { return y_; }
 
 	ugdk::graphic::Node* node() { return node_; }
+    const std::list<GameObject*>& objects_here() const { return objects_here_; }
 
   private:
 	ugdk::graphic::Node* node_;
