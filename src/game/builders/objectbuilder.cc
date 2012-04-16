@@ -35,7 +35,7 @@ GameObject* ObjectBuilder::BuildHero() {
         new   ControllerPlayer(hero),
         new          Collision(hero, "Creature"),
         new         Damageable(hero, 10.0),
-        new   ShapeRectangular(hero, 2, 2),
+        new   ShapeRectangular(hero, 3, 3),
         new GraphicRectangular(hero, L"@", 3.0)
     );
 
