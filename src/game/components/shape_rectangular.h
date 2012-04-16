@@ -19,8 +19,8 @@ namespace component {
 class ShapeRectangular : public Shape {
   typedef Shape super;
   public:
-    ShapeRectangular(game::base::GameObject* owner, size_t size_x = 1, size_t size_y = 1, size_t size_class = 10)
-      : super(owner, size_class),
+    ShapeRectangular(game::base::GameObject* owner, size_t size_x = 1, size_t size_y = 1, double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5)
+      : super(owner, stay_sizeclass, pass_sizeclass, enter_sizeclass),
         dimensions_(ugdk::Vector2D(size_x,size_y)) {}
     ~ShapeRectangular() {}
 

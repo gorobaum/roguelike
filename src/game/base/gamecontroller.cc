@@ -75,15 +75,26 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	GameObject* item = builder.BuildItem();
 	AddGameObject(item);
 
+    GameObject* wall_1 = builder.BuildWall();
+    GameObject* wall_2 = builder.BuildWall();
+    GameObject* wall_3 = builder.BuildWall();
+    GameObject* wall_4 = builder.BuildWall();
+    GameObject* wall_5 = builder.BuildWall();
+
     // Add them to the Scene.
     // AddPendingGameObjects(-) reparents the nodes to the root node,
     //   so we need to call it before placing them on the map.
     AddPendingGameObjects();
 
     // Place them on the map.
-    hero_->shape_component()->PlaceAt(tiles_[15][15]);
+    hero_->shape_component()->PlaceAt(tiles_[10][10]);
     enemy->shape_component()->PlaceAt(tiles_[3][3]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
+    wall_1->shape_component()->PlaceAt(tiles_[15][10]);
+    wall_2->shape_component()->PlaceAt(tiles_[16][10]);
+    wall_3->shape_component()->PlaceAt(tiles_[17][10]);
+    wall_4->shape_component()->PlaceAt(tiles_[15][14]);
+    wall_5->shape_component()->PlaceAt(tiles_[15][15]);
 }
 
 GameController::~GameController() {

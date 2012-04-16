@@ -19,13 +19,17 @@ namespace component {
 class Shape : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Shape(game::base::GameObject* owner, size_t size_class = 10)
-      : super(owner), size_class_(size_class) {}
+    Shape(game::base::GameObject* owner, double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5 )
+      : super(owner), stay_sizeclass_(stay_sizeclass), pass_sizeclass_(pass_sizeclass), enter_sizeclass_(enter_sizeclass) {}
     ~Shape() {}
 
-    void set_size_class(size_t size_class) { size_class = size_class_; }
+    void set_stay_sizeclass(  size_t stay_sizeclass ) { stay_sizeclass_  = stay_sizeclass;  }
+    void set_pass_sizeclass(  size_t pass_sizeclass ) { pass_sizeclass_  = pass_sizeclass;  }
+    void set_enter_sizeclass( size_t enter_sizeclass) { enter_sizeclass_ = enter_sizeclass; }
 
-    size_t size_class() const { return size_class_; }
+    double stay_sizeclass()  const { return stay_sizeclass_;  }
+    double pass_sizeclass()  const { return pass_sizeclass_;  }
+    double enter_sizeclass() const { return enter_sizeclass_; }
     const std::list<game::base::GameTile*>& occupying_tiles() const { return occupying_tiles_; } 
 
     virtual game::base::GameTile* PlaceAt(game::base::GameTile* tile) = 0;
@@ -33,7 +37,9 @@ class Shape : public ComponentBase {
     virtual game::base::GameTile* Step(game::action::Movement::Direction dir) = 0;
 
   protected:
-    size_t size_class_;
+    double stay_sizeclass_;
+    double pass_sizeclass_;
+    double enter_sizeclass_;
 	std::list<game::base::GameTile*> occupying_tiles_;
 };
 

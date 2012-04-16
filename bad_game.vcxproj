@@ -15,7 +15,6 @@
     <ClCompile Include="src\game\base\gameobject.cc" />
     <ClCompile Include="src\game\base\gametile.cc" />
     <ClCompile Include="src\game\builders\objectbuilder.cc" />
-    <ClCompile Include="src\game\components\collision.cc" />
     <ClCompile Include="src\game\components\controller_ai.cc" />
     <ClCompile Include="src\game\components\controller_idle.cc" />
     <ClCompile Include="src\game\components\controller_player.cc" />
@@ -35,7 +34,6 @@
     <ClInclude Include="src\game\builder.h" />
     <ClInclude Include="src\game\builders\objectbuilder.h" />
     <ClInclude Include="src\game\component.h" />
-    <ClInclude Include="src\game\components\collision.h" />
     <ClInclude Include="src\game\components\componentbase.h" />
     <ClInclude Include="src\game\components\controller.h" />
     <ClInclude Include="src\game\components\controller_ai.h" />

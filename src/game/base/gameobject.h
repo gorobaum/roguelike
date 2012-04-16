@@ -26,11 +26,8 @@ class GameObject : public ugdk::Entity {
 
     void Initialize(
         game::component::Controller* controller_component,
-
-        game::component::Collision*   collision_component,
         game::component::Damageable* damageable_component,
         game::component::Shape*           shape_component,
-
         game::component::Graphic*       graphic_component
     );
 
@@ -39,8 +36,6 @@ class GameObject : public ugdk::Entity {
           component::Controller* controller_component()       { return controller_component_; }
     const component::Controller* controller_component() const { return controller_component_; }
 
-	      component::Collision*   collision_component()       { return  collision_component_; }
-	const component::Collision*   collision_component() const { return  collision_component_; }
           component::Damageable* damageable_component()       { return damageable_component_; }
     const component::Damageable* damageable_component() const { return damageable_component_; }
           component::Shape*           shape_component()       { return      shape_component_; }
@@ -55,7 +50,6 @@ class GameObject : public ugdk::Entity {
   private:
     component::Controller* controller_component_;
 
-    component::Collision*   collision_component_;
     component::Damageable* damageable_component_;
     component::Shape*           shape_component_;
 

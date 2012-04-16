@@ -24,6 +24,7 @@ class ObjectBuilder {
     game::base::GameObject* BuildHero();
     game::base::GameObject* BuildEnemy();
     game::base::GameObject* BuildItem();
+    game::base::GameObject* BuildWall();
 };
 
 } // namespace builder

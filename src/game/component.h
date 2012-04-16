@@ -9,8 +9,6 @@ class Controller;
 class ControllerAi;
 class ControllerIdle;
 class ControllerPlayer;
-class Collision;
-class CollisionRectangular;
 class Graphic;
 class GraphicRectangular;
 class Shape;

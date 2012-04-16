@@ -37,8 +37,11 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
         for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
             const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
-            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot )
-                if((*ot)->shape_component()->size_class() >= this->size_class() + 1 ) return occupying_tiles_.front();
+            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
+                if( ((*ot) != this->owner_)
+                    && ( (*ot)->shape_component()->pass_sizeclass() <= stay_sizeclass_ )
+                    && ( (*ot)->shape_component()->stay_sizeclass() >  pass_sizeclass_ ) ) return occupying_tiles_.front();
+            }
         }
     }
 
