@@ -66,18 +66,13 @@ GameTile* ShapeRectangular::Move(Movement& mov) {
     // Steps the movement one direction at a time, aborts on nullptr or returns the last Step(-).
 
     // for with lookahead.
-    /*
     auto di = mov.dirs.begin();
-    for(  ; di != mov.dirs.end() && (++di) != mov.dirs.end() ; ++di ) {
+    for( ; di != mov.dirs.end() && (++di) != mov.dirs.end() ; ++di ) {
         --di;
         if( Step(*di) == nullptr ) return nullptr;
     }
+    if( di == mov.dirs.end() ) --di;
     return Step(*di);
-    */
-    for( list<Movement::Direction>::iterator di = mov.dirs.begin() ; di != mov.dirs.end() ; ++di )
-        if( Step(*di) == nullptr ) return nullptr;
-
-    return occupying_tiles_.front();
 }
 
 GameTile* ShapeRectangular::Step(Movement::Direction dir) {
