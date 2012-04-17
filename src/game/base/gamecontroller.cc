@@ -127,30 +127,44 @@ void GameController::ClearDeadGameObjects() {
 
 void GameController::AddPendingGameObjects() {
     for(auto it = pending_game_objects_.begin(); it != pending_game_objects_.end(); ++it) {
-        GameObject* new_obj = *it;
-        if(new_obj->graphic_component()->node() != nullptr)
-            this->content_node()->AddChild(new_obj->graphic_component()->node());
-        game_objects_.push_back(new_obj);
-        this->AddEntity(new_obj);
+        if((*it)->graphic_component()->node() != nullptr)
+            this->content_node()->AddChild((*it)->graphic_component()->node());
+        game_objects_.push_back(*it);
+        this->AddEntity(*it);
     }
     pending_game_objects_.clear();
 }
 
-GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) const {
-	if(tile == nullptr) return nullptr;
-	size_t x = tile->x(), y = tile->y();
-	for(auto it = mov.dirs.begin(); it != mov.dirs.end(); ++it) {
-		switch(*it) {
-			case Movement::UP:    --y; break;
-			case Movement::DOWN:  ++y; break;
-			case Movement::LEFT:  --x; break;
-			case Movement::RIGHT: ++x; break;
-			default: break;
-		}
+GameTile* GameController::GetTileByDirectionFromTile(GameTile* tile, Movement::Direction d) const {
+
+    if(tile == nullptr) return nullptr;
+
+    size_t x = tile->x(), y = tile->y();
+    switch(d) {
+		case Movement::UP:    --y; break;
+		case Movement::DOWN:  ++y; break;
+		case Movement::LEFT:  --x; break;
+		case Movement::RIGHT: ++x; break;
+		default: break;
 	}
+
 	if(y < 0 || y >= static_cast<size_t>(tiles_.size())) return nullptr;
 	if(x < 0 || x >= static_cast<size_t>(tiles_[y].size())) return nullptr;
+
 	return GetTileFromCoordinates(x,y);
+}
+
+GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) const {
+
+    if(tile == nullptr || mov.dirs.size() == 0 ) return tile;
+    auto it = mov.dirs.begin();
+	for( ; it != mov.dirs.end() && (++it != mov.dirs.end()); ++it) {
+        --it;
+		GetTileByDirectionFromTile(tile, *it);
+	}
+    --it;
+
+	return GetTileByDirectionFromTile(tile, (*it));
 }
 
 } // namespace base

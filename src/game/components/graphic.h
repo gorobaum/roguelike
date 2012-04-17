@@ -20,7 +20,7 @@ namespace component {
 class Graphic : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Graphic(game::base::GameObject* owner, std::wstring visual_representation, double zindex);
+    Graphic(game::base::GameObject* owner, std::string visual_representation, double zindex);
     ~Graphic();
 
     virtual void Update(double dt) = 0;

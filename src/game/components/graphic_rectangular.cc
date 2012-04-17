@@ -11,14 +11,14 @@
 
 // Using
 using std::list;
-using std::wstring;
+using std::string;
 using game::base::GameObject;
 using game::base::GameTile;
 
 namespace game {
 namespace component {
 
-GraphicRectangular::GraphicRectangular(GameObject* owner, wstring visual_representation, double zindex)
+GraphicRectangular::GraphicRectangular(GameObject* owner, string visual_representation, double zindex)
   : super(owner, visual_representation, zindex) {}
 GraphicRectangular::~GraphicRectangular() {}
 

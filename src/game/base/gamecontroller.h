@@ -39,12 +39,8 @@ class GameController : public ugdk::Scene {
             return tiles_[y][x];
         return nullptr;
     }
-	GameTile* GetTileByMovementFromTile(GameTile* tile, game::action::Movement&) const;
-	GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const {
-		game::action::Movement m;
-		m.dirs.push_back(d);
-		return GetTileByMovementFromTile(tile, m);
-	}
+    GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const;
+    GameTile* GetTileByMovementFromTile(GameTile* tile, game::action::Movement&) const;
 
 
   private:

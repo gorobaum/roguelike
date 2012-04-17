@@ -19,7 +19,7 @@ namespace component {
 class GraphicRectangular : public Graphic {
   typedef Graphic super;
   public:
-    GraphicRectangular(game::base::GameObject* owner, std::wstring visual_representation, double zindex);
+    GraphicRectangular(game::base::GameObject* owner, std::string visual_representation, double zindex);
     ~GraphicRectangular();
 
     void Update(double dt);
