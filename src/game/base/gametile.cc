@@ -13,11 +13,12 @@
 // Using
 using ugdk::Vector2D;
 using ugdk::graphic::Node;
+using game::base::GameObject;
 
 namespace game {
 namespace base {
 
-const Vector2D GameTile::TILE_SIZE = Vector2D(16.0, 16.0);
+const Vector2D GameTile::TILE_SIZE = Vector2D(23.0, 23.0);
 
 GameTile::GameTile(size_t x, size_t y) : node_(new Node) {
 	ground_ = TEXT_MANAGER()->GetText(L".");
@@ -32,27 +33,11 @@ GameTile::~GameTile() {
 }
 
 void GameTile::PushObject(GameObject* obj) {
-	/*
-	if (!objects_here_.empty())
-		node_->RemoveChild( objects_here_.back()->graphic_component()->node() );
-	*/
 	objects_here_.push_back(obj);
-	/*
-	node_->AddChild(obj->graphic_component()->node());
-
-	node_->set_drawable(NULL);
-	*/
 }
 
 void GameTile::RemoveObject(GameObject* obj) {
 	objects_here_.remove(obj);
-	/*
-	node_->RemoveChild(obj->graphic_component()->node());
-	if (!objects_here_.empty())
-		node_->AddChild( objects_here_.back()->graphic_component()->node() );
-	else
-		node_->set_drawable(ground_);
-	*/
 }
 
 } // namespace base

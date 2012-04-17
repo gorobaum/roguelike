@@ -1,8 +1,12 @@
+#include <math.h>
+
 // Header File
 #include "game/components/graphic_rectangular.h"
 
 // External Dependencies
 #include <ugdk/graphic/node.h>
+
+#include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
@@ -15,6 +19,8 @@ using std::string;
 using game::base::GameObject;
 using game::base::GameTile;
 
+using ugdk::Vector2D;
+
 namespace game {
 namespace component {
 
@@ -23,11 +29,10 @@ GraphicRectangular::GraphicRectangular(GameObject* owner, string visual_represen
 GraphicRectangular::~GraphicRectangular() {}
 
 void GraphicRectangular::Update(double dt) {
-    /* animation stuff goes here */
 }
 
 void GraphicRectangular::NodeLogic(const list<GameTile*>& occupying_tiles) {
-    node()->modifier()->set_scale(static_cast<ShapeRectangular*>(owner_->shape_component())->dimensions());
+    node()->modifier()->set_scale( (static_cast<ShapeRectangular*>(owner_->shape_component())->dimensions())*0.382 );
     occupying_tiles.front()->node()->AddChild(this->node());
 }
 

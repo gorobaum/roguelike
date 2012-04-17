@@ -16,6 +16,7 @@ using std::string;
 using ugdk::graphic::Node;
 using game::base::GameObject;
 
+using ugdk::Vector2D;
 using ugdk::graphic::TexturedRectangle;
 using ugdk::base::ResourceManager;
 
