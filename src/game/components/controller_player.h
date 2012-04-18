@@ -8,7 +8,7 @@
 // (none)
 
 // Internal Dependencies
-// (none)
+#include "game/action/movement.h" // needed for where_to_
 
 // Forward Declarations
 #include "game/base.h"
@@ -19,10 +19,14 @@ namespace component {
 class ControllerPlayer : public Controller {
   typedef Controller super;
   public:
-    ControllerPlayer(game::base::GameObject* owner) : super(owner) {}
-    ~ControllerPlayer() {}
+    ControllerPlayer(game::base::GameObject* owner);
+    ~ControllerPlayer();
 
     void Update(double dt);
+
+  private:
+    game::action::Movement::Direction where_to_;
+    bool special_;
 };
 
 } // namespace component

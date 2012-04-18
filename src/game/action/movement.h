@@ -18,9 +18,9 @@ namespace action {
 
 struct Movement {
 	enum Direction {
-		UP, DOWN, RIGHT, LEFT
+		NONE = 0, UP = 1, DOWN = 2, LEFT = 3, UP_LEFT = 4,
+        DOWN_LEFT = 5, RIGHT = 6, UP_RIGHT = 7, DOWN_RIGHT = 8
 	};
-
 	std::list<Direction> dirs;
 };
 
