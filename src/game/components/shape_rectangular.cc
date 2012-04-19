@@ -26,27 +26,8 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
-    // Check for out of bounds.
-    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
-                                     destination->x()+static_cast<size_t>(dimensions_.x)-1,
-                                     destination->y()+static_cast<size_t>(dimensions_.y)-1
-                                 ) == nullptr ) {
-        return occupying_tiles_.front(); //TODO: in case of diagonal movement, try to restrict to one coordinate.
-    }
-
-    // Check for impassable stuff where you're going.
-    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
-        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
-            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
-            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
-                if( ((*ot) != this->owner_) /* can't bump into self */
-                  && ( (*ot)->shape_component()->pass_sizeclass() <= stay_sizeclass_ ) /* this too big to pass under that */
-                  && ( (*ot)->shape_component()->stay_sizeclass() >  pass_sizeclass_ ) /* that can't fit under this */ ) {
-                    return occupying_tiles_.front();
-                }
-            }
-        }
-    }
+    // Better safe than sorry.
+    if(!TryPlace(destination)) return occupying_tiles_.front();
 
     // Remove yourself from the map
     for( auto xt = occupying_tiles_.begin() ; xt != occupying_tiles_.end() ; ++xt )
@@ -65,7 +46,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     // Update the nodes on the graphic component.
     this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
 
-    return destination; //TODO: check for logic collisions.
+    return destination; //TODO: run logic stuff.
 }
 
 GameTile* ShapeRectangular::Move(Movement& mov) {
@@ -83,10 +64,79 @@ GameTile* ShapeRectangular::Move(Movement& mov) {
 }
 
 GameTile* ShapeRectangular::Step(Movement::Direction dir) {
+    
+    // no movement? no Place.
+    if( TryStep(dir) == Movement::NONE ) return occupying_tiles_.front();
+
+    const GameController* gamecontroller = GameController::reference();
+    return PlaceAt(gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), TryStep(dir)));
+}
+
+bool ShapeRectangular::TryPlace(GameTile* destination) {
+    
+    // we'll need to access the tiles.
+    const GameController* gamecontroller = GameController::reference();
+
+    // Check for out of bounds.
+    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
+                                     destination->x()+static_cast<size_t>(dimensions_.x)-1,
+                                     destination->y()+static_cast<size_t>(dimensions_.y)-1
+                                 ) == nullptr ) {
+        return false;
+    }
+
+    // Check for impassable stuff where you're going.
+    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
+        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
+            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
+            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
+                if( ((*ot) != this->owner_) /* can't bump into self */
+                  && ( (*ot)->shape_component()->pass_sizeclass() <= stay_sizeclass_ ) /* this too big to pass under that */
+                  && ( (*ot)->shape_component()->stay_sizeclass() >  pass_sizeclass_ ) /* that can't fit under this */ ) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+Movement::Direction ShapeRectangular::TryStep(Movement::Direction dir) {
+
+    // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
     GameTile* destination = gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), dir);
-    return PlaceAt(destination);
+
+    // Trying to stand still doesn't move you.
+    // Moving diagonally requires at least one of the corners free.
+    // Trying to move diagonally will try to deflect your movement to one coord should it fail.
+    switch(dir) {
+        case Movement::NONE: return Movement::NONE;
+        case Movement::UP_LEFT:
+            if( ( TryStep(Movement::UP) || TryStep(Movement::LEFT) ) && TryPlace(destination) ) return Movement::UP_LEFT;
+            else if(TryStep(Movement::UP)    && !TryStep(Movement::LEFT)) return Movement::UP;
+            else if(TryStep(Movement::LEFT)  && !TryStep(Movement::UP)  ) return Movement::LEFT;
+            else return Movement::NONE;
+        case Movement::UP_RIGHT:
+            if( (TryStep(Movement::UP) || TryStep(Movement::RIGHT)) && TryPlace(destination) ) return Movement::UP_RIGHT;
+            else if(TryStep(Movement::UP)    && !TryStep(Movement::RIGHT)) return Movement::UP;
+            else if(TryStep(Movement::RIGHT) && !TryStep(Movement::UP)   ) return Movement::RIGHT;
+            else return Movement::NONE;
+        case Movement::DOWN_LEFT:
+            if( (TryStep(Movement::DOWN) || TryStep(Movement::LEFT)) && TryPlace(destination) ) return Movement::DOWN_LEFT;
+            else if(TryStep(Movement::DOWN) && !TryStep(Movement::LEFT)) return Movement::DOWN;
+            else if(TryStep(Movement::LEFT) && !TryStep(Movement::DOWN)) return Movement::LEFT;
+            else return Movement::NONE;
+        case Movement::DOWN_RIGHT:
+            if( (TryStep(Movement::DOWN) || TryStep(Movement::RIGHT)) && TryPlace(destination) ) return Movement::DOWN_RIGHT;
+            else if(TryStep(Movement::DOWN)  && !TryStep(Movement::RIGHT)) return Movement::DOWN;
+            else if(TryStep(Movement::RIGHT) && !TryStep(Movement::DOWN) ) return Movement::RIGHT;
+            else return Movement::NONE;
+        default: if(TryPlace(destination)) return dir; else return Movement::NONE;
+    }
+
 }
 
 } // namespace component

@@ -144,19 +144,19 @@ GameTile* GameController::GetTileByDirectionFromTile(GameTile* tile, Movement::D
 
     size_t x = tile->x(), y = tile->y();
     switch(d) {
-		case Movement::UP:         --y;      break;
-		case Movement::DOWN:       ++y;      break;
+		case Movement::UP:              --y; break;
+		case Movement::DOWN:            ++y; break;
 		case Movement::LEFT:       --x;      break;
-        case Movement::UP_LEFT:    --y; --x; break;
-        case Movement::DOWN_LEFT:  ++y; --x; break;
+        case Movement::UP_LEFT:    --x; --y; break;
+        case Movement::DOWN_LEFT:  --x; ++y; break;
 		case Movement::RIGHT:      ++x;      break;
-        case Movement::UP_RIGHT:   --y; ++x; break;
-        case Movement::DOWN_RIGHT: ++y; ++x; break;
+        case Movement::UP_RIGHT:   ++x; --y; break;
+        case Movement::DOWN_RIGHT: ++x; ++y; break;
 		default: break;
 	}
 
-	if(y < 0 || y >= static_cast<size_t>(tiles_.size())) return nullptr;
-	if(x < 0 || x >= static_cast<size_t>(tiles_[y].size())) return nullptr;
+	if( (y < 0) || (y >= static_cast<size_t>(    tiles_.size() )) ) return nullptr;
+	if( (x < 0) || (x >= static_cast<size_t>( tiles_[y].size() )) ) return nullptr;
 
 	return GetTileFromCoordinates(x,y);
 }

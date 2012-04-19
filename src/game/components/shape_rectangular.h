@@ -28,6 +28,9 @@ class ShapeRectangular : public Shape {
     game::base::GameTile* Move(game::action::Movement& mov);
     game::base::GameTile* Step(game::action::Movement::Direction dir);
 
+    bool TryPlace(game::base::GameTile* destination);
+    game::action::Movement::Direction TryStep(game::action::Movement::Direction dir);
+
     const ugdk::Vector2D& dimensions() const { return dimensions_; }
 
   private:

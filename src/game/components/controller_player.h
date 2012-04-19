@@ -5,12 +5,13 @@
 #include "game/components/controller.h"
 
 // External Dependencies
-// (none)
+#include <ugdk/time/timeaccumulator.h> // needed for time_held_
 
 // Internal Dependencies
 #include "game/action/movement.h" // needed for where_to_
 
 // Forward Declarations
+#include <ugdk/time.h>
 #include "game/base.h"
 
 namespace game {
@@ -26,7 +27,7 @@ class ControllerPlayer : public Controller {
 
   private:
     game::action::Movement::Direction where_to_;
-    bool special_;
+    ugdk::time::TimeAccumulator time_held_;
 };
 
 } // namespace component
