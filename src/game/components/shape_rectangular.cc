@@ -10,6 +10,7 @@
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
 #include "game/components/graphic.h"
+#include "utils/utils.h"
 
 // Using
 using std::list;
@@ -17,6 +18,7 @@ using game::action::Movement;
 using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
+using utils::Utils;
 
 namespace game {
 namespace component {
@@ -96,9 +98,9 @@ bool ShapeRectangular::TryPlace(GameTile* destination) {
         for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
             const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
             for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
-                if( ((*ot) != this->owner_) /* can't bump into self */
-                  && ( (*ot)->shape_component()->pass_sizeclass() <= stay_sizeclass_ ) /* this too big to pass under that */
-                  && ( (*ot)->shape_component()->stay_sizeclass() >  pass_sizeclass_ ) /* that can't fit under this */ ) {
+                if( ((*ot) != this->owner_) // can't bump into self
+                  && ( Utils::CompareDoubles( (*ot)->shape_component()->pass_sizeclass(), stay_sizeclass_ ) == -1 )     // this can't fit under that */
+                  && ( Utils::CompareDoubles( (*ot)->shape_component()->stay_sizeclass(), pass_sizeclass_ ) ==  1 ) ) { // that can't fit under this */
                     return false;
                 }
             }

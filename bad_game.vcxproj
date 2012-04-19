@@ -44,6 +44,7 @@
     <ClInclude Include="src\game\components\graphic_rectangular.h" />
     <ClInclude Include="src\game\components\shape.h" />
     <ClInclude Include="src\game\components\shape_rectangular.h" />
+    <ClInclude Include="src\utils\utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4378418C-D44E-4D87-87DC-5D8174DE93A7}</ProjectGuid>

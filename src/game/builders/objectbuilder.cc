@@ -34,7 +34,7 @@ GameObject* ObjectBuilder::BuildHero() {
     hero->Initialize(
         new   ControllerPlayer(hero),
         new         Damageable(hero, 10.0),
-        new   ShapeRectangular(hero, 2, 2, 1.0, 0.25, 1.0e-6),
+        new   ShapeRectangular(hero, 2, 2, 1.0, 0.25, 1.0e-9),
         new GraphicRectangular(hero, "@", 3.0)
     );
 
@@ -47,7 +47,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
     enemy->Initialize(
         new       ControllerAi(enemy),
         new         Damageable(enemy, 4.0),
-        new   ShapeRectangular(enemy, 5, 6, 3.0, 0.8, 1.0e-6),
+        new   ShapeRectangular(enemy, 5, 6, 3.0, 0.8, 1.0e-9),
         new GraphicRectangular(enemy, "E", 2.0)
     );
 
