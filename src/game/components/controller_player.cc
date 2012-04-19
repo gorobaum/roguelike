@@ -20,9 +20,12 @@ namespace game {
 namespace component {
 
 #define DELAY_HOLD 250
+#define HOLD_TICK_INTERVAL 25
 
-ControllerPlayer::ControllerPlayer(GameObject* owner) : super(owner), where_to_(Movement::NONE), time_held_(DELAY_HOLD) {
+ControllerPlayer::ControllerPlayer(GameObject* owner)
+  : super(owner), where_to_(Movement::NONE), time_held_(DELAY_HOLD), hold_tick_(HOLD_TICK_INTERVAL) {
     time_held_.Pause();
+    hold_tick_.Pause();
 }
 ControllerPlayer::~ControllerPlayer() {}
 
@@ -33,6 +36,7 @@ void ControllerPlayer::Update(double dt) {
         input->KeyPressed(ugdk::input::K_UP)    || input->KeyPressed(ugdk::input::K_DOWN) ) {
 
         time_held_.Restart(DELAY_HOLD);
+        hold_tick_.Restart(HOLD_TICK_INTERVAL);
 
         if(input->KeyPressed(ugdk::input::K_RIGHT)) {
             if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Movement::UP_RIGHT;
@@ -61,13 +65,17 @@ void ControllerPlayer::Update(double dt) {
         
         time_held_.Restart(DELAY_HOLD);
         time_held_.Pause();
+        hold_tick_.Restart(HOLD_TICK_INTERVAL);
+        hold_tick_.Pause();
+
         owner_->shape_component()->Step(where_to_);
         where_to_ = Movement::NONE;
     }
     else if ( ( input->KeyDown(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_LEFT) ||
                 input->KeyDown(ugdk::input::K_UP)    || input->KeyDown(ugdk::input::K_DOWN) )
-              && time_held_.Expired() ) {
+              && time_held_.Expired() && hold_tick_.Expired() ) {
 
+        hold_tick_.Restart(HOLD_TICK_INTERVAL);
         if(where_to_ != Movement::NONE) owner_->shape_component()->Step(where_to_);
     }
 }

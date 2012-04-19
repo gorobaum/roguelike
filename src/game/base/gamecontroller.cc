@@ -49,14 +49,12 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
-    double tile_zindex = -1.0;
 	for(size_t y = 0; y < 25; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
 		for(size_t x = 0; x < 30; ++x) {
 			GameTile* gt = new GameTile(x, y);
-            gt->node()->set_zindex(tile_zindex);
-            tile_zindex = tile_zindex - 1.0;
+            gt->node()->set_zindex(-1.0);
 			gt->node()->modifier()->set_offset(pos);
 			content_node()->AddChild(gt->node());
 			vect.push_back(gt);
@@ -79,10 +77,19 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	AddGameObject(item);
 
     GameObject* wall_1 = builder.BuildWall();
+    AddGameObject(wall_1);
     GameObject* wall_2 = builder.BuildWall();
+    AddGameObject(wall_2);
     GameObject* wall_3 = builder.BuildWall();
+    AddGameObject(wall_3);
     GameObject* wall_4 = builder.BuildWall();
+    AddGameObject(wall_4);
     GameObject* wall_5 = builder.BuildWall();
+    AddGameObject(wall_5);
+    GameObject* wall_6 = builder.BuildWall();
+    AddGameObject(wall_6);
+    GameObject* wall_7 = builder.BuildWall();
+    AddGameObject(wall_7);
 
     // Add them to the Scene.
     // AddPendingGameObjects(-) reparents the nodes to the root node,
@@ -90,14 +97,16 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     AddPendingGameObjects();
 
     // Place them on the map.
-    hero_->shape_component()->PlaceAt(tiles_[10][10]);
+    hero_->shape_component()->PlaceAt(tiles_[10][4]);
     enemy->shape_component()->PlaceAt(tiles_[3][3]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
     wall_1->shape_component()->PlaceAt(tiles_[15][10]);
     wall_2->shape_component()->PlaceAt(tiles_[16][10]);
     wall_3->shape_component()->PlaceAt(tiles_[17][10]);
-    wall_4->shape_component()->PlaceAt(tiles_[15][14]);
-    wall_5->shape_component()->PlaceAt(tiles_[15][15]);
+    wall_4->shape_component()->PlaceAt(tiles_[13][13]);
+    wall_5->shape_component()->PlaceAt(tiles_[13][14]);
+    wall_6->shape_component()->PlaceAt(tiles_[10][16]);
+    wall_7->shape_component()->PlaceAt(tiles_[11][16]);
 }
 
 GameController::~GameController() {

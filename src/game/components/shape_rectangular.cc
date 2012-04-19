@@ -27,7 +27,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     const GameController* gamecontroller = GameController::reference();
 
     // Better safe than sorry.
-    if(!TryPlace(destination)) return occupying_tiles_.front();
+    if(!TryPlace(destination)) { if(!occupying_tiles_.empty()) return occupying_tiles_.front(); else return nullptr; }
 
     // Remove yourself from the map
     for( auto xt = occupying_tiles_.begin() ; xt != occupying_tiles_.end() ; ++xt )
@@ -52,6 +52,9 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
 GameTile* ShapeRectangular::Move(Movement& mov) {
     // Steps the movement one direction at a time, aborts on nullptr or returns the last Step(-).
 
+    // you're nowhere? there's nothing I can do.
+    if(occupying_tiles_.empty()) return nullptr;
+
     // for with lookahead.
     if( mov.dirs.size() == 0 ) return occupying_tiles_.front(); // make sure ++di exists.
     auto di = mov.dirs.begin();
@@ -65,6 +68,9 @@ GameTile* ShapeRectangular::Move(Movement& mov) {
 
 GameTile* ShapeRectangular::Step(Movement::Direction dir) {
     
+    // you're nowhere? there's nothing I can do.
+    if(occupying_tiles_.empty()) return nullptr;
+
     // no movement? no Place.
     if( TryStep(dir) == Movement::NONE ) return occupying_tiles_.front();
 
@@ -73,7 +79,7 @@ GameTile* ShapeRectangular::Step(Movement::Direction dir) {
 }
 
 bool ShapeRectangular::TryPlace(GameTile* destination) {
-    
+
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
@@ -103,6 +109,9 @@ bool ShapeRectangular::TryPlace(GameTile* destination) {
 }
 
 Movement::Direction ShapeRectangular::TryStep(Movement::Direction dir) {
+
+    // you're nowhere? there's nothing I can do.
+    if(occupying_tiles_.empty()) return Movement::NONE;
 
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
@@ -136,7 +145,6 @@ Movement::Direction ShapeRectangular::TryStep(Movement::Direction dir) {
             else return Movement::NONE;
         default: if(TryPlace(destination)) return dir; else return Movement::NONE;
     }
-
 }
 
 } // namespace component

@@ -33,7 +33,7 @@ void GraphicRectangular::Update(double dt) {
 
 void GraphicRectangular::NodeLogic(const list<GameTile*>& occupying_tiles) {
     node()->modifier()->set_scale( (static_cast<ShapeRectangular*>(owner_->shape_component())->dimensions())*0.382 );
-    occupying_tiles.front()->node()->AddChild(this->node());
+    node()->modifier()->set_offset( occupying_tiles.front()->node()->modifier()->offset() );
 }
 
 } // namespace component
