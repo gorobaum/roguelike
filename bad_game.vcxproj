@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\alg\losprocessor.cc" />
     <ClCompile Include="src\game\base\gamecontroller.cc" />
     <ClCompile Include="src\game\base\gameobject.cc" />
     <ClCompile Include="src\game\base\gametile.cc" />
@@ -27,6 +28,8 @@
   <ItemGroup>
     <ClInclude Include="src\game\action.h" />
     <ClInclude Include="src\game\action\movement.h" />
+    <ClInclude Include="src\game\alg.h" />
+    <ClInclude Include="src\game\alg\losprocessor.h" />
     <ClInclude Include="src\game\base.h" />
     <ClInclude Include="src\game\base\gamecontroller.h" />
     <ClInclude Include="src\game\base\gameobject.h" />

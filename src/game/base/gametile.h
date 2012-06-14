@@ -30,9 +30,6 @@ class GameTile {
 	void PushObject(GameObject* obj);
 	void RemoveObject(GameObject* obj);
 	
-	//void Collide(GameObject* obj);
-
-	//void set_position(size_t x, size_t y) { x_ = x; y_ = y; }
 	size_t x() const { return x_; }
 	size_t y() const { return y_; }
 
