@@ -7,15 +7,16 @@
 // Internal Dependencies
 #include "game/base/gamecontroller.h"   // iterator& operator++()
 #include "game/base/gametile.h"         // focus_, outer_focus_
+#include "game/components/vision.h"     // eye()
 
 // Using
 
 namespace game {
 namespace alg {
-LosOctant::iterator::iterator(LosOctant* owner)
-  : owner_(owner), count_outer_(0), count_inner_(0) {
-    focus_ = outer_focus_ = owner->owner()->vision()->eye();
-}
+LosOctant::iterator::iterator(const LosOctant* owner)
+  : owner_(owner), count_outer_(0), count_inner_(0),
+    focus_(owner->owner()->vision()->eye()),
+    outer_focus_(owner->owner()->vision()->eye()) {}
 
 LosOctant::iterator::~iterator() {}
 
@@ -37,7 +38,7 @@ LosOctant::iterator& LosOctant::iterator::operator++() {
 }
 
 void LosOctant::iterator::step(int delta_x_in, int delta_y_in, int delta_x_out, int delta_y_out) {
-    const base::GameController* gamecontroller = base::GameController.reference();
+    const base::GameController* gamecontroller = base::GameController::reference();
 
     if(count_outer_ <= count_inner_) {
         focus_ = outer_focus_ = gamecontroller->GetTileFromCoordinates(outer_focus_->x()+delta_x_out,outer_focus_->y()+delta_y_out);

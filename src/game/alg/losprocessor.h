@@ -21,14 +21,14 @@ class LosOctant;
 
 class LosProcessor {
   public:
-
-
-            component::VisionComponent* vision()       { return vision_; }
-      const component::VisionComponent* vision() const { return vision_; }
+          component::Vision* vision()       { return vision_; }
+    const component::Vision* vision() const { return vision_; }
 
   private:
-    component::VisionComponent* vision_;
+    component::Vision* vision_;
 };
+
+class LosOctant;
 
 class LosOctant {
   public:
@@ -36,7 +36,7 @@ class LosOctant {
       : orientation_(orientation),
         owner_(owner) {}
 
-    class LosOctant::iterator;
+    class iterator;
 
     const int orientation() const { return orientation_; }
     const LosProcessor* owner() const { return owner_; }
@@ -48,12 +48,11 @@ class LosOctant {
 
 class LosOctant::iterator {
   public:
-    iterator(LosOctant* owner);
+    iterator(const LosOctant* owner);
     ~iterator();
 
     iterator& operator++();
     base::GameTile* operator*() const { return focus_; }
-    const base::GameTile* operator*(int) const { return focus_; }
 
   private:
     void step(int delta_x_in, int delta_y_in, int delta_x_out, int delta_y_out);

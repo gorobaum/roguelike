@@ -23,6 +23,7 @@
     <ClCompile Include="src\game\components\graphic.cc" />
     <ClCompile Include="src\game\components\graphic_rectangular.cc" />
     <ClCompile Include="src\game\components\shape_rectangular.cc" />
+    <ClCompile Include="src\game\components\vision.cc" />
     <ClCompile Include="src\main.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +48,7 @@
     <ClInclude Include="src\game\components\graphic_rectangular.h" />
     <ClInclude Include="src\game\components\shape.h" />
     <ClInclude Include="src\game\components\shape_rectangular.h" />
+    <ClInclude Include="src\game\components\vision.h" />
     <ClInclude Include="src\utils\utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

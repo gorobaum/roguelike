@@ -1,12 +1,14 @@
-#ifndef BADGAME_ACTION_H_
-#define BADGAME_ACTION_H_
+#ifndef BADGAME_ALG_H_
+#define BADGAME_ALG_H_
 
 namespace game {
-namespace action {
+namespace alg {
 
-struct Movement;
+struct LosProcessor;
+struct LosOctant;
+struct LosOctant::iterator;
 
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_ACTION_H_
+#endif // BADGAME_ALG_H_
