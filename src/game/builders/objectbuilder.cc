@@ -21,9 +21,9 @@ using game::base::GameObject;
 using game::component::ControllerAi;
 using game::component::ControllerIdle;
 using game::component::ControllerPlayer;
+using game::component::ShapeRectangular;
 using game::component::Damageable;
 using game::component::GraphicRectangular;
-using game::component::ShapeRectangular;
 
 namespace game {
 namespace builder {

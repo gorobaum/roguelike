@@ -23,9 +23,8 @@ class Damageable : public ComponentBase {
         : super(owner), current_life_(max_life), max_life_(max_life) {}
     ~Damageable() {}
 
-    void Update(double dt);
-
-    void Damage(double damage) { current_life_ -= damage; }
+    void TakeDamage(double damage);
+    void StartToDie();
 
     double current_life() const { return current_life_; }
 

@@ -48,7 +48,6 @@ void GameObject::Initialize(
 
 void GameObject::Update(double dt) {
     if(controller_component_) controller_component_->Update(dt);
-    if(damageable_component_) damageable_component_->Update(dt);
     if(graphic_component_)       graphic_component_->Update(dt);
 }
 

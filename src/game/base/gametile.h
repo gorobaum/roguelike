@@ -29,6 +29,7 @@ class GameTile {
 
 	void PushObject(GameObject* obj);
 	void RemoveObject(GameObject* obj);
+
 	
 	size_t x() const { return x_; }
 	size_t y() const { return y_; }

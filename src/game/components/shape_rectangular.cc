@@ -2,7 +2,7 @@
 #include "game/components/shape_rectangular.h"
 
 // External Dependencies
-// (none)
+#include <list>
 
 // Internal Dependencies
 #include "game/action/movement.h"
@@ -14,6 +14,8 @@
 
 // Using
 using std::list;
+using std::set;
+using std::vector;
 using game::action::Movement;
 using game::base::GameController;
 using game::base::GameObject;
@@ -31,12 +33,12 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     // Better safe than sorry.
     if(!TryPlace(destination)) { if(!occupying_tiles_.empty()) return occupying_tiles_.front(); else return nullptr; }
 
-    // Remove yourself from the map
-    for( auto xt = occupying_tiles_.begin() ; xt != occupying_tiles_.end() ; ++xt )
-        (*xt)->RemoveObject(this->owner_);
+    // Remove yourself from the map.
+    for( auto ot = occupying_tiles_.begin() ; ot != occupying_tiles_.end() ; ++ot )
+        (*ot)->RemoveObject(this->owner_);
     occupying_tiles_.clear();
 
-    // Add yourself to the new location
+    // Add yourself to the new location.
     for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
         for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
             GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
@@ -48,7 +50,7 @@ GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
     // Update the nodes on the graphic component.
     this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
 
-    return destination; //TODO: run logic stuff.
+    return destination;
 }
 
 GameTile* ShapeRectangular::Move(Movement& mov) {
@@ -76,37 +78,28 @@ GameTile* ShapeRectangular::Step(Movement::Direction dir) {
     // no movement? no Place.
     if( TryStep(dir) == Movement::NONE ) return occupying_tiles_.front();
 
+    //TODO: Step logic. (sound, sensoryfield adjustments, etc...)
+
     const GameController* gamecontroller = GameController::reference();
     return PlaceAt(gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), TryStep(dir)));
 }
 
 bool ShapeRectangular::TryPlace(GameTile* destination) {
 
+    if(!CheckForOob(destination)) return false;
+
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
-    // Check for out of bounds.
-    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
-                                     destination->x()+static_cast<size_t>(dimensions_.x)-1,
-                                     destination->y()+static_cast<size_t>(dimensions_.y)-1
-                                 ) == nullptr ) {
+    // Check for stuff where you're going.
+    EvalBumpsAt(destination);
+
+    if( !bumps_[0].empty() ) // there's something HUGE there (like a wall)
+        return false; //TODO: implement wall-like bumps.
+    else if( !bumps_[1].empty() || !bumps_[2].empty() || !bumps_[3].empty() ) //TODO: implement all these kinds of bumps.
         return false;
-    }
 
-    // Check for impassable stuff where you're going.
-    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
-        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
-            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
-            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
-                if( ((*ot) != this->owner_) // can't bump into self
-                  && ( Utils::CompareDoubles( (*ot)->shape_component()->pass_sizeclass(), stay_sizeclass_ ) == -1 )     // this can't fit under that */
-                  && ( Utils::CompareDoubles( (*ot)->shape_component()->stay_sizeclass(), pass_sizeclass_ ) ==  1 ) ) { // that can't fit under this */
-                    return false;
-                }
-            }
-        }
-    }
-
+    // Otherwise there's nothing wrong with placing the hero there.
     return true;
 }
 
@@ -147,6 +140,73 @@ Movement::Direction ShapeRectangular::TryStep(Movement::Direction dir) {
             else return Movement::NONE;
         default: if(TryPlace(destination)) return dir; else return Movement::NONE;
     }
+}
+
+bool ShapeRectangular::CheckForOob(GameTile* destination) {
+    // we'll need to access the tiles.
+    const GameController* gamecontroller = GameController::reference();
+
+    // Check for out of bounds.
+    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
+                                     destination->x()+static_cast<size_t>(dimensions_.x)-1,
+                                     destination->y()+static_cast<size_t>(dimensions_.y)-1
+                                 ) == nullptr ) {
+        return false;
+    }
+    return true;
+}
+
+void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
+
+    // !WARNING! //
+    // Make sure to CheckForOob(-) before calling this!!!! //
+    // !WARNING! //
+
+    set<GameObject*> impassable_bumps, larger_bumps, equal_bumps, smaller_bumps;
+    bumps_.clear();
+    
+    // we'll need to access the tiles.
+    const GameController* gamecontroller = GameController::reference();
+
+    double their_pass = 0.0;
+    double their_stay = 0.0;
+    int sizecomp = 0;
+
+    // Let's find out what we're bumping into.
+    for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
+        for( size_t i = 0 ; i < dimensions_.x ; ++i ) {
+            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
+            for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
+                if((*ot) != owner_) { // can't bump into self
+                    their_pass = (*ot)->shape_component()->pass_sizeclass();
+                    their_stay = (*ot)->shape_component()->stay_sizeclass();
+
+                    if(their_stay == std::numeric_limits<double>::infinity()) // you have bumped into something impassable, like a wall.
+                        impassable_bumps.insert(*ot);
+                    else if( (Utils::CompareDoubles(their_pass, stay_sizeclass_) == 2) &&  // you can't fit under that thing
+                             (Utils::CompareDoubles(their_stay, pass_sizeclass_) == 1) ) { // and that thing can't fit under you...
+
+                        sizecomp = Utils::CompareDoubles(their_stay, stay_sizeclass_);
+                        switch(sizecomp) {
+                            case 1: larger_bumps.insert(*ot); break;
+                            case 0: equal_bumps.insert(*ot); break;
+                            case 2: smaller_bumps.insert(*ot); break;
+                            default:
+                                #ifdef DEBUG
+                                fprintf(stderr,"CompareDoubles returned error value %i in ShapeRectangular::GetBumpsAt(-)\n", sizecomp)
+                                #endif
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    bumps_.push_back(impassable_bumps);
+    bumps_.push_back(larger_bumps);
+    bumps_.push_back(equal_bumps);
+    bumps_.push_back(smaller_bumps);
 }
 
 } // namespace component

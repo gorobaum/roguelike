@@ -1,5 +1,5 @@
-#ifndef TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_
-#define TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_
+#ifndef BADGAME_COMPONENT_CONTROLLER_IDLE_H_
+#define BADGAME_COMPONENT_CONTROLLER_IDLE_H_
 
 // Inheritance
 #include "game/components/controller.h"
@@ -28,4 +28,4 @@ class ControllerIdle : public Controller {
 } // namespace component
 } // namespace game
 
-#endif // TOPDOWN_GAME_COMPONENT_CONTROLLER_IDLE_H_
+#endif // BADGAME_COMPONENT_CONTROLLER_IDLE_H_

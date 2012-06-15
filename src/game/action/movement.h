@@ -5,7 +5,7 @@
 // (none)
 
 // External Dependencies
-#include <list> // template class
+#include <list> // needed for dirs
 
 // Internal Dependencies
 // (none)

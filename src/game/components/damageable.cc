@@ -13,10 +13,13 @@
 namespace game {
 namespace component {
 
-void Damageable::Update(double dt) {
-    if(current_life_ <= 0.0) {
-        owner_->Die();
-    }
+void Damageable::TakeDamage(double dmg) {
+    current_life_ -= dmg;
+    if(current_life_ <= 0.0) StartToDie();
+}
+
+void Damageable::StartToDie() {
+    owner_->Die();
 }
 
 } // namespace component

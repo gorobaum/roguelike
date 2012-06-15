@@ -29,6 +29,8 @@ class ControllerPlayer : public Controller {
     game::action::Movement::Direction where_to_;
     ugdk::time::TimeAccumulator time_held_;
     ugdk::time::TimeAccumulator hold_tick_;
+
+    bool held_movement_adjusted_;
 };
 
 } // namespace component
