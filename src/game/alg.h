@@ -4,9 +4,12 @@
 namespace game {
 namespace alg {
 
-struct LosProcessor;
-struct LosOctant;
-struct LosOctant::iterator;
+class LosProcessor;
+class LosOctant;
+class LosOctant::iterator;
+class LosCone;
+
+class EqLine;
 
 } // namespace base
 } // namespace game

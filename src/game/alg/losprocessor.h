@@ -8,7 +8,7 @@
 #include <map>  // octants_
 
 // Internal Dependencies
-// (none)
+#include "game/alg/eqline.h"
 
 // Forward Declarations
 #include "game/base.h"
@@ -64,6 +64,24 @@ class LosOctant::iterator {
 
     int count_outer_;
     int count_inner_;
+
+};
+
+class LosCone {
+  public:
+    LosCone(const EqLine& steep, const EqLine& shallow, int octant) : steep_(steep), shallow_(shallow), octant_(octant) {}
+
+    EqLine steep()   const { return   steep_; }
+    EqLine shallow() const { return shallow_; }
+    const int octant() const { return octant_; }
+
+    void set_steep(  const EqLine& new_steep  ) {   steep_ =   new_steep; }
+    void set_shallow(const EqLine& new_shallow) { shallow_ = new_shallow; }
+
+  private:
+    EqLine steep_;
+    EqLine shallow_;
+    const int octant_;
 
 };
 
