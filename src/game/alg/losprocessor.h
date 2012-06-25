@@ -5,7 +5,8 @@
 // (none)
 
 // External Dependencies
-#include <map>  // octants_
+#include <list> // steep_bumps_, shallow_bumps_
+#include <vector> // octants_
 
 // Internal Dependencies
 #include "game/alg/eqline.h"
@@ -18,17 +19,42 @@ namespace game {
 namespace alg {
 
 class LosOctant;
+class LosCone;
 
 class LosProcessor {
   public:
+    LosProcessor(component::Vision* vision)
+      : vision_(vision), octants_(8), preprocessings_(16,-1) {
+        for(int i = 1; i <= 8; ++i)
+        octants_.push_back(new LosOctant(nth_orientation(i),this));
+    }
+    ~LosProcessor() {
+        for(auto ot = octants_.begin(); ot != octants_.end(); ++ot)
+          delete *ot;
+    }
+
+    void Process();
+
           component::Vision* vision()       { return vision_; }
     const component::Vision* vision() const { return vision_; }
 
   private:
-    component::Vision* vision_;
-};
+    int nth_orientation(int n) {
+        switch(n) {
+            case 8: case 7: return n+3;
+            case 6: case 5: return n+2;
+            case 4: case 3: return n+1;
+            case 2: case 1: return n;
+            default: return 0;
+        }
+    }
 
-class LosOctant;
+    void preprocess(int dir_x, int dir_y, int off_x = 0, int off_y = 0);
+
+    component::Vision* vision_;
+    std::vector<LosOctant*> octants_;
+    std::vector<int> preprocessings_;
+};
 
 class LosOctant {
   public:
@@ -52,10 +78,14 @@ class LosOctant::iterator {
     ~iterator();
 
     iterator& operator++();
-    base::GameTile* operator*() const { return focus_; }
+    iterator& jump();
+
+    const base::GameTile* operator*() const { return focus_; }
+    const base::GameTile* outer_focus() const { return outer_focus_; }
 
   private:
     void step(int delta_x_in, int delta_y_in, int delta_x_out, int delta_y_out);
+    void step_jump(int delta_x_out, int delta_y_out);
 
     base::GameTile* focus_;
     base::GameTile* outer_focus_;
@@ -64,25 +94,62 @@ class LosOctant::iterator {
 
     int count_outer_;
     int count_inner_;
-
 };
+
 
 class LosCone {
   public:
-    LosCone(const EqLine& steep, const EqLine& shallow, int octant) : steep_(steep), shallow_(shallow), octant_(octant) {}
+    LosCone(const EqLine& steep, const EqLine& shallow, int octant,
+            const ugdk::Vector2D& straight_block,
+            const ugdk::Vector2D& inner_diag_block, const ugdk::Vector2D& outer_diag_block)
+      : steep_(steep), shallow_(shallow), orientation_(octant), steep_bumps_(), shallow_bumps_(),
+        straight_block_(straight_block), inner_diag_block_(inner_diag_block), outer_diag_block_(outer_diag_block) {}
 
-    EqLine steep()   const { return   steep_; }
-    EqLine shallow() const { return shallow_; }
-    const int octant() const { return octant_; }
+    const EqLine& steep()   const { return   steep_; }
+    const EqLine& shallow() const { return shallow_; }
 
-    void set_steep(  const EqLine& new_steep  ) {   steep_ =   new_steep; }
-    void set_shallow(const EqLine& new_shallow) { shallow_ = new_shallow; }
+    int orientation() const { return orientation_; }
+    
+    const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
+    const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
+
+    void   steep_bump(const ugdk::Vector2D& limit) {
+        steep_.set_target(limit);
+        for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
+            --st;
+            if(steep_.CompareWithVector(*st) <= 0) {
+                steep_.set_origin(*st);
+                shallow_bumps_.erase(shallow_bumps_.begin(),++st);
+                break;
+            }
+        }
+        steep_bumps_.push_back(limit);
+    }
+
+    void shallow_bump(const ugdk::Vector2D& limit) {
+        shallow_.set_target(limit);
+        for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
+            --st;
+            if(shallow_.CompareWithVector(*st) >= 0) {
+                shallow_.set_origin(*st);
+                steep_bumps_.erase(steep_bumps_.begin(),++st);
+                break;
+            }
+        }
+        shallow_bumps_.push_back(limit);
+    }
 
   private:
     EqLine steep_;
     EqLine shallow_;
-    const int octant_;
+    const int orientation_; // measured as 1,2,4,5,7,8,10 and 11 o'clock.
 
+    std::list<ugdk::Vector2D>   steep_bumps_;
+    std::list<ugdk::Vector2D> shallow_bumps_;
+
+    const ugdk::Vector2D& straight_block_;
+    const ugdk::Vector2D& inner_diag_block_;
+    const ugdk::Vector2D& outer_diag_block_;
 };
 
 } // namespace alg
