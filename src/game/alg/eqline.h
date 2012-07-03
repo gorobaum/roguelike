@@ -9,11 +9,10 @@
 #include <limits> // infinity()
 
 // Internal Dependencies
-// (none)
+#include "utils/utils.h"
 
 // Forward Declarations
 #include <ugdk/math.h>
-#include "utils/utils.h"
 
 namespace game {
 namespace alg {
@@ -22,8 +21,8 @@ class EqLine {
   public:
     EqLine(const ugdk::Vector2D& origin, const ugdk::Vector2D& target)
       : origin_(origin) {
-        if( utils::Utils::CompareDoubles(target.x,origin.x) == 0.0 ) {
-            if( utils::Utils::CompareDoubles(target.y,origin.y) == 0.0 ) {
+        if( utils::CompareDoubles(target.x,origin.x) == utils::EQ ) {
+            if( utils::CompareDoubles(target.y,origin.y) == utils::EQ ) {
                 coefficient_ = 0.0;
                 is_vertical_ = false;
                 target_coord_ = target.x;
@@ -45,12 +44,12 @@ class EqLine {
           ugdk::Vector2D& origin()       { return origin_; }
     const ugdk::Vector2D& origin() const { return origin_; }
 
-          ugdk::Vector2D& target()       {
+          ugdk::Vector2D  target()       {
         return is_vertical_
                  ? ugdk::Vector2D(origin_.x, target_coord_)
                  : ugdk::Vector2D(target_coord_, coefficient_*(target_coord_-origin_.x) - origin_.y);
     }
-    const ugdk::Vector2D& target() const {
+    const ugdk::Vector2D  target() const {
         return is_vertical_
                  ? ugdk::Vector2D(origin_.x, target_coord_)
                  : ugdk::Vector2D(target_coord_, coefficient_*(target_coord_-origin_.x) - origin_.y);
@@ -69,8 +68,8 @@ class EqLine {
     void set_origin(const ugdk::Vector2D& new_origin) {
         ugdk::Vector2D target = this->target();
 
-        if(utils::Utils::CompareDoubles(target.x,new_origin.x) == 0.0) {
-            if(utils::Utils::CompareDoubles(target.y,new_origin.y) == 0.0) {
+        if(utils::CompareDoubles(target.x,new_origin.x) == utils::EQ) {
+            if(utils::CompareDoubles(target.y,new_origin.y) == utils::EQ) {
                 origin_ = new_origin;
                 return;
             }
@@ -86,8 +85,8 @@ class EqLine {
 
     void set_target(const ugdk::Vector2D& new_target) {
         
-        if(utils::Utils::CompareDoubles(new_target.x,origin_.x) == 0.0) {
-            if(utils::Utils::CompareDoubles(new_target.y,origin_.y) == 0.0) {
+        if(utils::CompareDoubles(new_target.x,origin_.x) == utils::EQ) {
+            if(utils::CompareDoubles(new_target.y,origin_.y) == utils::EQ) {
                 is_vertical_ ? target_coord_ = origin_.y : target_coord_ = origin_.x;
                 return;
             }
@@ -104,8 +103,8 @@ class EqLine {
 
     // métodos
 
-    int CompareWithVector(const ugdk::Vector2D& vec) {
-        return utils::Utils::CompareDoubles( coefficient_*(vec.x - origin_.x) + origin_.y, vec.y);
+    utils::Ord CompareWithVector(const ugdk::Vector2D& vec) {
+        return utils::CompareDoubles( coefficient_*(vec.x - origin_.x) + origin_.y, vec.y);
     }
 
   private:

@@ -3,6 +3,7 @@
 
 // External Dependencies
 #include <list>
+#include <set>
 
 // Internal Dependencies
 #include "game/action/movement.h"
@@ -15,12 +16,12 @@
 // Using
 using std::list;
 using std::set;
-using std::vector;
 using game::action::Movement;
 using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
-using utils::Utils;
+using utils::CompareDoubles;
+using utils::Ord;
 
 namespace game {
 namespace component {
@@ -170,7 +171,7 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
 
     double their_pass = 0.0;
     double their_stay = 0.0;
-    int sizecomp = 0;
+    Ord sizecomp = utils::EQ;
 
     // Let's find out what we're bumping into.
     for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
@@ -183,14 +184,14 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
 
                     if(their_stay == std::numeric_limits<double>::infinity()) // you have bumped into something impassable, like a wall.
                         impassable_bumps.insert(*ot);
-                    else if( (Utils::CompareDoubles(their_pass, stay_sizeclass_) == 2) &&  // you can't fit under that thing
-                             (Utils::CompareDoubles(their_stay, pass_sizeclass_) == 1) ) { // and that thing can't fit under you...
+                    else if( (CompareDoubles(their_pass, stay_sizeclass_) == utils::LT) &&  // you can't fit under that thing
+                             (CompareDoubles(their_stay, pass_sizeclass_) == utils::GT) ) { // and that thing can't fit under you...
 
-                        sizecomp = Utils::CompareDoubles(their_stay, stay_sizeclass_);
+                        sizecomp = CompareDoubles(their_stay, stay_sizeclass_);
                         switch(sizecomp) {
-                            case 1: larger_bumps.insert(*ot); break;
-                            case 0: equal_bumps.insert(*ot); break;
-                            case 2: smaller_bumps.insert(*ot); break;
+                            case utils::GT: larger_bumps.insert(*ot); break;
+                            case utils::EQ: equal_bumps.insert(*ot); break;
+                            case utils::LT: smaller_bumps.insert(*ot); break;
                             default:
                                 #ifdef DEBUG
                                 fprintf(stderr,"CompareDoubles returned error value %i in ShapeRectangular::GetBumpsAt(-)\n", sizecomp)

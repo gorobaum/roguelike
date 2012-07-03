@@ -23,15 +23,8 @@ class LosCone;
 
 class LosProcessor {
   public:
-    LosProcessor(component::Vision* vision)
-      : vision_(vision), octants_(8), preprocessings_(16,-1) {
-        for(int i = 1; i <= 8; ++i)
-        octants_.push_back(new LosOctant(nth_orientation(i),this));
-    }
-    ~LosProcessor() {
-        for(auto ot = octants_.begin(); ot != octants_.end(); ++ot)
-          delete *ot;
-    }
+    LosProcessor(component::Vision* vision);
+    ~LosProcessor();
 
     void Process();
 

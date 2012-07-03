@@ -5,13 +5,17 @@
 // (none)
 
 // Internal Dependencies
-// (none)
+#include "game/base/gametile.h"
 
 // Using
-// (none)
+using game::base::GameTile;
 
 namespace game {
 namespace component {
+
+void Vision::MarkVisible(const GameTile* tile) {
+    //TODO: do stuff.
+}
 
 } // namespace component
 } // namespace game

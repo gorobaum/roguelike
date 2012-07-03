@@ -27,9 +27,12 @@ class Vision : public ComponentBase {
     }
     ~Vision() {}
 
+    const base::GameObject* owner() const { return owner_; }
     base::GameTile* eye() const { return owner_->shape_component()->occupying_tiles().front(); }
     double range() const { return range_; }
     const std::set<int>& relevant_octants() const { return relevant_octants_; }
+
+    void MarkVisible(const base::GameTile* tile);
 
   private:
     int nth_orientation(int n) {
