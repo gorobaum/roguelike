@@ -15,6 +15,7 @@
 // Using
 using std::list;
 using std::set;
+using ugdk::Vector2D;
 using game::base::GameObject;
 using game::base::GameTile;
 
@@ -22,14 +23,14 @@ namespace game {
 namespace alg {
 
 LosProcessor::LosProcessor(component::Vision* vision)
-  : vision_(vision), octants_(8), preprocessings_(16,-1) {
+  : vision_(vision), octants_(12), preprocessings_(16,-1) {
     for(int i = 1; i <= 8; ++i)
-    octants_.push_back(new LosOctant(nth_orientation(i),this));
+        octants_[nth_orientation(i)] = new LosOctant(nth_orientation(i),this);
 }
 
 LosProcessor::~LosProcessor() {
     for(auto ot = octants_.begin(); ot != octants_.end(); ++ot)
-        delete *ot;
+        if(*ot != nullptr) delete *ot;
 }
 
 LosOctant::iterator::iterator(const LosOctant* owner)
@@ -85,6 +86,11 @@ void LosOctant::iterator::step(int delta_x_in, int delta_y_in, int delta_x_out, 
         count_inner_ = 0;
     } else {
         focus_ = gamecontroller->GetTileFromCoordinates(focus_->x()+delta_x_in,focus_->y()+delta_y_in);
+        if(focus_ == nullptr) {
+            focus_ = outer_focus_ = gamecontroller->GetTileFromCoordinates(outer_focus_->x()+delta_x_out,outer_focus_->y()+delta_y_out);
+            ++count_outer_;
+            count_inner_ = 0;
+        }
         ++count_inner_;
     }
 }
@@ -114,6 +120,8 @@ void LosProcessor::Process() {
     rangesquared *= rangesquared;
     const set<int>& relevant_octants = vision_->relevant_octants();
 
+    //TODO: process gameobject tiles.
+
     // clear the preprocessings vector.
     for(int i = 0; i < 16; ++i)
         preprocessings_[i] = -1;
@@ -132,9 +140,24 @@ void LosProcessor::Process() {
             default: break;
         }
     }
+    /* criar cones iniciais */
+
+    for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt) {
+        for(auto ot = LosOctant::iterator(octants_[*rt]); (*ot) != nullptr;  ++ot) {
+            
+            if(Vector2D((*ot)->x() - vision_->eye()->x(), (*ot)->y() - vision_->eye()->y()).LengthSquared() > rangesquared) {
+                ot.jump();
+                if(*ot == nullptr) break;
+                if(Vector2D((*ot)->x() - vision_->eye()->x(), (*ot)->y() - vision_->eye()->y()).LengthSquared() > rangesquared) break;
+            }
+
+            vision_->MarkVisible(*ot);
+
+        }
+
+    }
 
 
-        /* criar cones iniciais */
     /*
         for(auto tt = LosOctant::iterator(*ot);
             ugdk::Vector2D(tt.outer_focus()->x(), tt.outer_focus()->y()).LengthSquared() < rangesquared;
@@ -154,7 +177,9 @@ void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
 
     bool has_offset = off_x != 0 || off_y != 0;
     GameTile* eye = vision_->eye();
-    GameTile* curr_tile = gamecontroller->GetTileFromCoordinates(eye->x()+off_x, eye->y()+off_y);
+    GameTile* curr_tile = gamecontroller->GetTileFromCoordinates(eye->x()+off_x+dir_x, eye->y()+off_y+dir_y);
+
+    if(curr_tile == nullptr) return;
 
     int count = 0;
 
