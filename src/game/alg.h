@@ -6,7 +6,6 @@ namespace alg {
 
 class LosProcessor;
 class LosOctant;
-class LosOctant::iterator;
 class LosCone;
 
 class EqLine;

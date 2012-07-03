@@ -31,8 +31,8 @@ class GameTile {
 	void RemoveObject(GameObject* obj);
 
 	
-	size_t x() const { return x_; }
-	size_t y() const { return y_; }
+	int x() const { return x_; }
+	int y() const { return y_; }
 
 	ugdk::graphic::Node* node() { return node_; }
     const std::list<GameObject*>& objects_here() const { return objects_here_; }
@@ -42,7 +42,7 @@ class GameTile {
 	std::list<GameObject*> objects_here_;
 	ugdk::graphic::Drawable* ground_;
 
-	size_t x_, y_;
+	int x_, y_;
 };
 
 } // namespace base

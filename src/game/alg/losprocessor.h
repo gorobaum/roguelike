@@ -32,15 +32,8 @@ class LosProcessor {
     const component::Vision* vision() const { return vision_; }
 
   private:
-    int nth_orientation(int n) {
-        switch(n) {
-            case 8: case 7: return n+3;
-            case 6: case 5: return n+2;
-            case 4: case 3: return n+1;
-            case 2: case 1: return n;
-            default: return 0;
-        }
-    }
+    // returns n_th octant's o'clock notation.
+    int nth_orientation(int n) { return n + (n-1)/2; }
 
     void preprocess(int dir_x, int dir_y, int off_x = 0, int off_y = 0);
 

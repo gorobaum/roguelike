@@ -46,7 +46,7 @@ void GameObject::Initialize(
         Graphic*       graphic_component ) {
 
     controller_component_ = controller_component;
-
+    vision_component_     =     vision_component;
     damageable_component_ = damageable_component;
     shape_component_      =      shape_component;
     graphic_component_    =    graphic_component;
@@ -54,6 +54,8 @@ void GameObject::Initialize(
 
 void GameObject::Update(double dt) {
     if(controller_component_) controller_component_->Update(dt);
+    if(vision_component_)         vision_component_->Update(dt);
+
     if(graphic_component_)       graphic_component_->Update(dt);
 }
 

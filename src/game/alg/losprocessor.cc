@@ -121,14 +121,14 @@ void LosProcessor::Process() {
     // preprocess stuff.
     for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt) {
         switch(*rt) {
-            case  1: preprocess( 0, 1); preprocess( 1, 1); preprocess( 1, 1, 1, 0); break;
-            case  2: preprocess( 1, 1); preprocess( 1, 0); preprocess( 1, 1, 0, 1); break;
-            case  4: preprocess( 1, 0); preprocess( 1,-1); preprocess( 1,-1, 0,-1); break;
-            case  5: preprocess( 1,-1); preprocess( 0,-1); preprocess( 1,-1, 1, 0); break;
-            case  7: preprocess( 0,-1); preprocess(-1,-1); preprocess(-1,-1,-1, 0); break;
-            case  8: preprocess(-1,-1); preprocess(-1, 0); preprocess(-1,-1, 0,-1); break;
-            case 10: preprocess(-1, 0); preprocess(-1, 1); preprocess(-1, 1, 0, 1); break;
-            case 11: preprocess(-1, 1); preprocess( 0, 1); preprocess(-1, 1,-1, 0); break;
+            case  1: preprocess( 0,-1); preprocess( 1,-1); preprocess( 1,-1, 1, 0); break;
+            case  2: preprocess( 1,-1); preprocess( 1, 0); preprocess( 1,-1, 0,-1); break;
+            case  4: preprocess( 1, 0); preprocess( 1, 1); preprocess( 1, 1, 0, 1); break;
+            case  5: preprocess( 1, 1); preprocess( 0, 1); preprocess( 1, 1, 1, 0); break;
+            case  7: preprocess( 0, 1); preprocess(-1, 1); preprocess(-1, 1,-1, 0); break;
+            case  8: preprocess(-1, 1); preprocess(-1, 0); preprocess(-1, 1, 0, 1); break;
+            case 10: preprocess(-1, 0); preprocess(-1,-1); preprocess(-1,-1, 0,-1); break;
+            case 11: preprocess(-1,-1); preprocess( 0,-1); preprocess(-1,-1,-1, 0); break;
             default: break;
         }
     }
@@ -171,16 +171,16 @@ void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
     while(distsq <= rangesq) {
         if(!has_offset) vision_->MarkVisible(curr_tile);
 
-        const list<GameObject*> stuff = curr_tile->objects_here();
-        for(auto ot = stuff.begin(); ot != stuff.end(); ++ot) {
-            //TODO: regras de bloqueio de visão.
-            if(*ot != vision_->owner()) break;
-        }
+        if(vision_->BlocksVision(curr_tile)) break;
 
         ++count;
 
         // update stuff for the while condition.
         curr_tile = gamecontroller->GetTileFromCoordinates(curr_tile->x()+dir_x, curr_tile->y()+dir_y);
+        
+
+        // can't look beyond the universe, yo!
+        if(curr_tile == nullptr) break;
 
         dxsq = curr_tile->x() - eye->x();
         dxsq *= dxsq;
@@ -189,8 +189,8 @@ void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
         distsq = dxsq + dysq;
     }
 
-    // if exited from range condition, we're done!
-    if(distsq > rangesq) return;
+    // if exited from range condition, or map limits, we're done!
+    if(distsq > rangesq || curr_tile == nullptr) return;
 
     // otherwise, store the count in the correct position in the preprocessings_ vector...
     // ...the correct.. position... HHHHNNNNNGGGGGGFFFSSS
