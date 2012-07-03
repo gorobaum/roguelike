@@ -47,6 +47,7 @@ class Vision : public ComponentBase {
 
     double range_;
     std::set<int> relevant_octants_;
+    std::list<GameTile*> visible_;
 };
 
 } // namespace component

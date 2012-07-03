@@ -44,8 +44,9 @@ class GameController : public ugdk::Scene {
 
 
   private:
-    void ClearDeadGameObjects();
-    void AddPendingGameObjects();
+    void clearDeadGameObjects();
+    void addPendingGameObjects();
+    void blackoutTiles();
     
     std::list<GameObject*> pending_game_objects_;
     std::list<GameObject*> game_objects_;

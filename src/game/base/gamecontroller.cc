@@ -94,7 +94,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     // Add them to the Scene.
     // AddPendingGameObjects(-) reparents the nodes to the root node,
     //   so we need to call it before placing them on the map.
-    AddPendingGameObjects();
+    addPendingGameObjects();
 
     // Place them on the map.
     hero_->shape_component()->PlaceAt(tiles_[10][4]);
@@ -114,6 +114,9 @@ GameController::~GameController() {
 }
 
 void GameController::Update(double dt) {
+    blackoutTiles();
+
+    // update the entities.
     super::Update(dt);
 
     if(hero_ && hero_->dead()) {
@@ -121,23 +124,31 @@ void GameController::Update(double dt) {
         return;
     }
 
-    ClearDeadGameObjects();
-    AddPendingGameObjects();
+    clearDeadGameObjects();
+    addPendingGameObjects();
+
+
 }
 
 void GameController::AddGameObject(GameObject* game_object) {
     pending_game_objects_.push_back(game_object);
 }
 
-void GameController::ClearDeadGameObjects() {
-    for(list<GameObject*>::iterator it = game_objects_.begin(); it != game_objects_.end(); ++it) {
+void GameController::clearDeadGameObjects() {
+    for(auto it = game_objects_.begin(); it != game_objects_.end(); ++it) {
         if((*it)->dead())
             RemoveEntity(*it);
     }
     game_objects_.remove_if(objectIsDead);
 }
 
-void GameController::AddPendingGameObjects() {
+void GameController::blackoutTiles() {
+    for(auto j = tiles_.begin(); j != tiles_.end(); ++j)
+        for(auto i = (*j).begin(); i != (*j).end(); ++i)
+            (*i)->node()->modifier()->set_visible(false);
+}
+
+void GameController::addPendingGameObjects() {
     for(auto it = pending_game_objects_.begin(); it != pending_game_objects_.end(); ++it) {
         if((*it)->graphic_component()->node() != nullptr)
             this->content_node()->AddChild((*it)->graphic_component()->node());
