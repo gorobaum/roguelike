@@ -5,7 +5,9 @@
 // (none)
 
 // External Dependencies
+#include <array> // control_offsets_
 #include <list> // steep_bumps_, shallow_bumps_
+#include <map> // control_offsets_
 #include <vector> // octants_
 
 // Internal Dependencies
@@ -21,6 +23,8 @@ namespace alg {
 class LosOctant;
 class LosCone;
 
+typedef std::array<ugdk::Vector2D,5> Array5Vec2D;
+
 class LosProcessor {
   public:
     LosProcessor(component::Vision* vision);
@@ -30,6 +34,8 @@ class LosProcessor {
 
           component::Vision* vision()       { return vision_; }
     const component::Vision* vision() const { return vision_; }
+    
+    const std::map<int, Array5Vec2D >& control_offsets() const { return control_offsets_; }
 
   private:
     // returns n_th octant's o'clock notation.
@@ -37,9 +43,19 @@ class LosProcessor {
 
     void preprocess(int dir_x, int dir_y, int off_x = 0, int off_y = 0);
 
+    void calculate_control_points(double sight_range);
+    void transform1(const Array5Vec2D& base, int dest);
+    void transform2(const Array5Vec2D& base, int dest);
+    void transform3(const Array5Vec2D& base, int dest);
+    void transform4(const Array5Vec2D& base, int dest);
+
     component::Vision* vision_;
-    std::vector<LosOctant*> octants_;
-    std::vector<int> preprocessings_;
+    std::array<LosOctant*,12> octants_;
+    std::array<int,16> preprocessings_;
+
+    std::list<LosCone*> cones_;
+    std::map<int, Array5Vec2D > control_offsets_; // (steep_near,steep_far,shallow_near,shallow_far,rotate_offset)
+
 };
 
 class LosOctant {
@@ -60,11 +76,10 @@ class LosOctant {
 
 class LosOctant::iterator {
   public:
-    iterator(const LosOctant* owner);
+    iterator(const LosOctant* owner, double range_squared);
     ~iterator();
 
     iterator& operator++();
-    iterator& jump();
 
     const base::GameTile* operator*() const { return focus_; }
     const base::GameTile* outer_focus() const { return outer_focus_; }
@@ -80,26 +95,37 @@ class LosOctant::iterator {
 
     int count_outer_;
     int count_inner_;
+
+    double range_squared_;
 };
 
+namespace enums {
+namespace bump {
+enum BumpType {
+    ABV = 0,
+    STP = 1,
+    MDL = 2,
+    BLK = 3,
+    SHL = 4,
+    BLW = 5
+};
+}
+}
 
 class LosCone {
   public:
     LosCone(const EqLine& steep, const EqLine& shallow, int octant,
             const ugdk::Vector2D& straight_block,
-            const ugdk::Vector2D& inner_diag_block, const ugdk::Vector2D& outer_diag_block)
-      : steep_(steep), shallow_(shallow), orientation_(octant), steep_bumps_(), shallow_bumps_(),
-        straight_block_(straight_block), inner_diag_block_(inner_diag_block), outer_diag_block_(outer_diag_block) {}
+            const ugdk::Vector2D& inner_diag_block, const ugdk::Vector2D& outer_diag_block,
+            const LosProcessor* owner);
 
     const EqLine& steep()   const { return   steep_; }
     const EqLine& shallow() const { return shallow_; }
-
-    int orientation() const { return orientation_; }
     
     const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
     const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
 
-    void   steep_bump(const ugdk::Vector2D& limit) {
+    void   SteepBump(const ugdk::Vector2D& limit) {
         steep_.set_target(limit);
         for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
             --st;
@@ -112,7 +138,7 @@ class LosCone {
         steep_bumps_.push_back(limit);
     }
 
-    void shallow_bump(const ugdk::Vector2D& limit) {
+    void ShallowBump(const ugdk::Vector2D& limit) {
         shallow_.set_target(limit);
         for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
             --st;
@@ -125,10 +151,13 @@ class LosCone {
         shallow_bumps_.push_back(limit);
     }
 
+    enums::bump::BumpType ComputeBumpType(const base::GameTile* focus);
+
   private:
     EqLine steep_;
     EqLine shallow_;
     const int orientation_; // measured as 1,2,4,5,7,8,10 and 11 o'clock.
+    const LosProcessor* owner_;
 
     std::list<ugdk::Vector2D>   steep_bumps_;
     std::list<ugdk::Vector2D> shallow_bumps_;

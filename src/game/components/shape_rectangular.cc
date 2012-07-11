@@ -21,7 +21,7 @@ using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
 using utils::CompareDoubles;
-using utils::Ord;
+using namespace utils::enums;
 
 namespace game {
 namespace component {
@@ -171,7 +171,7 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
 
     double their_pass = 0.0;
     double their_stay = 0.0;
-    Ord sizecomp = utils::EQ;
+    ord::Ord sizecomp = ord::EQ;
 
     // Let's find out what we're bumping into.
     for( size_t j = 0 ; j < dimensions_.y ; ++j ) {
@@ -184,14 +184,14 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
 
                     if(their_stay == std::numeric_limits<double>::infinity()) // you have bumped into something impassable, like a wall.
                         impassable_bumps.insert(*ot);
-                    else if( (CompareDoubles(their_pass, stay_sizeclass_) == utils::LT) &&  // you can't fit under that thing
-                             (CompareDoubles(their_stay, pass_sizeclass_) == utils::GT) ) { // and that thing can't fit under you...
+                    else if( (CompareDoubles(their_pass, stay_sizeclass_) == ord::LT) &&  // you can't fit under that thing
+                             (CompareDoubles(their_stay, pass_sizeclass_) == ord::GT) ) { // and that thing can't fit under you...
 
                         sizecomp = CompareDoubles(their_stay, stay_sizeclass_);
                         switch(sizecomp) {
-                            case utils::GT: larger_bumps.insert(*ot); break;
-                            case utils::EQ: equal_bumps.insert(*ot); break;
-                            case utils::LT: smaller_bumps.insert(*ot); break;
+                            case ord::GT: larger_bumps.insert(*ot); break;
+                            case ord::EQ: equal_bumps.insert(*ot); break;
+                            case ord::LT: smaller_bumps.insert(*ot); break;
                             default:
                                 #ifdef DEBUG
                                 fprintf(stderr,"CompareDoubles returned error value %i in ShapeRectangular::GetBumpsAt(-)\n", sizecomp)
