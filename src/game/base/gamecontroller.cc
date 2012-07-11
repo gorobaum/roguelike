@@ -28,10 +28,10 @@ using game::action::Movement;
 namespace game {
 namespace base {
 
-static double getRandomNumber(double min, double max) {
+/*static double getRandomNumber(double min, double max) {
     double n = rand();
     return min + (max - min) * (n / RAND_MAX);
-}
+}*/
 
 static bool objectIsDead (const GameObject* value) {
     bool is_dead = value->dead();

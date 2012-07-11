@@ -22,9 +22,12 @@ namespace game {
 namespace component {
 
 Vision::Vision(game::base::GameObject* owner) : super(owner), range_(9.5) {
-    for(int i = 1; i <= 8; ++i)
+    /*for(int i = 1; i <= 8; ++i)
         relevant_octants_.insert(nth_orientation(i));
-
+*/
+    relevant_octants_.insert(nth_orientation(1));
+    relevant_octants_.insert(nth_orientation(4));
+    relevant_octants_.insert(nth_orientation(6));
     losprocessor_ = new LosProcessor(this);
 }
 
@@ -45,7 +48,7 @@ bool Vision::BlocksVision(const GameTile* tile) {
     //TODO: POARR NAO TUDO BLOCA VISAO NEH
     const list<GameObject*> stuff = tile->objects_here();
     for(auto ot = stuff.begin(); ot != stuff.end(); ++ot) {
-        if(*ot != owner_ ) return true;
+        if(*ot != owner_) return true;
     }
     return false;
 }

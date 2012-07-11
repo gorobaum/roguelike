@@ -7,6 +7,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <functional>
 #include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
@@ -22,6 +23,9 @@ using std::array;
 using std::list;
 using std::map;
 using std::set;
+using std::tr1::bind;
+using std::tr1::function;
+using namespace std::tr1::placeholders;
 using ugdk::Vector2D;
 using game::alg::EqLine;
 using game::component::Vision;
@@ -43,6 +47,8 @@ LosProcessor::LosProcessor(component::Vision* vision)
         octants_[nth_orientation(i)] = new LosOctant(nth_orientation(i),this);
     for(int i=0; i<16; ++i)
         preprocessings_[i] = -1;
+
+    calculate_control_points(vision_->range());
 }
 
 LosProcessor::~LosProcessor() {
@@ -50,6 +56,41 @@ LosProcessor::~LosProcessor() {
         if(octants_[nth_orientation(i)] != nullptr) delete octants_[nth_orientation(i)];
     for(auto ct = cones_.begin(); ct != cones_.end(); ++ct)
         if(*ct != nullptr) delete *ct;
+}
+
+static int staticcount = 0;
+
+bool LosProcessor::process_cone(const base::GameTile* binded_tile, LosCone* cone) {
+    bump::BumpType bt = cone->ComputeBumpType(binded_tile);
+    switch(bt) {
+        case bump::STP:
+            vision_->MarkVisible(binded_tile);
+            if(vision_->BlocksVision(binded_tile)) cone->SteepBump(binded_tile);
+            return false;
+        case bump::MDL:
+            vision_->MarkVisible(binded_tile);
+            if(vision_->BlocksVision(binded_tile)) {
+                ++staticcount;
+                if(staticcount < 50) {
+                LosCone* newcone = new LosCone(*cone);
+                cone->SteepBump(binded_tile);
+                newcone->ShallowBump(binded_tile);
+                cones_.push_back(newcone);
+                }
+            }
+            return false;
+        case bump::BLK:
+            vision_->MarkVisible(binded_tile);
+            if(vision_->BlocksVision(binded_tile)) return true;
+            return false;
+        case bump::SHL:
+            vision_->MarkVisible(binded_tile);
+            if(vision_->BlocksVision(binded_tile)) cone->ShallowBump(binded_tile);
+            return false;
+        case bump::ABV:
+        case bump::BLW:
+        default: return false;
+    }
 }
 
 void LosProcessor::Process() {
@@ -82,7 +123,7 @@ void LosProcessor::Process() {
 
     for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt) {
         EqLine steep(EYE_VEC() + (control_offsets_[*rt])[0], EYE_VEC() + (control_offsets_[*rt])[1]);
-        EqLine shallow(EYE_VEC() + (control_offsets_[*rt])[0], EYE_VEC() + (control_offsets_[*rt])[1]);
+        EqLine shallow(EYE_VEC() + (control_offsets_[*rt])[2], EYE_VEC() + (control_offsets_[*rt])[3]);
 
         //TODO: calcular os blocks preprocessados.
         Vector2D straight_block;
@@ -95,15 +136,17 @@ void LosProcessor::Process() {
         for(auto ot = LosOctant::iterator(octants_[*rt],rangesquared);
             (*ot) != nullptr && (TILE_VEC(*ot) - eye).LengthSquared() <= rangesquared;
             ++ot ) {
+
+            staticcount = 0;
             
             //TODO: completar o algoritmo.
-            for(auto ct = cones_.begin(); ct != cones_.end(); ++ct) {
-                
-               vision_->MarkVisible(*ot);
-            }
+            //iterate through the list, removing if necessary.
+            function<bool (LosCone*)> process_cone_at_binded_tile = bind( &LosProcessor::process_cone, this, (*ot), _1);
+            cones_.remove_if( process_cone_at_binded_tile );
+
+            staticcount = 0;
         
         }
-
         cones_.clear();
     }
 }
@@ -226,7 +269,7 @@ void LosProcessor::calculate_control_points(double sight_range) {
     five_off[4] = Vector2D(1.0,0.0);
     control_offsets_[1] = five_off;
 
-    //derived octants.
+    // derived octants.
     transform1(control_offsets_[1],2);
     transform2(control_offsets_[2],4);
     transform3(control_offsets_[4],5);
@@ -285,14 +328,14 @@ LosOctant::iterator::iterator(const LosOctant* owner, double range_squared)
     int start_iter_x = 0, start_iter_y = 0;
 
     switch(owner->orientation()) {
-        case 1:  start_iter_x =  1; start_iter_y =  2; break;
-        case 2:  start_iter_x =  2; start_iter_y =  1; break;
-        case 4:  start_iter_x =  2; start_iter_y = -1; break;
-        case 5:  start_iter_x =  1; start_iter_y = -2; break;
-        case 7:  start_iter_x = -1; start_iter_y = -2; break;
-        case 8:  start_iter_x = -2; start_iter_y = -1; break;
-        case 10: start_iter_x = -2; start_iter_y =  1; break;
-        case 11: start_iter_x = -1; start_iter_y =  2; break;
+        case 1:  start_iter_x =  1; start_iter_y = -2; break;
+        case 2:  start_iter_x =  2; start_iter_y = -1; break;
+        case 4:  start_iter_x =  2; start_iter_y =  1; break;
+        case 5:  start_iter_x =  1; start_iter_y =  2; break;
+        case 7:  start_iter_x = -1; start_iter_y =  2; break;
+        case 8:  start_iter_x = -2; start_iter_y =  1; break;
+        case 10: start_iter_x = -2; start_iter_y = -1; break;
+        case 11: start_iter_x = -1; start_iter_y = -2; break;
         default: break;
     }
 
@@ -306,14 +349,14 @@ LosOctant::iterator::~iterator() {}
 LosOctant::iterator& LosOctant::iterator::operator++() {
 
     switch(owner_->orientation()) {
-        case 1:  step( 1, 0, 0, 1); break;
-        case 2:  step( 0, 1, 1, 0); break;
-        case 4:  step( 0,-1, 1, 0); break;
-        case 5:  step( 1, 0, 0,-1); break;
-        case 7:  step(-1, 0, 0,-1); break;
-        case 8:  step( 0,-1,-1, 0); break;
-        case 10: step( 0, 1,-1, 0); break;
-        case 11: step(-1, 0, 0, 1); break;
+        case 1:  step( 1, 0, 0,-1); break;
+        case 2:  step( 0,-1, 1, 0); break;
+        case 4:  step( 0, 1, 1, 0); break;
+        case 5:  step( 1, 0, 0, 1); break;
+        case 7:  step(-1, 0, 0, 1); break;
+        case 8:  step( 0, 1,-1, 0); break;
+        case 10: step( 0,-1,-1, 0); break;
+        case 11: step(-1, 0, 0,-1); break;
         default: break;
     }
 
@@ -366,6 +409,38 @@ bump::BumpType LosCone::ComputeBumpType(const base::GameTile* focus) {
     }
     if( shallow_.CompareWithVector(foc + offs[0]) == ord::GT ) return bump::SHL;
     return bump::MDL;
+}
+
+void LosCone::SteepBump(const base::GameTile* tile) {
+    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[0];
+
+    steep_.set_target(limit);
+    for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
+        --st;
+        if(steep_.CompareWithVector(*st) == ord::LT) {
+            steep_.set_origin(*st);
+            //TODO: testar essa prox linha em mais detalhe.
+            shallow_bumps_.erase(shallow_bumps_.begin(),++st);
+            break;
+        }
+    }
+    steep_bumps_.push_back(limit);
+}
+
+void LosCone::ShallowBump(const base::GameTile* tile) {
+    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[2];
+
+    shallow_.set_target(limit);
+    for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
+        --st;
+        if(shallow_.CompareWithVector(*st) == ord::GT) {
+            shallow_.set_origin(*st);
+            //TODO: testar essa prox linha em mais detalhe.
+            steep_bumps_.erase(steep_bumps_.begin(),++st);
+            break;
+        }
+    }
+    shallow_bumps_.push_back(limit);
 }
 
 } // namespace alg

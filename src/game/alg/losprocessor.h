@@ -49,6 +49,8 @@ class LosProcessor {
     void transform3(const Array5Vec2D& base, int dest);
     void transform4(const Array5Vec2D& base, int dest);
 
+    bool process_cone(const base::GameTile* binded_tile, LosCone* cone);
+
     component::Vision* vision_;
     std::array<LosOctant*,12> octants_;
     std::array<int,16> preprocessings_;
@@ -125,31 +127,8 @@ class LosCone {
     const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
     const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
 
-    void   SteepBump(const ugdk::Vector2D& limit) {
-        steep_.set_target(limit);
-        for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
-            --st;
-            if(steep_.CompareWithVector(*st) <= 0) {
-                steep_.set_origin(*st);
-                shallow_bumps_.erase(shallow_bumps_.begin(),++st);
-                break;
-            }
-        }
-        steep_bumps_.push_back(limit);
-    }
-
-    void ShallowBump(const ugdk::Vector2D& limit) {
-        shallow_.set_target(limit);
-        for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
-            --st;
-            if(shallow_.CompareWithVector(*st) >= 0) {
-                shallow_.set_origin(*st);
-                steep_bumps_.erase(steep_bumps_.begin(),++st);
-                break;
-            }
-        }
-        shallow_bumps_.push_back(limit);
-    }
+    void   SteepBump(const base::GameTile* tile);
+    void ShallowBump(const base::GameTile* tile);
 
     enums::bump::BumpType ComputeBumpType(const base::GameTile* focus);
 

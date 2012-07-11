@@ -105,7 +105,7 @@ class EqLine {
     // métodos
 
     ord::Ord CompareWithVector(const ugdk::Vector2D& vec) {
-        return utils::CompareDoubles( coefficient_*(vec.x - origin_.x) + origin_.y, vec.y);
+        return utils::CompareDoubles(vec.y, coefficient_*(vec.x - target().x) + target().y);
     }
 
   private:
