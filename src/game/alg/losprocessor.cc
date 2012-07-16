@@ -125,6 +125,9 @@ void LosProcessor::Process() {
         EqLine steep(EYE_VEC() + (control_offsets_[*rt])[0], EYE_VEC() + (control_offsets_[*rt])[1]);
         EqLine shallow(EYE_VEC() + (control_offsets_[*rt])[2], EYE_VEC() + (control_offsets_[*rt])[3]);
 
+        //TODO: tirar issoaqui
+        EqLine::Test();
+
         //TODO: calcular os blocks preprocessados.
         Vector2D straight_block;
         Vector2D inner_diag_block;

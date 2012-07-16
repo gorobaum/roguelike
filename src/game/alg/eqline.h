@@ -105,7 +105,16 @@ class EqLine {
     // métodos
 
     ord::Ord CompareWithVector(const ugdk::Vector2D& vec) {
-        return utils::CompareDoubles(vec.y, coefficient_*(vec.x - target().x) + target().y);
+        return utils::CompareDoubles(coefficient_*(vec.x - target().x) + target().y, vec.y);
+    }
+
+    static void Test() {
+        int test1 = 0, test2 = 0, test3 = 0, test4 = 0, test5 = 0;
+
+        EqLine line = EqLine(ugdk::Vector2D(0,0),ugdk::Vector2D(1,0));
+        test1 = line.CompareWithVector(ugdk::Vector2D(2,0));
+        printf("%d,%d,%d,%d,%d",test1,test2,test3,test4,test5);
+        printf("\n");
     }
 
   private:
