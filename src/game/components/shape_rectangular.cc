@@ -194,7 +194,7 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
                             case ord::LT: smaller_bumps.insert(*ot); break;
                             default:
                                 #ifdef DEBUG
-                                fprintf(stderr,"CompareDoubles returned error value %i in ShapeRectangular::GetBumpsAt(-)\n", sizecomp)
+                                fprintf(stderr,"CompareDoubles returned error value %i in ShapeRectangular::GetBumpsAt(-)\n", sizecomp);
                                 #endif
                                 break;
                         }

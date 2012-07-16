@@ -104,12 +104,12 @@ class LosOctant::iterator {
 namespace enums {
 namespace bump {
 enum BumpType {
-    ABV = 0,
-    STP = 1,
-    MDL = 2,
-    BLK = 3,
-    SHL = 4,
-    BLW = 5
+    ABV = 0, // tile está completamente acima do cone de visão
+    STP = 1, // tile colide com a steep line do cone apenas
+    MDL = 2, // tile está dentro do cone de visão, sem colidir com nenhuma linha
+    BLK = 3, // tile bloqueia o campo de visão completamente (colide com as duas linhas)
+    SHL = 4, // tile colide com a shallow line do cone apenas
+    BLW = 5  // tile está completamente abaixo do cone de visão
 };
 }
 }
@@ -131,6 +131,10 @@ class LosCone {
     void ShallowBump(const base::GameTile* tile);
 
     enums::bump::BumpType ComputeBumpType(const base::GameTile* focus);
+
+#ifdef DEBUG
+    void LosCone::TestCmpBumpType(const LosProcessor* owner);
+#endif
 
   private:
     EqLine steep_;

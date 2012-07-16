@@ -49,10 +49,10 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
-	for(size_t y = 0; y < 25; ++y) {
+	for(size_t y = 0; y < 50; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
-		for(size_t x = 0; x < 30; ++x) {
+		for(size_t x = 0; x < 50; ++x) {
 			GameTile* gt = new GameTile(x, y);
             gt->node()->set_zindex(-1.0);
 			gt->node()->modifier()->set_offset(pos);

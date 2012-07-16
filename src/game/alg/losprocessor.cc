@@ -125,9 +125,6 @@ void LosProcessor::Process() {
         EqLine steep(EYE_VEC() + (control_offsets_[*rt])[0], EYE_VEC() + (control_offsets_[*rt])[1]);
         EqLine shallow(EYE_VEC() + (control_offsets_[*rt])[2], EYE_VEC() + (control_offsets_[*rt])[3]);
 
-        //TODO: tirar issoaqui
-        EqLine::Test();
-
         //TODO: calcular os blocks preprocessados.
         Vector2D straight_block;
         Vector2D inner_diag_block;
@@ -401,18 +398,57 @@ LosCone::LosCone(const EqLine& steep, const EqLine& shallow, int octant,
 bump::BumpType LosCone::ComputeBumpType(const base::GameTile* focus) {
     const Array5Vec2D& offs = owner_->control_offsets().at(orientation_);
     Vector2D foc = TILE_VEC(focus);
-
-    if( steep_.CompareWithVector(foc + offs[0]) == ord::LT )
+    /*
+#ifdef DEBUG
+    fprintf(stderr,"(%f,%f), (%f,%f)\n",offs[0].x,offs[0].y,offs[2].x,offs[2].y);
+#endif
+    */
+    ord::Ord cmp = steep_.CompareWithVector(foc + offs[0]);
+    if( cmp == ord::LT || cmp == ord::EQ )
         return bump::ABV;
-    if( shallow_.CompareWithVector(foc + offs[2]) == ord::GT )
+
+    cmp = shallow_.CompareWithVector(foc + offs[2]);
+    if( cmp == ord::GT || cmp == ord::EQ )
         return bump::BLW;
-    if( steep_.CompareWithVector(foc + offs[2]) == ord::LT ) {
-        if( shallow_.CompareWithVector(foc + offs[0]) == ord::GT ) return bump::BLK;
+
+    cmp = steep_.CompareWithVector(foc + offs[2]);
+    if( cmp == ord::LT ) {
+        cmp = shallow_.CompareWithVector(foc + offs[0]);
+        if( cmp == ord::GT ) return bump::BLK;
+        /* the following compare is useless due to case bump::ABV :
+         * cmp = steep_.CompareWithVector(foc + offs[0]);
+         * if( cmp == ord::GT || cmp == ord::EQ ) */
         return bump::STP;
     }
-    if( shallow_.CompareWithVector(foc + offs[0]) == ord::GT ) return bump::SHL;
+    cmp = shallow_.CompareWithVector(foc + offs[0]);
+    if( cmp == ord::GT ) return bump::SHL;
     return bump::MDL;
 }
+
+#ifdef DEBUG
+void LosCone::TestCmpBumpType(const LosProcessor* owner) {
+    const base::GameController* gamecontroller = base::GameController::reference();
+
+    EqLine shallow = EqLine(Vector2D(0.0,1.0),Vector2D(40.0,5.0));
+    EqLine steep = EqLine(Vector2D(1.0,0.0),Vector2D(5.0,40.0));
+    LosCone cone = LosCone(steep,shallow,4,Vector2D(0.0),Vector2D(0.0),Vector2D(0.0),owner);
+
+    GameTile* tile1 = gamecontroller->GetTileFromCoordinates(0,40);
+    GameTile* tile2 = gamecontroller->GetTileFromCoordinates(1,5);
+    GameTile* tile3 = gamecontroller->GetTileFromCoordinates(30,30);
+    GameTile* tile4 = gamecontroller->GetTileFromCoordinates(1,1);
+    GameTile* tile5 = gamecontroller->GetTileFromCoordinates(5,1);
+    GameTile* tile6 = gamecontroller->GetTileFromCoordinates(40,0);
+
+    fprintf(stderr,"LosCone TestCmpBumpType: %d,",cone.ComputeBumpType(tile1));
+    fprintf(stderr,"%d,",cone.ComputeBumpType(tile2));
+    fprintf(stderr,"%d,",cone.ComputeBumpType(tile3));
+    fprintf(stderr,"%d,",cone.ComputeBumpType(tile4));
+    fprintf(stderr,"%d,",cone.ComputeBumpType(tile5));
+    fprintf(stderr,"%d",cone.ComputeBumpType(tile6));
+    fprintf(stderr,"\n");
+}
+#endif
 
 void LosCone::SteepBump(const base::GameTile* tile) {
     Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[0];
