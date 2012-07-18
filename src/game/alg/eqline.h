@@ -54,6 +54,7 @@ class EqLine {
     // setters
     void set_origin(const ugdk::Vector2D& new_origin) {
         ugdk::Vector2D target = this->target();
+        ugdk::Vector2D prevent_vert(0.0);
 
         if(utils::CompareDoubles(target.x,new_origin.x) == ord::EQ) {
             if(utils::CompareDoubles(target.y,new_origin.y) == ord::EQ) {
@@ -61,16 +62,24 @@ class EqLine {
                 return;
             }
 #ifdef DEBUG
-            fprintf(stderr,"BAD BAD PROGRAMMER: Vertical line after set_origin:\n");
+            fprintf(stderr,"EqLine soft Warning: Attempt of vertical line at set_origin:\n");
             fprintf(stderr,"  new_origin == (%f,%f)\n",new_origin.x,new_origin.y);
             fprintf(stderr,"  target == (%f,%f)\n",target.x,target.y);
 #endif
+            if(coefficient_ < 0) {
+                if(utils::CompareDoubles(target.y,new_origin.y) == ord::LT) prevent_vert.x -= 0.0001;
+                else prevent_vert.x += 0.0001;
+            } else {
+                if(utils::CompareDoubles(target.y,new_origin.y) == ord::LT) prevent_vert.x += 0.0001;
+                else prevent_vert.x -= 0.0001;
+            }
         }
-        coefficient_ = ( coefficient_*(target.x - origin_.x) - (new_origin.y - origin_.y) ) / (target.x - new_origin.x);
-        origin_ = new_origin;
+        coefficient_ = ( coefficient_*(target.x - origin_.x) - (new_origin.y - origin_.y) ) / (target.x - (new_origin.x + prevent_vert.x));
+        origin_ = new_origin + prevent_vert;
     }
 
     void set_target(const ugdk::Vector2D& new_target) {
+        double prevent_vert = 0.0;
         
         if(utils::CompareDoubles(new_target.x,origin_.x) == ord::EQ) {
             if(utils::CompareDoubles(new_target.y,origin_.y) == ord::EQ) {
@@ -78,13 +87,20 @@ class EqLine {
                 return;
             }
 #ifdef DEBUG
-            fprintf(stderr,"BAD BAD PROGRAMMER: Vertical line after set_target:\n");
+            fprintf(stderr,"EqLine soft Warning: Attempt of vertical line at set_target:\n");
             fprintf(stderr,"  origin_ == (%f,%f)\n",origin_.x,origin_.y);
             fprintf(stderr,"  new_target == (%f,%f)\n",new_target.x,new_target.y);
 #endif
+            if(coefficient_ < 0) {
+                if(utils::CompareDoubles(new_target.y,origin_.y) == ord::LT) prevent_vert += 0.0001;
+                else prevent_vert -= 0.0001;
+            } else {
+                if(utils::CompareDoubles(new_target.y,origin_.y) == ord::LT) prevent_vert -= 0.0001;
+                else prevent_vert += 0.0001;
+            }
         }
-        coefficient_ = (new_target.y - origin_.y) / (new_target.x - origin_.x);
-        target_x_ = new_target.x;
+        coefficient_ = (new_target.y - origin_.y) / (new_target.x + prevent_vert - origin_.x);
+        target_x_ = new_target.x + prevent_vert;
     }
     //TODO: mais setters
 

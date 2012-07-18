@@ -26,7 +26,7 @@ GraphicRectangular::GraphicRectangular(GameObject* owner, string visual_represen
   : super(owner, visual_representation, zindex) {}
 GraphicRectangular::~GraphicRectangular() {}
 
-void GraphicRectangular::Update(double dt) {}
+void GraphicRectangular::Update(double) {}
 
 void GraphicRectangular::NodeLogic(const list<GameTile*>& occupying_tiles) {
     node()->modifier()->set_scale( (static_cast<ShapeRectangular*>(owner_->shape_component())->dimensions())*0.382 );

@@ -21,14 +21,25 @@ using game::alg::LosProcessor;
 namespace game {
 namespace component {
 
-Vision::Vision(game::base::GameObject* owner) : super(owner), range_(19.5) {
+Vision::Vision(game::base::GameObject* owner) : super(owner), range_(29.5) {
+/*
     for(int i = 1; i <= 8; ++i)
         relevant_octants_.insert(nth_orientation(i));
-        
-/*    relevant_octants_.insert(nth_orientation(1));
-    relevant_octants_.insert(nth_orientation(2));
-    relevant_octants_.insert(nth_orientation(4));
-    relevant_octants_.insert(nth_orientation(6));*/
+*/
+/*
+    for(int i = 2; i <= 7; ++i)
+        relevant_octants_.insert(nth_orientation(i));
+*/
+
+    relevant_octants_.insert(nth_orientation(1));
+//    relevant_octants_.insert(nth_orientation(2));
+//    relevant_octants_.insert(nth_orientation(4));
+//    relevant_octants_.insert(nth_orientation(5));
+//    relevant_octants_.insert(nth_orientation(7));
+//    relevant_octants_.insert(nth_orientation(8));
+//    relevant_octants_.insert(nth_orientation(10));
+//    relevant_octants_.insert(nth_orientation(11));
+
     losprocessor_ = new LosProcessor(this);
 }
 

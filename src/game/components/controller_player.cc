@@ -29,7 +29,7 @@ ControllerPlayer::ControllerPlayer(GameObject* owner)
 }
 ControllerPlayer::~ControllerPlayer() {}
 
-void ControllerPlayer::Update(double dt) {
+void ControllerPlayer::Update(double) {
     InputManager* input = INPUT_MANAGER();
 
     if( input->KeyPressed(ugdk::input::K_RIGHT) || input->KeyPressed(ugdk::input::K_LEFT) ||

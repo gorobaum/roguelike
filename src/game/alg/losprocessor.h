@@ -23,7 +23,7 @@ namespace alg {
 class LosOctant;
 class LosCone;
 
-typedef std::array<ugdk::Vector2D,5> Array5Vec2D;
+typedef std::array<ugdk::Vector2D,9> Array9Vec2D;
 
 class LosProcessor {
   public:
@@ -35,7 +35,7 @@ class LosProcessor {
           component::Vision* vision()       { return vision_; }
     const component::Vision* vision() const { return vision_; }
     
-    const std::map<int, Array5Vec2D >& control_offsets() const { return control_offsets_; }
+    const std::map<int, Array9Vec2D >& control_offsets() const { return control_offsets_; }
 
   private:
     // returns n_th octant's o'clock notation.
@@ -44,10 +44,10 @@ class LosProcessor {
     void preprocess(int dir_x, int dir_y, int off_x = 0, int off_y = 0);
 
     void calculate_control_points(double sight_range);
-    void transform1(const Array5Vec2D& base, int dest);
-    void transform2(const Array5Vec2D& base, int dest);
-    void transform3(const Array5Vec2D& base, int dest);
-    void transform4(const Array5Vec2D& base, int dest);
+    void transform1(const Array9Vec2D& base, int dest);
+    void transform2(const Array9Vec2D& base, int dest);
+    void transform3(const Array9Vec2D& base, int dest);
+    void transform4(const Array9Vec2D& base, int dest);
 
     bool process_cone(const base::GameTile* binded_tile, LosCone* cone);
 
@@ -56,7 +56,7 @@ class LosProcessor {
     std::array<int,16> preprocessings_;
 
     std::list<LosCone*> cones_;
-    std::map<int, Array5Vec2D > control_offsets_; // (steep_near,steep_far,shallow_near,shallow_far,rotate_offset)
+    std::map<int, Array9Vec2D > control_offsets_; // (steep_near,steep_far,shallow_near,shallow_far,rotate_offset)
 
 };
 

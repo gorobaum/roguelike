@@ -2,9 +2,7 @@
 #include "game/components/graphic.h"
 
 // External Dependencies
-//#include <ugdk/base/engine.h>
 #include <ugdk/graphic/node.h>
-
 #include <ugdk/base/resourcemanager.h>
 #include <ugdk/graphic/drawable/texturedrectangle.h>
 

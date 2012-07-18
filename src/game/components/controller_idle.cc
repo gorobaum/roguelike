@@ -13,7 +13,7 @@
 namespace game {
 namespace component {
 
-void ControllerIdle::Update(double dt) {
+void ControllerIdle::Update(double) {
 
 }
 

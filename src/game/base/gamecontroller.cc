@@ -49,7 +49,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
-	for(size_t y = 0; y < 35; ++y) {
+	for(size_t y = 0; y < 40; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
 		for(size_t x = 0; x < 50; ++x) {
@@ -90,6 +90,12 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     AddGameObject(wall_6);
     GameObject* wall_7 = builder.BuildWall();
     AddGameObject(wall_7);
+    GameObject* wall_8 = builder.BuildWall();
+    AddGameObject(wall_8);
+    GameObject* wall_9 = builder.BuildWall();
+    AddGameObject(wall_9);
+    GameObject* wall_0 = builder.BuildWall();
+    AddGameObject(wall_0);
 
     // Add them to the Scene.
     // AddPendingGameObjects(-) reparents the nodes to the root node,
@@ -98,7 +104,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 
     // Place them on the map.
     hero_->shape_component()->PlaceAt(tiles_[10][4]);
-    enemy->shape_component()->PlaceAt(tiles_[20][20]);
+    enemy->shape_component()->PlaceAt(tiles_[25][10]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
     wall_1->shape_component()->PlaceAt(tiles_[15][10]);
     wall_2->shape_component()->PlaceAt(tiles_[16][10]);
@@ -107,6 +113,9 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     wall_5->shape_component()->PlaceAt(tiles_[13][14]);
     wall_6->shape_component()->PlaceAt(tiles_[10][16]);
     wall_7->shape_component()->PlaceAt(tiles_[11][16]);
+    wall_8->shape_component()->PlaceAt(tiles_[10][25]);
+    wall_9->shape_component()->PlaceAt(tiles_[11][24]);
+    wall_0->shape_component()->PlaceAt(tiles_[20][24]);
 }
 
 GameController::~GameController() {

@@ -19,7 +19,7 @@ namespace component {
     return min + (max - min) * (n / RAND_MAX);
 }*/
 
-void ControllerAi::Update(double dt) {
+void ControllerAi::Update(double) {
 
 }
 

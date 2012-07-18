@@ -123,19 +123,24 @@ void LosProcessor::Process() {
 
     for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt) {
         
-        Vector2D anti_vert_offset(0.1,0.0);
-        if( (*rt) >= 1 && (*rt) <= 5 ) { anti_vert_offset.x = -0.1; }
+        Vector2D anti_vert_offset(0.000001,0.0);
+        if( (*rt) >= 1 && (*rt) <= 5 ) { anti_vert_offset.x = -0.000001; }
 
-        EqLine steep(eye + (control_offsets_[*rt])[0] + anti_vert_offset, eye + (control_offsets_[*rt])[1]);
-        EqLine shallow(eye + (control_offsets_[*rt])[2], eye + (control_offsets_[*rt])[3]);
+        EqLine steep(eye + control_offsets_[*rt][0] + anti_vert_offset, eye + control_offsets_[*rt][1]);
+        EqLine shallow(eye + control_offsets_[*rt][2], eye + control_offsets_[*rt][3]);
+        EqLine aux_steep(eye + control_offsets_[*rt][5] , eye + control_offsets_[*rt][6]);
+        EqLine aux_shallow(eye + control_offsets_[*rt][7] , eye + control_offsets_[*rt][8]);
 
         //TODO: calcular os blocks preprocessados.
         Vector2D straight_block;
         Vector2D inner_diag_block;
         Vector2D outer_diag_block;
 
-        LosCone* cone_init = new LosCone(steep,shallow,*rt,straight_block,inner_diag_block,outer_diag_block,this);
-        cones_.push_back(cone_init);
+        LosCone* cone_init_main = new LosCone(steep,shallow,*rt,straight_block,inner_diag_block,outer_diag_block,this);
+        LosCone* cone_init_aux = new LosCone(aux_steep,aux_shallow,*rt,straight_block,inner_diag_block,outer_diag_block,this);
+
+        cones_.push_back(cone_init_main);
+        cones_.push_back(cone_init_aux);
 
         for(auto ot = LosOctant::iterator(octants_[*rt],rangesquared);
             (*ot) != nullptr && (TILE_VEC(*ot) - eye).LengthSquared() <= rangesquared;
@@ -259,16 +264,23 @@ void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
 }
 
 void LosProcessor::calculate_control_points(double sight_range) {
-    Array5Vec2D five_off;
+    Array9Vec2D nine_off;
     sight_range *= 2.0;
 
     // first octant.
-    five_off[0] = Vector2D(1.0,1.0);                        // steep near offset
-    five_off[1] = Vector2D(1.0,-sight_range);               // steep far offset
-    five_off[2] = Vector2D(0.0,0.0);                        // shallow near offset
-    five_off[3] = Vector2D(sight_range+1.0,-sight_range);   // shallow far offset
-    five_off[4] = Vector2D(1.0,0.0);                        // rotate center
-    control_offsets_[1] = Array5Vec2D(five_off);
+    nine_off[0] = Vector2D(1.0,1.0);                       // steep near offset
+    nine_off[1] = Vector2D(1.0,-sight_range);              // steep far offset
+    nine_off[2] = Vector2D(0.0,0.0);                       // shallow near offset
+    nine_off[3] = Vector2D(sight_range+1.0,-sight_range);  // shallow far offset
+
+    nine_off[4] = Vector2D(1.0,0.0);                       // rotate center
+
+    nine_off[5] = nine_off[0];                             // aux steep near offset
+    nine_off[6] = Vector2D(2.0,-3.0);                      // aux steep far offset
+    nine_off[7] = Vector2D(0.0,1.0);                       // aux shallow near offset
+    nine_off[8] = nine_off[3];                             // aux shallow far offset
+
+    control_offsets_[1] = Array9Vec2D(nine_off);
 
     // derived octants.
     transform1(control_offsets_[1],2);
@@ -280,51 +292,67 @@ void LosProcessor::calculate_control_points(double sight_range) {
     transform3(control_offsets_[10],11);
 }
 
-void LosProcessor::transform1(const Array5Vec2D& base, int dest) {
-    Array5Vec2D five_off;
+void LosProcessor::transform1(const Array9Vec2D& base, int dest) {
+    Array9Vec2D nine_off;
     
-    five_off[0] = base[0];
-    five_off[1] = base[3];
-    five_off[2] = base[2];
+    nine_off[0] = base[0];
+    nine_off[1] = base[3];
+    nine_off[2] = base[2];
     Vector2D tempvec = base[1] - base[4];
-    five_off[3] = Vector2D(tempvec.y,tempvec.x) + base[4];
-    five_off[4] = base[4];
+    nine_off[3] = Vector2D(tempvec.y,tempvec.x) + base[4];
 
-    control_offsets_[dest] = Array5Vec2D(five_off);
+    nine_off[4] = base[4];
+
+    nine_off[5] = base[7];
+    nine_off[6] = base[8];
+    tempvec = base[5] - base[4];
+    nine_off[7] = Vector2D(tempvec.y,tempvec.x) + base[4];
+    tempvec = base[6] - base[4];
+    nine_off[8] = Vector2D(tempvec.y,tempvec.x) + base[4];
+
+    control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform2(const Array5Vec2D& base, int dest) {
-    Array5Vec2D five_off;
+void LosProcessor::transform2(const Array9Vec2D& base, int dest) {
+    Array9Vec2D nine_off;
     Vector2D center(0.5,0.5);
 
-    for(int i=0; i<5; ++i) {
+    for(int i=0; i<9; ++i) {
         Vector2D tempvec = base[i] - center;
-        five_off[i] = Vector2D(tempvec.x,-tempvec.y) + center;
+        nine_off[i] = Vector2D(tempvec.x,-tempvec.y) + center;
     }
 
-    control_offsets_[dest] = Array5Vec2D(five_off);
+    control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform3(const Array5Vec2D& base, int dest) {
-    Array5Vec2D five_off;
+void LosProcessor::transform3(const Array9Vec2D& base, int dest) {
+    Array9Vec2D nine_off;
     
-    five_off[0] = base[0];
+    nine_off[0] = base[0];
     Vector2D tempvec = base[3] - base[4];
-    five_off[1] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
-    five_off[2] = base[2];
-    five_off[3] = base[1];
-    five_off[4] = base[4];
+    nine_off[1] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    nine_off[2] = base[2];
+    nine_off[3] = base[1];
 
-    control_offsets_[dest] = Array5Vec2D(five_off);
+    nine_off[4] = base[4];
+    
+    tempvec = base[7] - base[4];
+    nine_off[5] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    tempvec = base[8] - base[4];
+    nine_off[6] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    nine_off[7] = base[5];
+    nine_off[8] = base[6];
+
+    control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform4(const Array5Vec2D& base, int dest) {
-    Array5Vec2D five_off;
+void LosProcessor::transform4(const Array9Vec2D& base, int dest) {
+    Array9Vec2D nine_off;
     Vector2D center(0.5,0.5);
 
-    for(int i=0; i<5; ++i) {
+    for(int i=0; i<9; ++i) {
         Vector2D tempvec = base[i] - center;
-        five_off[i] = Vector2D(-tempvec.x,tempvec.y) + center;
+        nine_off[i] = Vector2D(-tempvec.x,tempvec.y) + center;
     }
     
-    control_offsets_[dest] = Array5Vec2D(five_off);
+    control_offsets_[dest] = Array9Vec2D(nine_off);
 }
 
 LosOctant::iterator::iterator(const LosOctant* owner, double range_squared)
@@ -403,7 +431,7 @@ LosCone::LosCone(const EqLine& steep, const EqLine& shallow, int octant,
     owner_(owner) {}
 
 bump::BumpType LosCone::ComputeBumpType(const base::GameTile* focus, int ydir) {
-    const Array5Vec2D& offs = owner_->control_offsets().at(orientation_);
+    const Array9Vec2D& offs = owner_->control_offsets().at(orientation_);
     Vector2D foc = TILE_VEC(focus);
     /*
 #ifdef DEBUG
