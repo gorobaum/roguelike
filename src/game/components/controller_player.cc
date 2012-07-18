@@ -9,6 +9,7 @@
 // Internal Dependencies
 #include "game/base/gameobject.h"
 #include "game/components/shape.h"
+#include "game/components/vision.h"
 
 // Using
 using ugdk::input::InputManager;
@@ -32,6 +33,11 @@ ControllerPlayer::~ControllerPlayer() {}
 void ControllerPlayer::Update(double) {
     InputManager* input = INPUT_MANAGER();
 
+    // Vision stuff
+    if( input->KeyPressed(ugdk::input::K_i) ) owner_->vision_component()->Initialize();
+    if( input->KeyPressed(ugdk::input::K_o) ) owner_->vision_component()->CycleOctant();
+
+    // Movement
     if( input->KeyPressed(ugdk::input::K_RIGHT) || input->KeyPressed(ugdk::input::K_LEFT) ||
         input->KeyPressed(ugdk::input::K_UP)    || input->KeyPressed(ugdk::input::K_DOWN) ) {
 
@@ -69,6 +75,7 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Pause();
 
         owner_->shape_component()->Step(where_to_);
+        owner_->vision_component()->See();
         where_to_ = Movement::NONE;
     }
     else if ( ( input->KeyDown(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_LEFT) ||
@@ -76,8 +83,13 @@ void ControllerPlayer::Update(double) {
               && time_held_.Expired() && hold_tick_.Expired() ) {
 
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
-        if(where_to_ != Movement::NONE) owner_->shape_component()->Step(where_to_);
+        if(where_to_ != Movement::NONE) {
+            owner_->shape_component()->Step(where_to_);
+            owner_->vision_component()->See();
+        }
     }
+
+
 }
 
 } // namespace component

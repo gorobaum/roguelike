@@ -65,6 +65,8 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 		pos.y += GameTile::TILE_SIZE.y;
 	}
 
+    BlackoutTiles();
+
     // Time for hard-coded awesomeness to start!
     ObjectBuilder builder = ObjectBuilder();
 
@@ -123,8 +125,6 @@ GameController::~GameController() {
 }
 
 void GameController::Update(double dt) {
-    blackoutTiles();
-
     // update the entities.
     super::Update(dt);
 
@@ -151,7 +151,7 @@ void GameController::clearDeadGameObjects() {
     game_objects_.remove_if(objectIsDead);
 }
 
-void GameController::blackoutTiles() {
+void GameController::BlackoutTiles() const {
     for(auto j = tiles_.begin(); j != tiles_.end(); ++j)
         for(auto i = (*j).begin(); i != (*j).end(); ++i)
             (*i)->node()->modifier()->set_visible(false);

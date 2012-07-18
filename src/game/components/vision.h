@@ -25,6 +25,8 @@ class Vision : public ComponentBase {
     Vision(game::base::GameObject* owner);
     ~Vision();
 
+    void Initialize();
+
     const base::GameObject* owner() const { return owner_; }
     base::GameTile* eye() const { return owner_->shape_component()->occupying_tiles().front(); }
     double range() const { return range_; }
@@ -33,6 +35,9 @@ class Vision : public ComponentBase {
     void MarkVisible(const base::GameTile* tile);
 
     void Update(double dt);
+    void See();
+
+    void CycleOctant();
 
     bool BlocksVision(const base::GameTile* tile);
 
@@ -44,6 +49,8 @@ class Vision : public ComponentBase {
     std::set<int> relevant_octants_;
     std::list<base::GameTile*> visible_tiles_;
     alg::LosProcessor* losprocessor_;
+
+    bool initialized_;
 };
 
 } // namespace component

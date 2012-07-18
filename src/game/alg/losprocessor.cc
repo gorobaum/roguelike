@@ -276,7 +276,7 @@ void LosProcessor::calculate_control_points(double sight_range) {
     nine_off[4] = Vector2D(1.0,0.0);                       // rotate center
 
     nine_off[5] = nine_off[0];                             // aux steep near offset
-    nine_off[6] = Vector2D(2.0,-3.0);                      // aux steep far offset
+    nine_off[6] = Vector2D(2.0,-2.0);                      // aux steep far offset
     nine_off[7] = Vector2D(0.0,1.0);                       // aux shallow near offset
     nine_off[8] = nine_off[3];                             // aux shallow far offset
 
@@ -299,16 +299,16 @@ void LosProcessor::transform1(const Array9Vec2D& base, int dest) {
     nine_off[1] = base[3];
     nine_off[2] = base[2];
     Vector2D tempvec = base[1] - base[4];
-    nine_off[3] = Vector2D(tempvec.y,tempvec.x) + base[4];
+    nine_off[3] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
 
     nine_off[4] = base[4];
 
     nine_off[5] = base[7];
     nine_off[6] = base[8];
     tempvec = base[5] - base[4];
-    nine_off[7] = Vector2D(tempvec.y,tempvec.x) + base[4];
+    nine_off[7] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
     tempvec = base[6] - base[4];
-    nine_off[8] = Vector2D(tempvec.y,tempvec.x) + base[4];
+    nine_off[8] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
 
     control_offsets_[dest] = Array9Vec2D(nine_off);
 }
@@ -328,16 +328,16 @@ void LosProcessor::transform3(const Array9Vec2D& base, int dest) {
     
     nine_off[0] = base[0];
     Vector2D tempvec = base[3] - base[4];
-    nine_off[1] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    nine_off[1] = Vector2D(tempvec.y,tempvec.x) + base[4];
     nine_off[2] = base[2];
     nine_off[3] = base[1];
 
     nine_off[4] = base[4];
     
     tempvec = base[7] - base[4];
-    nine_off[5] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    nine_off[5] = Vector2D(tempvec.y,tempvec.x) + base[4];
     tempvec = base[8] - base[4];
-    nine_off[6] = Vector2D(-tempvec.y,-tempvec.x) + base[4];
+    nine_off[6] = Vector2D(tempvec.y,tempvec.x) + base[4];
     nine_off[7] = base[5];
     nine_off[8] = base[6];
 

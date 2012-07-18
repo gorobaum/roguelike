@@ -42,11 +42,11 @@ class GameController : public ugdk::Scene {
     GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const;
     GameTile* GetTileByMovementFromTile(GameTile* tile, game::action::Movement&) const;
 
+    void BlackoutTiles() const;
 
   private:
     void clearDeadGameObjects();
     void addPendingGameObjects();
-    void blackoutTiles();
     
     std::list<GameObject*> pending_game_objects_;
     std::list<GameObject*> game_objects_;
