@@ -72,6 +72,8 @@ class LosOctant {
     const LosProcessor* owner() const { return owner_; }
 
   private:
+    LosOctant& operator=(const LosOctant&);
+
     const int orientation_; // measured as 1,2,4,5,7,8,10 and 11 o'clock.
     const LosProcessor* owner_;
 };
@@ -123,6 +125,8 @@ class LosCone {
 
     const EqLine& steep()   const { return   steep_; }
     const EqLine& shallow() const { return shallow_; }
+
+    const int orientation() const { return orientation_; }
     
     const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
     const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
@@ -130,13 +134,15 @@ class LosCone {
     void   SteepBump(const base::GameTile* tile);
     void ShallowBump(const base::GameTile* tile);
 
-    enums::bump::BumpType ComputeBumpType(const base::GameTile* focus);
+    enums::bump::BumpType ComputeBumpType(const base::GameTile* focus, int ydir);
 
 #ifdef DEBUG
     void LosCone::TestCmpBumpType(const LosProcessor* owner);
 #endif
 
   private:
+    LosCone& operator=(const LosCone&);
+
     EqLine steep_;
     EqLine shallow_;
     const int orientation_; // measured as 1,2,4,5,7,8,10 and 11 o'clock.

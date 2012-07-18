@@ -49,7 +49,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
-	for(size_t y = 0; y < 50; ++y) {
+	for(size_t y = 0; y < 35; ++y) {
 		vector<GameTile*> vect;
 		pos.x = 0;
 		for(size_t x = 0; x < 50; ++x) {
@@ -98,7 +98,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 
     // Place them on the map.
     hero_->shape_component()->PlaceAt(tiles_[10][4]);
-    enemy->shape_component()->PlaceAt(tiles_[3][3]);
+    enemy->shape_component()->PlaceAt(tiles_[20][20]);
     item->shape_component()->PlaceAt(tiles_[2][2]);
     wall_1->shape_component()->PlaceAt(tiles_[15][10]);
     wall_2->shape_component()->PlaceAt(tiles_[16][10]);
