@@ -75,15 +75,15 @@ bool LosProcessor::process_cone(const base::GameTile* binded_tile, LosCone* cone
         case bump::BLK:
             return true;
         case bump::STP:
-            cone->SteepBump(binded_tile);
+            cone->SteepBump(binded_tile,ydir);
             break;
         case bump::SHL:
-            cone->ShallowBump(binded_tile);
+            cone->ShallowBump(binded_tile,ydir);
             break;
         case bump::MDL:
             newcone = new LosCone(*cone);
-            cone->SteepBump(binded_tile);
-            newcone->ShallowBump(binded_tile);
+            cone->SteepBump(binded_tile,ydir);
+            newcone->ShallowBump(binded_tile,ydir);
             cones_.push_back(newcone);
             break;
         case bump::ABV:
@@ -123,8 +123,9 @@ void LosProcessor::Process() {
 
     for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt) {
         
-        Vector2D anti_vert_offset(0.000001,0.0);
-        if( (*rt) >= 1 && (*rt) <= 5 ) { anti_vert_offset.x = -0.000001; }
+        Vector2D anti_vert_offset(0.0);
+        if( (*rt) == 1 || (*rt) ==  5 ) { anti_vert_offset.x = -0.000001; }
+        if( (*rt) == 7 || (*rt) == 11 ) { anti_vert_offset.x =  0.000001; }
 
         EqLine steep(eye + control_offsets_[*rt][0] + anti_vert_offset, eye + control_offsets_[*rt][1]);
         EqLine shallow(eye + control_offsets_[*rt][2], eye + control_offsets_[*rt][3]);
@@ -506,13 +507,14 @@ void LosCone::TestCmpBumpType(const LosProcessor* owner) {
 }
 #endif
 
-void LosCone::SteepBump(const base::GameTile* tile) {
+void LosCone::SteepBump(const base::GameTile* tile, int ydir) {
     Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[0];
 
     steep_.set_target(limit);
     for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
         --st;
-        if(steep_.CompareWithVector(*st) == ord::LT) {
+        if( (ydir == -1 && steep_.CompareWithVector(*st) == ord::GT) 
+            || (ydir == 1 && steep_.CompareWithVector(*st) == ord::LT) ) {
             steep_.set_origin(*st);
             //TODO: testar essa prox linha em mais detalhe.
             //shallow_bumps_.erase(shallow_bumps_.begin(),++st);
@@ -522,13 +524,14 @@ void LosCone::SteepBump(const base::GameTile* tile) {
     steep_bumps_.push_back(limit);
 }
 
-void LosCone::ShallowBump(const base::GameTile* tile) {
+void LosCone::ShallowBump(const base::GameTile* tile, int ydir) {
     Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[2];
 
     shallow_.set_target(limit);
     for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
         --st;
-        if(shallow_.CompareWithVector(*st) == ord::GT) {
+        if( (ydir == -1 && shallow_.CompareWithVector(*st) == ord::LT)
+            || (ydir == 1 && shallow_.CompareWithVector(*st) == ord::GT) ) {
             shallow_.set_origin(*st);
             //TODO: testar essa prox linha em mais detalhe.
             //steep_bumps_.erase(steep_bumps_.begin(),++st);

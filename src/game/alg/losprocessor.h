@@ -131,8 +131,8 @@ class LosCone {
     const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
     const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
 
-    void   SteepBump(const base::GameTile* tile);
-    void ShallowBump(const base::GameTile* tile);
+    void   SteepBump(const base::GameTile* tile, int ydir);
+    void ShallowBump(const base::GameTile* tile, int ydir);
 
     enums::bump::BumpType ComputeBumpType(const base::GameTile* focus, int ydir);
 
