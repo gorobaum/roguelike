@@ -87,6 +87,8 @@ class LosOctant::iterator {
 
     const base::GameTile* operator*() const { return focus_; }
     const base::GameTile* outer_focus() const { return outer_focus_; }
+    int count_outer() const { return count_outer_; }
+    int count_inner() const { return count_inner_; }
 
   private:
     void step(int delta_x_in, int delta_y_in, int delta_x_out, int delta_y_out);
@@ -119,8 +121,6 @@ enum BumpType {
 class LosCone {
   public:
     LosCone(const EqLine& steep, const EqLine& shallow, int octant,
-            const ugdk::Vector2D& straight_block,
-            const ugdk::Vector2D& inner_diag_block, const ugdk::Vector2D& outer_diag_block,
             const LosProcessor* owner);
 
     const EqLine& steep()   const { return   steep_; }
@@ -150,10 +150,6 @@ class LosCone {
 
     std::list<ugdk::Vector2D>   steep_bumps_;
     std::list<ugdk::Vector2D> shallow_bumps_;
-
-    const ugdk::Vector2D& straight_block_;
-    const ugdk::Vector2D& inner_diag_block_;
-    const ugdk::Vector2D& outer_diag_block_;
 };
 
 } // namespace alg
