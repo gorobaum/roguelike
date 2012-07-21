@@ -50,7 +50,7 @@ void ControllerPlayer::Update(double) {
             else where_to_ = Movement::RIGHT;
         }
         else if(input->KeyPressed(ugdk::input::K_LEFT)) {
-            if(     input->KeyDown(ugdk::input::K_UP))   where_to_ = Movement::UP_LEFT;
+            if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Movement::UP_LEFT;
             else if(input->KeyDown(ugdk::input::K_DOWN)) where_to_ = Movement::DOWN_LEFT;
             else where_to_ = Movement::LEFT;
         }
