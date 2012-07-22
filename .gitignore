@@ -9,3 +9,17 @@
 *.vcxproj.user
 *.suo
 Thumbs.db
+/CMakeCache.txt
+/CMakeFiles
+/src/CMakeFiles
+x64
+*.tlog
+*.log
+*.obj
+*.pdb
+*.ilk
+*.manifest
+*.lastbuildstate
+roguelike.exe.embed.manifest.res
+roguelike_manifest.rc
+*.exe

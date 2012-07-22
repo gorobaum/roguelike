@@ -100,6 +100,7 @@ LuaLang = cvar.LuaLang
 PythonLang = cvar.PythonLang
 
 import ugdk_action
+import ugdk_base
 class Reader(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Reader, name, value)
@@ -159,6 +160,25 @@ class ParseStatus(_object):
 ParseStatus_swigregister = _ugdk_gdd.ParseStatus_swigregister
 ParseStatus_swigregister(ParseStatus)
 
+class ResourceContainer_AnimationSet(ugdk_base.ResourceContainerBase):
+    __swig_setmethods__ = {}
+    for _s in [ugdk_base.ResourceContainerBase]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ResourceContainer_AnimationSet, name, value)
+    __swig_getmethods__ = {}
+    for _s in [ugdk_base.ResourceContainerBase]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ResourceContainer_AnimationSet, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _ugdk_gdd.delete_ResourceContainer_AnimationSet
+    __del__ = lambda self : None;
+    def Insert(self, *args): return _ugdk_gdd.ResourceContainer_AnimationSet_Insert(self, *args)
+    def Replace(self, *args): return _ugdk_gdd.ResourceContainer_AnimationSet_Replace(self, *args)
+    def Exists(self, *args): return _ugdk_gdd.ResourceContainer_AnimationSet_Exists(self, *args)
+    def Find(self, *args): return _ugdk_gdd.ResourceContainer_AnimationSet_Find(self, *args)
+    def Load(self, *args): return _ugdk_gdd.ResourceContainer_AnimationSet_Load(self, *args)
+ResourceContainer_AnimationSet_swigregister = _ugdk_gdd.ResourceContainer_AnimationSet_swigregister
+ResourceContainer_AnimationSet_swigregister(ResourceContainer_AnimationSet)
+
 class AnimationAbstractLoader(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, AnimationAbstractLoader, name, value)
@@ -196,12 +216,12 @@ class AnimationSimpleLoader(AnimationAbstractLoader):
 AnimationSimpleLoader_swigregister = _ugdk_gdd.AnimationSimpleLoader_swigregister
 AnimationSimpleLoader_swigregister(AnimationSimpleLoader)
 
-class AnimationLoader(AnimationSimpleLoader):
+class AnimationLoader(AnimationSimpleLoader,ResourceContainer_AnimationSet):
     __swig_setmethods__ = {}
-    for _s in [AnimationSimpleLoader]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    for _s in [AnimationSimpleLoader,ResourceContainer_AnimationSet]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, AnimationLoader, name, value)
     __swig_getmethods__ = {}
-    for _s in [AnimationSimpleLoader]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    for _s in [AnimationSimpleLoader,ResourceContainer_AnimationSet]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, AnimationLoader, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 

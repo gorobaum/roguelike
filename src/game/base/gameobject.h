@@ -18,8 +18,8 @@
 namespace game {
 namespace base {
 
-class GameObject : public ugdk::Entity {
-  typedef ugdk::Entity super;
+class GameObject : public ugdk::action::Entity {
+  typedef ugdk::action::Entity super;
   public:
     GameObject();
     ~GameObject();

@@ -11,7 +11,7 @@ namespace graphic {
 
 class Sprite : public Drawable {
   public:
-    Sprite(Spritesheet *spritesheet, AnimationSet *set = NULL);
+    Sprite(Spritesheet *spritesheet, action::AnimationSet *set = NULL);
     virtual ~Sprite();
 
     void Draw(double dt);
@@ -19,7 +19,7 @@ class Sprite : public Drawable {
     
     /// Change the current animation to a new animation from the previously selected AnimationSet.
     /**Given a animation name (a string), the function changes the current animation to a new animation of AnimationSet*/
-    void SelectAnimation(std::string animation_name) {
+    void SelectAnimation(const std::string& animation_name) {
         animation_manager_->Select(animation_name);
     }
     /// Change the current animation to a new animation from the previously selected AnimationSet.
@@ -50,8 +50,12 @@ class Sprite : public Drawable {
     /** Given an observer object, the function include this in the animation manager
     *  @param *observer is a pointer to the observer object
     */
-    void AddObserverToAnimation(Observer *observer) {
+    void AddObserverToAnimation(action::Observer *observer) {
         animation_manager_->AddObserver(observer);
+    }
+    
+    void AddTickFunctionToAnimation(std::tr1::function<void (void)> tick) {
+        animation_manager_->AddTickFunction(tick);
     }
 
     /// Return the animation frame number
@@ -69,7 +73,7 @@ class Sprite : public Drawable {
        
   private:
     Spritesheet *spritesheet_;
-    AnimationManager *animation_manager_;
+    action::AnimationManager *animation_manager_;
 
     /// Update the Sprite based on the time variation.
     /** One of the two main functions of the UGDK Engine. Most of the game logic 
