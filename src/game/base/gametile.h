@@ -22,7 +22,7 @@ class GameTile {
   public:
 	static const ugdk::Vector2D TILE_SIZE;
 
-	GameTile(size_t x, size_t y);
+	GameTile(int x, int y);
 	~GameTile();
 
 	ugdk::graphic::Node* node() const { return node_; }

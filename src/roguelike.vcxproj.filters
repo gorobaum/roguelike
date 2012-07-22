@@ -117,6 +117,7 @@
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\utils\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\config.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
