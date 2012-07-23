@@ -26,3 +26,11 @@ add_subdirectory(externals/ugdk)
 include_directories ("externals/ugdk/src")
 
 add_subdirectory(src) # The game binary.
+
+IF(FIND_LIBRARY_USE_LIB64_PATHS)
+	add_custom_command(TARGET roguelike POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib64" "./")
+ELSE()
+	add_custom_command(TARGET roguelike POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib/" "./")
+ENDIF(FIND_LIBRARY_USE_LIB64_PATHS)	
