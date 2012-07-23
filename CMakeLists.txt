@@ -3,7 +3,8 @@ PROJECT(roguelike CXX C)
 set(roguelike_VERSION_MAJOR 0)
 set(roguelike_VERSION_MINOR 0)
 set(roguelike_VERSION_SUBMINOR 0)
-SET(roguelike_FULL_VERSION "${roguelike_VERSION_MAJOR}.${roguelike_VERSION_MINOR}.${roguelike_VERSION_SUBMINOR} Alpha")
+SET(roguelike_FULL_VERSION
+	"${roguelike_VERSION_MAJOR}.${roguelike_VERSION_MINOR}.${roguelike_VERSION_SUBMINOR} Alpha")
 
 MESSAGE("== Roguelike -- version ${roguelike_FULL_VERSION} ==")
 
@@ -26,11 +27,3 @@ add_subdirectory(externals/ugdk)
 include_directories ("externals/ugdk/src")
 
 add_subdirectory(src) # The game binary.
-
-IF(FIND_LIBRARY_USE_LIB64_PATHS)
-	add_custom_command(TARGET roguelike POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib64" "./")
-ELSE()
-	add_custom_command(TARGET roguelike POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib/" "./")
-ENDIF(FIND_LIBRARY_USE_LIB64_PATHS)	

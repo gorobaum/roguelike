@@ -127,10 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{49850A2F-84D5-4FA7-B01F-2EAB86B2A81B}</UniqueIdentifier>
+      <UniqueIdentifier>{9F279ABE-91E9-45DE-A064-55ACA239C5D8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{4E871E18-2A62-4409-A3CE-6CE3186904BA}</UniqueIdentifier>
+      <UniqueIdentifier>{4018C2AE-D21C-4136-90AD-B36BD6EA4A0E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

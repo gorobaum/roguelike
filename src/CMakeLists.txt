@@ -27,6 +27,23 @@ include_directories(${SDLMIXER_INCLUDE_DIR})
 
 add_executable(roguelike ${GAME_SRCS})
 target_link_libraries(roguelike ugdk)
+
+add_custom_command(TARGET roguelike PRE_BUILD
+	COMMAND ${CMAKE_COMMAND} -E remove "./*.dll")
+	
+add_custom_command(TARGET roguelike PRE_BUILD
+	COMMAND ${CMAKE_COMMAND} -E remove "./*.lib")
+
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	add_custom_command(TARGET roguelike POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib64/" "./"
+	WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
+ELSE()
+	add_custom_command(TARGET roguelike POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib/" "./"
+	WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
+ENDIF()
+
 #if(WIN32)
 #    add_custom_command(TARGET roguelike POST_BUILD 
 #    COMMAND xcopy externals\\ugdk\\src\\generated\\*.py data\\scripts\\ugdk\\ /q /k /y

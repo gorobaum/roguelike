@@ -9,9 +9,8 @@
 *.vcxproj.user
 *.suo
 Thumbs.db
-/CMakeCache.txt
-/CMakeFiles
-/src/CMakeFiles
+CMakeCache.txt
+CMakeFiles
 x64
 *.tlog
 *.log
@@ -20,7 +19,9 @@ x64
 *.ilk
 *.manifest
 *.lastbuildstate
-roguelike.exe.embed.manifest.res
-roguelike_manifest.rc
+*.res
+*.rc
 *.exe
 *.cache
+/*.lib
+/*.dll

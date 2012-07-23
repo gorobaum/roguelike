@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGUID>{624C6FC2-49A1-4784-B889-97217C3B69E4}</ProjectGUID>
+    <ProjectGUID>{D0BD2E75-0030-4F8D-A69B-0B427BFDECB2}</ProjectGUID>
     <SccProjectName />
     <SccLocalPath />
     <Keyword>Win32Proj</Keyword>

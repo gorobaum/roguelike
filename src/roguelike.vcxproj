@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGUID>{A3B6DF4D-6E74-4109-A87D-704BED8D847E}</ProjectGUID>
+    <ProjectGUID>{5BAAA21F-3FE4-4DA9-BE08-60B9BC223A6C}</ProjectGUID>
     <SccProjectName />
     <SccLocalPath />
     <Keyword>Win32Proj</Keyword>
@@ -114,6 +114,43 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.lib
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying relevant libs to the root</Message>
+      <Command>setlocal
+cd "C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E copy_directory ./lib64/ ./
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
     <Link>
       <AdditionalOptions> /machine:x64 /debug %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\externals\ugdk\lib\ugdk_d.lib;Ws2_32.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDLmain.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_mixer.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_ttf.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_image.lib;glu32.lib;opengl32.lib;C:\Program Files (x86)\Lua\5.1\lib\lua51.lib</AdditionalDependencies>
@@ -163,6 +200,43 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.lib
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying relevant libs to the root</Message>
+      <Command>setlocal
+cd "C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E copy_directory ./lib64/ ./
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
     <Link>
       <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\externals\ugdk\lib\ugdk.lib;Ws2_32.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDLmain.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_mixer.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_ttf.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_image.lib;glu32.lib;opengl32.lib;C:\Program Files (x86)\Lua\5.1\lib\lua51.lib</AdditionalDependencies>
@@ -211,6 +285,43 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.lib
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying relevant libs to the root</Message>
+      <Command>setlocal
+cd "C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E copy_directory ./lib64/ ./
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
     <Link>
       <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\externals\ugdk\lib\ugdk.lib;Ws2_32.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDLmain.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_mixer.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_ttf.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_image.lib;glu32.lib;opengl32.lib;C:\Program Files (x86)\Lua\5.1\lib\lua51.lib</AdditionalDependencies>
@@ -259,6 +370,43 @@
       <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
+    <PreBuildEvent>
+      <Message>	</Message>
+      <Command>setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E remove ./*.lib
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying relevant libs to the root</Message>
+      <Command>setlocal
+cd "C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -E copy_directory ./lib64/ ./
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
     <Link>
       <AdditionalOptions> /machine:x64 /debug %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\externals\ugdk\lib\ugdk.lib;Ws2_32.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDLmain.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_mixer.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_ttf.lib;C:\Users\brocoli\Desktop\Tools\libs\libsdownloader\SDL-1.2.15\lib64\SDL_image.lib;glu32.lib;opengl32.lib;C:\Program Files (x86)\Lua\5.1\lib\lua51.lib</AdditionalDependencies>
@@ -369,10 +517,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/ZERO_CHECK.vcxproj">
-      <Project>624C6FC2-49A1-4784-B889-97217C3B69E4</Project>
+      <Project>D0BD2E75-0030-4F8D-A69B-0B427BFDECB2</Project>
     </ProjectReference>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/externals/ugdk/ugdk.vcxproj">
-      <Project>C28657E9-A748-459E-91AB-D33D2EFF28D5</Project>
+      <Project>4A038D53-50F5-4ED3-BEE7-DF57AFA321E6</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

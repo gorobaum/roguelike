@@ -23,7 +23,7 @@ namespace base {
 const Vector2D GameTile::TILE_SIZE = Vector2D(23.0, 23.0);
 
 GameTile::GameTile(int x, int y) : node_(new Node) {
-	ground_ = new TexturedRectangle( ResourceManager::GetTextureFromFile("data/white.png") );
+	ground_ = new TexturedRectangle( ResourceManager::GetTextureFromFile("data/images/white.png") );
 	node_->set_drawable(ground_);
     node_->modifier()->set_scale(Vector2D(0.382));
 	x_ = x;

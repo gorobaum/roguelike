@@ -51,10 +51,11 @@ Vision::~Vision() {
 
 void Vision::Initialize() {
     initialized_ = true;
-
+    /*
     for(int i = 1; i <= 8; ++i)
         relevant_octants_.insert(nth_orientation(i));
-
+    */
+    relevant_octants_.insert(1);
     See();
 }
 

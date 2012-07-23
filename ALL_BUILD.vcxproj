@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGUID>{268C1354-3A00-43CA-9F34-7BFD160A08FE}</ProjectGUID>
+    <ProjectGUID>{59076CEF-BBB5-4B30-A64C-FE7A2EEC3334}</ProjectGUID>
     <SccProjectName />
     <SccLocalPath />
     <Keyword>Win32Proj</Keyword>
@@ -201,19 +201,19 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/ZERO_CHECK.vcxproj">
-      <Project>624C6FC2-49A1-4784-B889-97217C3B69E4</Project>
+      <Project>D0BD2E75-0030-4F8D-A69B-0B427BFDECB2</Project>
     </ProjectReference>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/externals/ugdk/test/gtest.vcxproj">
-      <Project>0DD436F0-CFB3-4130-80B5-C9B74410937D</Project>
+      <Project>4C71CEF0-72AB-4BFC-9829-4CB3F443BDA1</Project>
     </ProjectReference>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/externals/ugdk/test/gtest_main.vcxproj">
-      <Project>787AC0B4-D7D9-48AF-B00D-99FD083F50A5</Project>
+      <Project>EE4B97E4-EA19-495D-B814-4D39BFFF6601</Project>
     </ProjectReference>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src/roguelike.vcxproj">
-      <Project>A3B6DF4D-6E74-4109-A87D-704BED8D847E</Project>
+      <Project>5BAAA21F-3FE4-4DA9-BE08-60B9BC223A6C</Project>
     </ProjectReference>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/externals/ugdk/ugdk.vcxproj">
-      <Project>C28657E9-A748-459E-91AB-D33D2EFF28D5</Project>
+      <Project>4A038D53-50F5-4ED3-BEE7-DF57AFA321E6</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
