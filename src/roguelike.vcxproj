@@ -51,36 +51,35 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">roguelike.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">roguelike</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">roguelike.dir\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">roguelike</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\MinSizeRel\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">roguelike.dir\MinSizeRel\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">roguelike</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\RelWithDebInfo\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">roguelike.dir\RelWithDebInfo\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">roguelike</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
-  </PropertyGroup>
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">roguelike.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">roguelike</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">roguelike.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">roguelike</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">roguelike.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">roguelike</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">roguelike.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">roguelike</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+    </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalOptions> /Zm1000 %(AdditionalOptions)</AdditionalOptions>
@@ -125,8 +124,7 @@
       <ProgramDataBaseFileName>C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src/Debug/roguelike.pdb</ProgramDataBaseFileName>
       <StackReserveSize>10000000</StackReserveSize>
       <SubSystem>Console</SubSystem>
-      <Version>
-      </Version>
+      <Version></Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -147,8 +145,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat></DebugInformationFormat>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>Release</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -175,8 +172,7 @@
       <ProgramDataBaseFileName>C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src/Release/roguelike.pdb</ProgramDataBaseFileName>
       <StackReserveSize>10000000</StackReserveSize>
       <SubSystem>Console</SubSystem>
-      <Version>
-      </Version>
+      <Version></Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -197,8 +193,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat></DebugInformationFormat>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>MinSizeRel</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -225,8 +220,7 @@
       <ProgramDataBaseFileName>C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src/MinSizeRel/roguelike.pdb</ProgramDataBaseFileName>
       <StackReserveSize>10000000</StackReserveSize>
       <SubSystem>Console</SubSystem>
-      <Version>
-      </Version>
+      <Version></Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -275,8 +269,7 @@
       <ProgramDataBaseFileName>C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src/RelWithDebInfo/roguelike.pdb</ProgramDataBaseFileName>
       <StackReserveSize>10000000</StackReserveSize>
       <SubSystem>Console</SubSystem>
-      <Version>
-      </Version>
+      <Version></Version>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -373,7 +366,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\components\vision.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\main.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\utils\utils.h" />
-    <ClInclude Include="game\config.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/ZERO_CHECK.vcxproj">
