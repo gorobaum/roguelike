@@ -25,7 +25,7 @@ class PythonData : public VirtualData {
     }
 
     /// Tries to unwrap the data contained in this object using the given type.
-    virtual void* Unwrap(const VirtualType& type) const;
+    virtual void* Unwrap(const VirtualType& type, bool disown) const;
     const char* UnwrapString() const;
     bool UnwrapBoolean() const;
     int UnwrapInteger() const;
@@ -51,6 +51,10 @@ class PythonData : public VirtualData {
 	virtual Ptr GetAttribute(Ptr key);
 
     virtual Ptr SetAttribute(Ptr key, Ptr value);
+    
+    void* unsafe_data() const {
+        return static_cast<void*>(py_data_);
+    }
 
   protected:
     PythonWrapper* wrapper_;

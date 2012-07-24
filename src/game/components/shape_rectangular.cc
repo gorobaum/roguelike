@@ -89,9 +89,6 @@ bool ShapeRectangular::TryPlace(GameTile* destination) {
 
     if(!CheckForOob(destination)) return false;
 
-    // we'll need to access the tiles.
-    const GameController* gamecontroller = GameController::reference();
-
     // Check for stuff where you're going.
     EvalBumpsAt(destination);
 

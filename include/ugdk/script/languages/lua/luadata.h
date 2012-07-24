@@ -22,7 +22,7 @@ class LuaData : public VirtualData {
 
     ~LuaData();
 
-    void* Unwrap(const VirtualType& type) const;
+    void* Unwrap(const VirtualType& type, bool disown) const;
     const char* UnwrapString() const;
     bool UnwrapBoolean() const;
     int UnwrapInteger() const;
@@ -44,6 +44,10 @@ class LuaData : public VirtualData {
     Ptr GetAttribute(Ptr key);
 
     Ptr SetAttribute(Ptr key, Ptr value);
+    
+    void* unsafe_data() const {
+        return NULL;
+    }
 
     void AddToBuffer();
     void RemoveFromBuffer() {}

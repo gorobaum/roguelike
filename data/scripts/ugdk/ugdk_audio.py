@@ -106,6 +106,7 @@ class Sample(_object):
     __getattr__ = lambda self, name: _swig_getattr(self, Sample, name)
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
+    def PlayForever(self): return _ugdk_audio.Sample_PlayForever(self)
     def Play(self, *args): return _ugdk_audio.Sample_Play(self, *args)
     def Stop(self): return _ugdk_audio.Sample_Stop(self)
     def IsPlaying(self): return _ugdk_audio.Sample_IsPlaying(self)
@@ -121,8 +122,8 @@ class Music(_object):
     __getattr__ = lambda self, name: _swig_getattr(self, Music, name)
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
-    def Play(self, *args): return _ugdk_audio.Music_Play(self, *args)
     def PlayForever(self): return _ugdk_audio.Music_PlayForever(self)
+    def Play(self, *args): return _ugdk_audio.Music_Play(self, *args)
     def Stop(self): return _ugdk_audio.Music_Stop(self)
     def IsPlaying(self): return _ugdk_audio.Music_IsPlaying(self)
     def Pause(self): return _ugdk_audio.Music_Pause(self)

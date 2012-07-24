@@ -46,7 +46,7 @@ const GameController* GameController::reference_ = nullptr;
 GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
 	reference_ = this;
 
-	TEXT_MANAGER()->AddFont("MAH FONTI", "FUTRFW.ttf", 15, 0, 0);
+	TEXT_MANAGER()->AddFont("MAH FONTI", "data/fonts/FUTRFW.ttf", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
 	for(size_t y = 0; y < 40; ++y) {

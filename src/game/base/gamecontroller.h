@@ -18,8 +18,8 @@
 namespace game {
 namespace base {
 
-class GameController : public ugdk::Scene {
-  typedef ugdk::Scene super;
+class GameController : public ugdk::action::Scene {
+  typedef ugdk::action::Scene super;
   static const GameController* reference_;
 
   public:

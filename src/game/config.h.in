@@ -1,0 +1,22 @@
+
+#ifndef ROGUELIKE_CONFIG_H_
+#define ROGUELIKE_CONFIG_H_
+
+// Project configurations.
+
+@CHECKMAC@
+
+#define GAME_VERSION L"@roguelike_FULL_VERSION@"
+
+#ifndef ISMAC
+# ifndef INSTALLED
+#  define INSTALL_PATH "@GAME_LOCAL_DIR@"
+# else  
+#  define INSTALL_PATH "@GAME_INSTALL_DIR@"
+# endif
+#else
+# define INSTALL_PATH "@GAME_INSTALL_DIR@"
+#endif
+
+
+#endif

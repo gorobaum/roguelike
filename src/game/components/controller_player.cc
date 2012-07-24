@@ -23,6 +23,9 @@ namespace component {
 #define DELAY_HOLD 250
 #define HOLD_TICK_INTERVAL 25
 
+//TODO: REMOVE THIS GAMBS
+#define KeyReleased(key) KeyUp(key)
+
 ControllerPlayer::ControllerPlayer(GameObject* owner)
   : super(owner), where_to_(Movement::NONE), time_held_(DELAY_HOLD), hold_tick_(HOLD_TICK_INTERVAL) {
     time_held_.Pause();

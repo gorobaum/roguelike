@@ -89,6 +89,8 @@ class Vector2D(_object):
     def Angle(self): return _ugdk_math.Vector2D_Angle(self)
     def Normalize(self): return _ugdk_math.Vector2D_Normalize(self)
     def Rotate(self, *args): return _ugdk_math.Vector2D_Rotate(self, *args)
+    def HorizontalMirror(self): return _ugdk_math.Vector2D_HorizontalMirror(self)
+    def VerticalMirror(self): return _ugdk_math.Vector2D_VerticalMirror(self)
     def Scale(self, *args): return _ugdk_math.Vector2D_Scale(self, *args)
     __swig_getmethods__["Add"] = lambda x: _ugdk_math.Vector2D_Add
     if _newclass:Add = staticmethod(_ugdk_math.Vector2D_Add)

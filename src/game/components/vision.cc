@@ -24,24 +24,6 @@ namespace game {
 namespace component {
 
 Vision::Vision(game::base::GameObject* owner) : super(owner), range_(29.5), initialized_(false) {
-
-    for(int i = 1; i <= 8; ++i)
-        relevant_octants_.insert(nth_orientation(i));
-
-/*
-    for(int i = 2; i <= 7; ++i)
-        relevant_octants_.insert(nth_orientation(i));
-*/
-
-//    relevant_octants_.insert(nth_orientation(1));
-//    relevant_octants_.insert(nth_orientation(2));
-//    relevant_octants_.insert(nth_orientation(3));
-//    relevant_octants_.insert(nth_orientation(4));
-//    relevant_octants_.insert(nth_orientation(5));
-//    relevant_octants_.insert(nth_orientation(6));
-//    relevant_octants_.insert(nth_orientation(7));
-//    relevant_octants_.insert(nth_orientation(8));
-
     losprocessor_ = new LosProcessor(this);
 }
 
@@ -51,10 +33,10 @@ Vision::~Vision() {
 
 void Vision::Initialize() {
     initialized_ = true;
-
+    
     for(int i = 1; i <= 8; ++i)
         relevant_octants_.insert(nth_orientation(i));
-
+    
     See();
 }
 
