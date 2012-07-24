@@ -3,33 +3,22 @@
 #include "game/alg/losprocessor.h"
 
 // External Dependencies
-#include <array>
-#include <list>
-#include <map>
-#include <set>
 #include <functional>
+#include <set>
 #include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
-#include "game/alg/eqline.h"            // LosCone()
-#include "game/base/gamecontroller.h"   // iterator& operator++()
-#include "game/base/gameobject.h"       // stuff
-#include "game/base/gametile.h"         // focus_, outer_focus_
-#include "game/components/vision.h"     // eye()
-#include "utils/utils.h"
+#include "game/alg/loscone.h"
+#include "game/alg/losoctant.h"
+#include "game/base/gamecontroller.h"
+#include "game/base/gametile.h"
+#include "game/components/vision.h"
 
 // Using
-using std::array;
-using std::list;
-using std::map;
 using std::set;
-using std::tr1::bind;
 using std::tr1::function;
 using namespace std::tr1::placeholders;
 using ugdk::Vector2D;
-using game::alg::EqLine;
-using game::component::Vision;
-using game::base::GameObject;
 using game::base::GameTile;
 using namespace game::alg::enums;
 
@@ -40,29 +29,29 @@ using namespace game::alg::enums;
 namespace game {
 namespace alg {
 
-LosProcessor::LosProcessor(component::Vision* vision)
+LoSProcessor::LoSProcessor(component::Vision* vision)
   : vision_(vision) {
     for(int i=1; i<=8; ++i)
-        octants_[nth_orientation(i)] = new LosOctant(nth_orientation(i),this);
+        octants_[nth_orientation(i)] = new LoSOctant(nth_orientation(i),this);
     for(int i=0; i<16; ++i)
         preprocessings_[i] = -1;
 
     calculate_control_points(vision_->range());
 }
 
-LosProcessor::~LosProcessor() {
+LoSProcessor::~LoSProcessor() {
     for(int i=1; i<=8; ++i)
         if(octants_[nth_orientation(i)] != nullptr) delete octants_[nth_orientation(i)];
     for(auto ct = cones_.begin(); ct != cones_.end(); ++ct)
         if(*ct != nullptr) delete *ct;
 }
 
-bool LosProcessor::process_cone(const base::GameTile* binded_tile, LosCone* cone) {
+bool LoSProcessor::process_cone(const base::GameTile* binded_tile, LoSCone* cone) {
     int ydir = -1;
     if(cone->orientation() >= 4 && cone->orientation() <= 8) ydir = 1; 
 
     bump::BumpType bt = cone->ComputeBumpType(binded_tile,ydir);
-    LosCone* newcone = nullptr;
+    LoSCone* newcone = nullptr;
 
     if( bt != bump::ABV && bt != bump::BLW )
         vision_->MarkVisible(binded_tile);
@@ -80,7 +69,7 @@ bool LosProcessor::process_cone(const base::GameTile* binded_tile, LosCone* cone
             cone->ShallowBump(binded_tile,ydir);
             break;
         case bump::MDL:
-            newcone = new LosCone(*cone);
+            newcone = new LoSCone(*cone);
             cone->SteepBump(binded_tile,ydir);
             newcone->ShallowBump(binded_tile,ydir);
             cones_.push_back(newcone);
@@ -92,7 +81,7 @@ bool LosProcessor::process_cone(const base::GameTile* binded_tile, LosCone* cone
     return false;
 }
 
-void LosProcessor::Process() {
+void LoSProcessor::Process() {
     const base::GameController* gamecontroller = base::GameController::reference();
 
     double rangesquared = vision_->range();
@@ -151,13 +140,13 @@ void LosProcessor::Process() {
             default: straight_p =  0; inner_diag_p =  0; outer_diag_p =  0;break;
         }
 
-        LosCone* cone_init_main = new LosCone(steep,shallow,*rt,this);
-        LosCone* cone_init_aux = new LosCone(aux_steep,aux_shallow,*rt,this);
+        LoSCone* cone_init_main = new LoSCone(steep,shallow,*rt,this);
+        LoSCone* cone_init_aux = new LoSCone(aux_steep,aux_shallow,*rt,this);
 
         cones_.push_back(cone_init_main);
         cones_.push_back(cone_init_aux);
 
-        for(auto ot = LosOctant::iterator(octants_[*rt],rangesquared);
+        for(auto ot = LoSOctant::iterator(octants_[*rt],rangesquared);
             (*ot) != nullptr && (TILE_VEC(*ot) - eyev).LengthSquared() <= rangesquared;
             ++ot ) {
             /*
@@ -206,7 +195,7 @@ void LosProcessor::Process() {
 
             // iterate through the list, removing if necessary.
             
-            function<bool (LosCone*)> process_cone_at_binded_tile = bind( &LosProcessor::process_cone, this, (*ot), _1);
+            function<bool (LoSCone*)> process_cone_at_binded_tile = bind( &LoSProcessor::process_cone, this, (*ot), _1);
             cones_.remove_if( process_cone_at_binded_tile );
             
         
@@ -215,7 +204,7 @@ void LosProcessor::Process() {
     }
 }
 
-void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
+void LoSProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
     const base::GameController* gamecontroller = base::GameController::reference();
 
     bool has_offset = off_x != 0 || off_y != 0;
@@ -322,7 +311,7 @@ void LosProcessor::preprocess(int dir_x, int dir_y, int off_x, int off_y) {
     }
 }
 
-void LosProcessor::calculate_control_points(double sight_range) {
+void LoSProcessor::calculate_control_points(double sight_range) {
     Array9Vec2D nine_off;
     sight_range *= 2.0;
 
@@ -351,7 +340,7 @@ void LosProcessor::calculate_control_points(double sight_range) {
     transform3(control_offsets_[10],11);
 }
 
-void LosProcessor::transform1(const Array9Vec2D& base, int dest) {
+void LoSProcessor::transform1(const Array9Vec2D& base, int dest) {
     Array9Vec2D nine_off;
     
     nine_off[0] = base[0];
@@ -371,7 +360,7 @@ void LosProcessor::transform1(const Array9Vec2D& base, int dest) {
 
     control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform2(const Array9Vec2D& base, int dest) {
+void LoSProcessor::transform2(const Array9Vec2D& base, int dest) {
     Array9Vec2D nine_off;
     Vector2D center(0.5,0.5);
 
@@ -382,7 +371,7 @@ void LosProcessor::transform2(const Array9Vec2D& base, int dest) {
 
     control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform3(const Array9Vec2D& base, int dest) {
+void LoSProcessor::transform3(const Array9Vec2D& base, int dest) {
     Array9Vec2D nine_off;
     
     nine_off[0] = base[0];
@@ -402,7 +391,7 @@ void LosProcessor::transform3(const Array9Vec2D& base, int dest) {
 
     control_offsets_[dest] = Array9Vec2D(nine_off);
 }
-void LosProcessor::transform4(const Array9Vec2D& base, int dest) {
+void LoSProcessor::transform4(const Array9Vec2D& base, int dest) {
     Array9Vec2D nine_off;
     Vector2D center(0.5,0.5);
 
@@ -412,191 +401,6 @@ void LosProcessor::transform4(const Array9Vec2D& base, int dest) {
     }
     
     control_offsets_[dest] = Array9Vec2D(nine_off);
-}
-
-LosOctant::iterator::iterator(const LosOctant* owner, double range_squared)
-  : owner_(owner), count_outer_(0), count_inner_(0), range_squared_(range_squared) {
-
-    const base::GameController* gamecontroller = base::GameController::reference();
-
-    int start_iter_x = 0, start_iter_y = 0;
-
-    switch(owner->orientation()) {
-        case 1:  start_iter_x =  1; start_iter_y = -2; break;
-        case 2:  start_iter_x =  2; start_iter_y = -1; break;
-        case 4:  start_iter_x =  2; start_iter_y =  1; break;
-        case 5:  start_iter_x =  1; start_iter_y =  2; break;
-        case 7:  start_iter_x = -1; start_iter_y =  2; break;
-        case 8:  start_iter_x = -2; start_iter_y =  1; break;
-        case 10: start_iter_x = -2; start_iter_y = -1; break;
-        case 11: start_iter_x = -1; start_iter_y = -2; break;
-        default: break;
-    }
-
-    GameTile* eye = owner->owner()->vision()->eye();
-
-    focus_ = (outer_focus_ = gamecontroller->GetTileFromCoordinates(eye->x()+start_iter_x,eye->y()+start_iter_y));
-}
-
-LosOctant::iterator::~iterator() {}
-
-LosOctant::iterator& LosOctant::iterator::operator++() {
-
-    switch(owner_->orientation()) {
-        case 1:  step( 1, 0, 0,-1); break;
-        case 2:  step( 0,-1, 1, 0); break;
-        case 4:  step( 0, 1, 1, 0); break;
-        case 5:  step( 1, 0, 0, 1); break;
-        case 7:  step(-1, 0, 0, 1); break;
-        case 8:  step( 0, 1,-1, 0); break;
-        case 10: step( 0,-1,-1, 0); break;
-        case 11: step(-1, 0, 0,-1); break;
-        default: break;
-    }
-
-    return (*this);
-}
-
-void LosOctant::iterator::step(int delta_x_in, int delta_y_in, int delta_x_out, int delta_y_out) {
-    const base::GameController* gamecontroller = base::GameController::reference();
-
-    if(count_outer_ <= count_inner_) {
-        step_jump(delta_x_out, delta_y_out);
-    } else {
-        focus_ = gamecontroller->GetTileFromCoordinates(focus_->x()+delta_x_in,focus_->y()+delta_y_in);
-
-        if(focus_ == nullptr
-           || Vector2D(focus_->x() - owner_->owner()->vision()->eye()->x() ,
-                       focus_->y() - owner_->owner()->vision()->eye()->y()).LengthSquared() > range_squared_) {
-
-            step_jump(delta_x_out, delta_y_out);
-        }
-        ++count_inner_;
-    }
-}
-
-void LosOctant::iterator::step_jump(int delta_x_out, int delta_y_out) {
-    const base::GameController* gamecontroller = base::GameController::reference();
-
-    focus_ = (outer_focus_ = gamecontroller->GetTileFromCoordinates(outer_focus_->x()+delta_x_out,
-                                                                    outer_focus_->y()+delta_y_out) );
-    ++count_outer_;
-    count_inner_ = 0;
-}
-
-LosCone::LosCone(const EqLine& steep, const EqLine& shallow, int octant,
-                 const LosProcessor* owner)
-  : orientation_(octant), steep_(steep), shallow_(shallow),
-    owner_(owner) {}
-
-bump::BumpType LosCone::ComputeBumpType(const base::GameTile* focus, int ydir) {
-    const Array9Vec2D& offs = owner_->control_offsets().at(orientation_);
-    Vector2D foc = TILE_VEC(focus);
-    /*
-#ifdef DEBUG
-    fprintf(stderr,"(%f,%f), (%f,%f)\n",offs[0].x,offs[0].y,offs[2].x,offs[2].y);
-#endif
-    */
-    ord::Ord cmp = steep_.CompareWithVector(foc + offs[0]);
-    if(ydir == -1) {
-        if( cmp == ord::GT || cmp == ord::EQ )
-            return bump::ABV;
-
-        cmp = shallow_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::LT || cmp == ord::EQ )
-            return bump::BLW;
-
-        cmp = steep_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::GT ) {
-            cmp = shallow_.CompareWithVector(foc + offs[0]);
-            if( cmp == ord::LT ) return bump::BLK;
-            /* the following compare is useless due to case bump::ABV :
-             * cmp = steep_.CompareWithVector(foc + offs[0]);
-             * if( cmp == ord::LT || cmp == ord::EQ ) */
-            return bump::STP;
-        }
-        cmp = shallow_.CompareWithVector(foc + offs[0]);
-        if( cmp == ord::LT ) return bump::SHL;
-    } else {
-        if( cmp == ord::LT || cmp == ord::EQ )
-            return bump::ABV;
-
-        cmp = shallow_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::GT || cmp == ord::EQ )
-            return bump::BLW;
-
-        cmp = steep_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::LT ) {
-            cmp = shallow_.CompareWithVector(foc + offs[0]);
-            if( cmp == ord::GT ) return bump::BLK;
-            /* the following compare is useless due to case bump::ABV :
-             * cmp = steep_.CompareWithVector(foc + offs[0]);
-             * if( cmp == ord::GT || cmp == ord::EQ ) */
-            return bump::STP;
-        }
-        cmp = shallow_.CompareWithVector(foc + offs[0]);
-        if( cmp == ord::GT ) return bump::SHL;
-    }
-    return bump::MDL;
-}
-
-#ifdef DEBUG
-void LosCone::TestCmpBumpType(const LosProcessor* owner) {
-    const base::GameController* gamecontroller = base::GameController::reference();
-
-    EqLine shallow = EqLine(Vector2D(0.0,1.0),Vector2D(40.0,5.0));
-    EqLine steep = EqLine(Vector2D(1.0,0.0),Vector2D(5.0,40.0));
-    LosCone cone = LosCone(steep,shallow,4,owner);
-
-    GameTile* tile1 = gamecontroller->GetTileFromCoordinates(0,40);
-    GameTile* tile2 = gamecontroller->GetTileFromCoordinates(1,5);
-    GameTile* tile3 = gamecontroller->GetTileFromCoordinates(30,30);
-    GameTile* tile4 = gamecontroller->GetTileFromCoordinates(1,1);
-    GameTile* tile5 = gamecontroller->GetTileFromCoordinates(5,1);
-    GameTile* tile6 = gamecontroller->GetTileFromCoordinates(40,0);
-
-    fprintf(stderr,"LosCone TestCmpBumpType: %d,",cone.ComputeBumpType(tile1,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile2,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile3,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile4,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile5,1));
-    fprintf(stderr,"%d",cone.ComputeBumpType(tile6,1));
-    fprintf(stderr,"\n");
-}
-#endif
-
-void LosCone::SteepBump(const base::GameTile* tile, int ydir) {
-    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[0];
-
-    steep_.set_target(limit);
-    for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
-        --st;
-        if( (ydir == -1 && steep_.CompareWithVector(*st) == ord::GT) 
-            || (ydir == 1 && steep_.CompareWithVector(*st) == ord::LT) ) {
-            steep_.set_origin(*st);
-            //TODO: testar essa prox linha em mais detalhe.
-            //shallow_bumps_.erase(shallow_bumps_.begin(),++st);
-            break;
-        }
-    }
-    steep_bumps_.push_back(limit);
-}
-
-void LosCone::ShallowBump(const base::GameTile* tile, int ydir) {
-    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[2];
-
-    shallow_.set_target(limit);
-    for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
-        --st;
-        if( (ydir == -1 && shallow_.CompareWithVector(*st) == ord::LT)
-            || (ydir == 1 && shallow_.CompareWithVector(*st) == ord::GT) ) {
-            shallow_.set_origin(*st);
-            //TODO: testar essa prox linha em mais detalhe.
-            //steep_bumps_.erase(steep_bumps_.begin(),++st);
-            break;
-        }
-    }
-    shallow_bumps_.push_back(limit);
 }
 
 } // namespace alg

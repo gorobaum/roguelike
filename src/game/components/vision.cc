@@ -18,13 +18,13 @@ using std::list;
 using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
-using game::alg::LosProcessor;
+using game::alg::LoSProcessor;
 
 namespace game {
 namespace component {
 
 Vision::Vision(game::base::GameObject* owner) : super(owner), range_(29.5), initialized_(false) {
-    losprocessor_ = new LosProcessor(this);
+    losprocessor_ = new LoSProcessor(this);
 }
 
 Vision::~Vision() {

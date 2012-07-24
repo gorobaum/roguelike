@@ -4,9 +4,9 @@
 namespace game {
 namespace alg {
 
-class LosProcessor;
-class LosOctant;
-class LosCone;
+class LoSProcessor;
+class LoSOctant;
+class LoSCone;
 
 class EqLine;
 

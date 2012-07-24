@@ -21,13 +21,12 @@ namespace component {
 class ShapeRectangular : public Shape {
   typedef Shape super;
   public:
-    ShapeRectangular(game::base::GameObject* owner, size_t size_x = 1, size_t size_y = 1, double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5)
-      : super(owner, stay_sizeclass, pass_sizeclass, enter_sizeclass),
-        dimensions_(ugdk::Vector2D(size_x,size_y)),
-        bumps_() {
-        bumps_.resize(4);
-    }
-    ~ShapeRectangular() {}
+    ShapeRectangular(
+        game::base::GameObject* owner,
+        double size_x = 1, double size_y = 1,
+        double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5
+    );
+    ~ShapeRectangular();
 
     game::base::GameTile* PlaceAt(game::base::GameTile* destination);
     game::base::GameTile* Move(game::action::Movement& mov);

@@ -478,7 +478,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\action\movement.h" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\action.h" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.h" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.cc" />
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.h" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\losoctant.cc" />
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\losoctant.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\losprocessor.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\losprocessor.h" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg.h" />

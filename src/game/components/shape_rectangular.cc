@@ -26,6 +26,17 @@ using namespace utils::enums;
 namespace game {
 namespace component {
 
+ShapeRectangular::ShapeRectangular(
+        game::base::GameObject* owner, double size_x, double size_y,
+        double stay_sizeclass, double pass_sizeclass, double enter_sizeclass
+    )
+  : super(owner, stay_sizeclass, pass_sizeclass, enter_sizeclass),
+    dimensions_(ugdk::Vector2D(size_x,size_y)),
+    bumps_() {
+    bumps_.resize(4);
+}
+ShapeRectangular::~ShapeRectangular() {}
+
 GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
 
     // we'll need to access the tiles.

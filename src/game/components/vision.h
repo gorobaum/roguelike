@@ -48,7 +48,7 @@ class Vision : public ComponentBase {
     double range_;
     std::set<int> relevant_octants_;
     std::list<base::GameTile*> visible_tiles_;
-    alg::LosProcessor* losprocessor_;
+    alg::LoSProcessor* losprocessor_;
 
     bool initialized_;
 };

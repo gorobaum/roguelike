@@ -23,9 +23,9 @@ class Shape : public ComponentBase {
       : super(owner), stay_sizeclass_(stay_sizeclass), pass_sizeclass_(pass_sizeclass), enter_sizeclass_(enter_sizeclass) {}
     ~Shape() {}
 
-    void set_stay_sizeclass(  size_t stay_sizeclass ) { stay_sizeclass_  = stay_sizeclass;  }
-    void set_pass_sizeclass(  size_t pass_sizeclass ) { pass_sizeclass_  = pass_sizeclass;  }
-    void set_enter_sizeclass( size_t enter_sizeclass) { enter_sizeclass_ = enter_sizeclass; }
+    void set_stay_sizeclass(  double stay_sizeclass ) { stay_sizeclass_  = stay_sizeclass;  }
+    void set_pass_sizeclass(  double pass_sizeclass ) { pass_sizeclass_  = pass_sizeclass;  }
+    void set_enter_sizeclass( double enter_sizeclass) { enter_sizeclass_ = enter_sizeclass; }
 
     double stay_sizeclass()  const { return stay_sizeclass_;  }
     double pass_sizeclass()  const { return pass_sizeclass_;  }

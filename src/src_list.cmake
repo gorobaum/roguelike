@@ -1,7 +1,12 @@
 SET(GAME_SRCS 
     ./game/action/movement.h 
     ./game/action.h 
+    ./game/alg/eqline.cc 
     ./game/alg/eqline.h 
+    ./game/alg/loscone.cc 
+    ./game/alg/loscone.h 
+    ./game/alg/losoctant.cc 
+    ./game/alg/losoctant.h 
     ./game/alg/losprocessor.cc 
     ./game/alg/losprocessor.h 
     ./game/alg.h 
