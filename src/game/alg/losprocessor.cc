@@ -34,7 +34,6 @@ using game::base::GameTile;
 using namespace game::alg::enums;
 
 // Defines
-#define PI 3.1415926535897932384626433832795
 #define EYE_VEC() Vector2D(static_cast<double>(vision_->eye()->x()),static_cast<double>(vision_->eye()->y()))
 #define TILE_VEC(tile) Vector2D(static_cast<double>((tile)->x()),static_cast<double>((tile)->y()))
 

@@ -25,3 +25,7 @@ x64
 *.cache
 /*.lib
 /*.dll
+roguelike.dir
+Debug
+*.vcxproj
+*.filters
