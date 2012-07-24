@@ -35,6 +35,8 @@ SET(GAME_SRCS
     ./game/components/shape_rectangular.h 
     ./game/components/vision.cc 
     ./game/components/vision.h 
+    ./game/config.h 
     ./main.cc 
+    ./utils/utils.cc 
     ./utils/utils.h 
 )

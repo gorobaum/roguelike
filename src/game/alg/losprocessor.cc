@@ -161,7 +161,7 @@ void LosProcessor::Process() {
         for(auto ot = LosOctant::iterator(octants_[*rt],rangesquared);
             (*ot) != nullptr && (TILE_VEC(*ot) - eyev).LengthSquared() <= rangesquared;
             ++ot ) {
-               /*TODO: MAKE WORK.
+            /*
             // we need to feed the preprocessings to the cones' bump lists as they become relevant:
             if( ot.count_outer() == preprocessings_[straight_p] - 1 && ot.count_inner() == 0 ) {
                 // straight preprocess:
@@ -206,10 +206,10 @@ void LosProcessor::Process() {
             */
 
             // iterate through the list, removing if necessary.
-                /*TODO:FIX
+            
             function<bool (LosCone*)> process_cone_at_binded_tile = bind( &LosProcessor::process_cone, this, (*ot), _1);
             cones_.remove_if( process_cone_at_binded_tile );
-            */
+            
         
         }
         cones_.clear();

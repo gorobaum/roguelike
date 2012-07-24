@@ -512,7 +512,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\components\shape_rectangular.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\components\vision.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\components\vision.h" />
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\config.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\main.cc" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\utils\utils.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
