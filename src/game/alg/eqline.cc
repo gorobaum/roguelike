@@ -81,6 +81,12 @@ void EqLine::set_target(const Vector2D& new_target) {
     }
     coefficient_ = (new_target.y - origin_.y) / (new_target.x + prevent_vert - origin_.x);
     target_x_ = new_target.x + prevent_vert;
+
+    // always try to move the origin, not the target.
+    if(prevent_vert != 0.0) {
+        set_origin(origin_ + Vector2D(-prevent_vert,0.0));
+        set_target(new_target);
+    }
 }
 
 void EqLine::Test() {
