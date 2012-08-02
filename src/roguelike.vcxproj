@@ -480,6 +480,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\action.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.h" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationalline.cc" />
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationalline.h" />
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationallineimpl.cc" />
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationallineimpl.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.cc" />
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.h" />
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\losoctant.cc" />

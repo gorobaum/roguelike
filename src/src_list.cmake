@@ -3,6 +3,8 @@ SET(GAME_SRCS
     ./game/action.h 
     ./game/alg/eqline.cc 
     ./game/alg/eqline.h 
+    ./game/alg/equationalline.cc 
+    ./game/alg/equationalline.h 
     ./game/alg/loscone.cc 
     ./game/alg/loscone.h 
     ./game/alg/losoctant.cc 

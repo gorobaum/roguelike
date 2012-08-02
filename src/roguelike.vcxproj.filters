@@ -4,6 +4,12 @@
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationalline.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationallineimpl.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -64,6 +70,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\eqline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationalline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\equationallineimpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\brocoli\Documents\Visual Studio 2010\Projects\roguelike\src\game\alg\loscone.h">
