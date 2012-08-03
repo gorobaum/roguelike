@@ -11,18 +11,18 @@
 // (none)
 
 // Forward Declarations
-class game::alg::EquationalLineImpl;
 #include <ugdk/math.h>
 #include "utils/utils.h"
 
 
 namespace game {
 namespace alg {
+
+class EquationalLineImpl;
     
 class EquationalLine {
   public:
     // constructors and destructors
-    EquationalLine(double a = 0.0, double b = 0.0, bool use_left_as_up = true);
     EquationalLine(const ugdk::Vector2D& origin, const ugdk::Vector2D& target, bool use_left_as_up = true);
     ~EquationalLine();
 
@@ -31,20 +31,20 @@ class EquationalLine {
     double b() const;
     bool use_left_as_up() const;
     const ugdk::Vector2D& origin() const;
-    const ugdk::Vector2D& offset_target() const;
+    const ugdk::Vector2D& target() const;
 
     // setters
-    void set_a(double a);
-    void set_b(double b);
-    void set_origin(const ugdk::Vector2D& new_origin);
-    void set_target(const ugdk::Vector2D& new_target);
+    void set_origin(const ugdk::Vector2D& origin);
+    void set_target(const ugdk::Vector2D& target);
+    void set_use_left_as_up(bool use_left_as_up);
 
     // methods
-    ugdk::Vector2D Target() const;
     double YAt(double x) const;
     utils::enums::ord::Ord CompareWithVector(const ugdk::Vector2D& vec);
 
   private:
+    EquationalLine& operator=(const EquationalLine&);
+
     EquationalLineImpl*const pimpl_;
 };
 
