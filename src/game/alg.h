@@ -6,6 +6,7 @@ namespace alg {
 
 class LoSProcessor;
 class LoSOctant;
+class OctantIterator;
 class LoSCone;
 
 class EquationalLine;

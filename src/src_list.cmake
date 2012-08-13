@@ -3,12 +3,19 @@ SET(GAME_SRCS
     ./game/action.h 
     ./game/alg/equationalline.cc 
     ./game/alg/equationalline.h 
+    ./game/alg/evenoctantiterator.cc 
+    ./game/alg/evenoctantiterator.h 
     ./game/alg/loscone.cc 
     ./game/alg/loscone.h 
+    ./game/alg/losoctantprocessor.cc 
+    ./game/alg/losoctantprocessor.h 
     ./game/alg/losoctant.cc 
     ./game/alg/losoctant.h 
     ./game/alg/losprocessor.cc 
     ./game/alg/losprocessor.h 
+    ./game/alg/octantiterator.h 
+    ./game/alg/oddoctantiterator.cc 
+    ./game/alg/oddoctantiterator.h 
     ./game/alg.h 
     ./game/base/gamecontroller.cc 
     ./game/base/gamecontroller.h 

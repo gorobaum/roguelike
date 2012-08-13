@@ -171,7 +171,7 @@ GameTile* GameController::GetTileByDirectionFromTile(GameTile* tile, Movement::D
 
     if(tile == nullptr) return nullptr;
 
-    size_t x = tile->x(), y = tile->y();
+    int x = tile->x(), y = tile->y();
     switch(d) {
 		case Movement::UP:              --y; break;
 		case Movement::DOWN:            ++y; break;
@@ -184,8 +184,8 @@ GameTile* GameController::GetTileByDirectionFromTile(GameTile* tile, Movement::D
 		default: break;
 	}
 
-	if( (y < 0) || (y >= static_cast<size_t>(    tiles_.size() )) ) return nullptr;
-	if( (x < 0) || (x >= static_cast<size_t>( tiles_[y].size() )) ) return nullptr;
+	if( (y < 0) || (y >=    tiles_.size() ) ) return nullptr;
+	if( (x < 0) || (x >= tiles_[y].size() ) ) return nullptr;
 
 	return GetTileFromCoordinates(x,y);
 }

@@ -19,6 +19,9 @@ namespace game {
 namespace base {
 
 class GameTile {
+  // Lacks operator=
+  GameTile& operator=(const GameTile&);
+
   public:
 	static const ugdk::Vector2D TILE_SIZE;
 
@@ -38,14 +41,16 @@ class GameTile {
     const ugdk::math::Integer2D& coords() const { return coords_; }
 
 	ugdk::graphic::Node* node() { return node_; }
+    
     const std::list<GameObject*>& objects_here() const { return objects_here_; }
+          std::list<GameObject*>& objects_here()       { return objects_here_; }
 
   private:
 	ugdk::graphic::Node* node_;
 	std::list<GameObject*> objects_here_;
 	ugdk::graphic::Drawable* ground_;
 
-	ugdk::math::Integer2D coords_;
+	const ugdk::math::Integer2D coords_;
 };
 
 } // namespace base

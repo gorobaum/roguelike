@@ -20,8 +20,10 @@ class EvenOctantIterator : public OctantIterator {
   typedef OctantIterator super;
 
   public:
-    EvenOctantIterator(double range_squared) : super(range_squared) {}
+    EvenOctantIterator(double range_squared);
+    ~EvenOctantIterator() {}
 
+    EvenOctantIterator& operator++();
 
 };
 

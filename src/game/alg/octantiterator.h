@@ -19,18 +19,17 @@ namespace alg {
 
 class OctantIterator {
   public:
-    OctantIterator(double range_squared) : range_squared_(range_squared), focus_(0), outer(0) {}
-    ~OctantIterator();
+    OctantIterator(double range_squared, const ugdk::math::Integer2D& start_offset )
+      : range_squared_(range_squared), focus_(start_offset) {}
+    ~OctantIterator() {}
 
     ugdk::math::Integer2D operator*() const { return focus_; }
-    const std::list<game::base::GameObject*>& objects_at_focus() const { return objects_at_focus_; }
+    bool end() const { return focus_.x*focus_.x + focus_.y*focus_.y > range_squared_; }
     virtual OctantIterator& operator++() = 0;
 
-  private:
+  protected:
     double range_squared_;
     ugdk::math::Integer2D focus_;
-    ugdk::math::Integer2D outer_;
-    const std::list<game::base::GameObject*>& objects_at_focus_;
 };
 
 } // namespace alg
