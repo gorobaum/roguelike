@@ -60,4 +60,11 @@ ord::Ord CompareDoubles(double a, double b) {
     return ord::LT;
 }
 
+ord::Ord CompareInts(int a, int b) {
+    a -= b;
+    if(a > 0) return ord::GT;
+    if(a < 0) return ord::LT;
+    return ord::EQ;
+}
+
 } // utils

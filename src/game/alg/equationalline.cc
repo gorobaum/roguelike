@@ -4,17 +4,17 @@
 
 // External Dependencies
 #include <assert.h>
-#include <limits>
-#include <ugdk/math/vector2D.h>
+#include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
 #include "utils/utils.h"
 
 // Using
-using std::numeric_limits;
-using ugdk::Vector2D;
+using ugdk::math::Integer2D;
 using utils::CompareDoubles;
+using utils::CompareInts;
 using namespace utils::enums;
+using utils::enums::ord::Ord;
 
 namespace game {
 namespace alg {
@@ -22,7 +22,7 @@ namespace alg {
 class EquationalLineImpl {
   public:
     // constructors and destructors
-    EquationalLineImpl(const Vector2D& origin, const Vector2D& target, bool use_left_as_up)
+    EquationalLineImpl(const Integer2D& origin, const Integer2D& target, bool use_left_as_up)
       : use_left_as_up_(use_left_as_up), origin_(origin), target_(target),
         lazy_a_(true), lazy_b_(true) {}
 
@@ -33,16 +33,16 @@ class EquationalLineImpl {
     double b() { if(lazy_b_) update_b(); return b_; }
     bool use_left_as_up() const { return use_left_as_up_; }
 
-    const Vector2D& origin() const { return origin_; }
-    const Vector2D& target() const { return target_; }
+    const Integer2D& origin() const { return origin_; }
+    const Integer2D& target() const { return target_; }
 
     // setters
-    void set_origin(const Vector2D& origin) {
+    void set_origin(const Integer2D& origin) {
         assert(origin.x != target_.x || origin.y != target_.y);
         origin_ = origin;
         lazy_a_ = lazy_b_ = true;
     }
-    void set_target(const Vector2D& target) {
+    void set_target(const Integer2D& target) {
         assert(origin_.x != target.x || origin_.y != target.y);
         target_ = target;
         lazy_a_ = lazy_b_ = true;
@@ -52,41 +52,39 @@ class EquationalLineImpl {
     // methods
     double YAt(double x) {
         if(lazy_b_) update_b(); // requires fresh a_ already
-        assert(a_ != numeric_limits<double>::infinity());
+        assert(!is_vertical_);
 
         return a_*x + b_;
     }
-    utils::enums::ord::Ord CompareWithVector(const Vector2D& vec) {
+    Ord CompareWithInteger2D(const Integer2D& vec) {
         if(lazy_a_) update_a();
 
-        if(a_ == numeric_limits<double>::infinity()) {
+        if(is_vertical_) {
             if(use_left_as_up_)
-                return CompareDoubles(origin_.x,vec.x);
-
-            return CompareDoubles(vec.x,origin_.x);
+                return CompareInts(origin_.x, vec.x);
+            return CompareInts(vec.x, origin_.x);
         }
 
-
-        return CompareDoubles(YAt(vec.x), vec.y);
+        return CompareDoubles(YAt(static_cast<double>(vec.x)), static_cast<double>(vec.y));
     }
 
   private:
     // utility functions for lazyness
     void update_a() {
-        if(CompareDoubles(origin_.x,target_.x) == ord::EQ)
-            a_ = numeric_limits<double>::infinity();
-        else
-            a_ = (origin_.y - target_.y) / (origin_.x - target_.x);
+        if(CompareInts(origin_.x,target_.x) == ord::EQ)
+            is_vertical_ = true;
+        else {
+            a_ = static_cast<double>(origin_.y - target_.y) / static_cast<double>(origin_.x - target_.x);
+            is_vertical_ = false;
+        }
 
         lazy_a_ = false;
     }
     void update_b() {
         if(lazy_a_) update_a();
 
-        if(a_ == numeric_limits<double>::infinity())
-            b_ = -42.12345; // rofl. doesn't matter actually.
-        else
-            b_ = origin_.y - a_ * origin_.x;
+        if(!is_vertical_)
+            b_ = static_cast<double>(origin_.y) - a_ * static_cast<double>(origin_.x);
 
         lazy_b_ = false;
     }
@@ -95,8 +93,9 @@ class EquationalLineImpl {
     double a_;
     double b_;
     bool use_left_as_up_;
-    Vector2D origin_;
-    Vector2D target_;
+    Integer2D origin_;
+    Integer2D target_;
+    bool is_vertical_;
 
     // lazyness attributes
     bool lazy_a_;
@@ -104,7 +103,7 @@ class EquationalLineImpl {
 };
 
 // contructors and destructors
-EquationalLine::EquationalLine(const Vector2D& origin, const Vector2D& target, bool use_left_as_up)
+EquationalLine::EquationalLine(const Integer2D& origin, const Integer2D& target, bool use_left_as_up)
   : pimpl_(new EquationalLineImpl(origin,target,use_left_as_up)) {}
 
 EquationalLine::~EquationalLine() { delete pimpl_; }
@@ -113,16 +112,16 @@ EquationalLine::~EquationalLine() { delete pimpl_; }
 double EquationalLine::a() const { return pimpl_->a(); }
 double EquationalLine::b() const { return pimpl_->b(); }
 bool EquationalLine::use_left_as_up() const { return pimpl_->use_left_as_up(); }
-const Vector2D& EquationalLine::origin() const { return pimpl_->origin(); }
-const Vector2D& EquationalLine::target() const { return pimpl_->target(); }
+const Integer2D& EquationalLine::origin() const { return pimpl_->origin(); }
+const Integer2D& EquationalLine::target() const { return pimpl_->target(); }
 
 // setters
-void EquationalLine::set_origin(const Vector2D& origin) { pimpl_->set_origin(origin); }
-void EquationalLine::set_target(const Vector2D& target) { pimpl_->set_target(target); }
+void EquationalLine::set_origin(const Integer2D& origin) { pimpl_->set_origin(origin); }
+void EquationalLine::set_target(const Integer2D& target) { pimpl_->set_target(target); }
 
 // methods
 double EquationalLine::YAt(double x) const { return pimpl_->YAt(x); }
-ord::Ord EquationalLine::CompareWithVector(const Vector2D& vec) { return pimpl_->CompareWithVector(vec); }
+Ord EquationalLine::CompareWithInteger2D(const Integer2D& vec) { return pimpl_->CompareWithInteger2D(vec); }
 
 
 

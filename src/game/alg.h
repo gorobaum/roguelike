@@ -8,7 +8,7 @@ class LoSProcessor;
 class LoSOctant;
 class LoSCone;
 
-class EqLine;
+class EquationalLine;
 
 } // namespace base
 } // namespace game

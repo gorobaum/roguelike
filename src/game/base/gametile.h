@@ -6,13 +6,13 @@
 
 // External Dependencies
 #include <list> // template class
+#include <ugdk/math/integer2D.h> // coords_
 
 // Internal Dependencies
 // (none)
 
 // Forward Declarations
 #include <ugdk/graphic.h>
-#include <ugdk/math.h>
 #include "game/base.h"
 
 namespace game {
@@ -23,6 +23,7 @@ class GameTile {
 	static const ugdk::Vector2D TILE_SIZE;
 
 	GameTile(int x, int y);
+    GameTile(const ugdk::math::Integer2D& coords);
 	~GameTile();
 
 	ugdk::graphic::Node* node() const { return node_; }
@@ -31,8 +32,10 @@ class GameTile {
 	void RemoveObject(GameObject* obj);
 
 	
-	int x() const { return x_; }
-	int y() const { return y_; }
+	int x() const { return coords_.x; }
+	int y() const { return coords_.y; }
+
+    const ugdk::math::Integer2D& coords() const { return coords_; }
 
 	ugdk::graphic::Node* node() { return node_; }
     const std::list<GameObject*>& objects_here() const { return objects_here_; }
@@ -42,10 +45,10 @@ class GameTile {
 	std::list<GameObject*> objects_here_;
 	ugdk::graphic::Drawable* ground_;
 
-	int x_, y_;
+	ugdk::math::Integer2D coords_;
 };
 
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_BASE_GAMEOBJECT_H_
+#endif // BADGAME_BASE_GAMETILE_H_

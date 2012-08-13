@@ -22,6 +22,9 @@ enum Ord {
 // Note: "CompareDoubles(a,b) == ord::EQ && CompareDoubles(b,c) == ord::EQ && CompareDoubles(a,c) == ord::LT" might be true.
 enums::ord::Ord CompareDoubles(double a, double b);
 
+// Derp
+enums::ord::Ord CompareInts(int a, int b);
+
 } // namespace utils
 
 #endif

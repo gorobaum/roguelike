@@ -3,139 +3,94 @@
 #include "game/alg/loscone.h"
 
 // External Dependencies
-#include <ugdk/math/vector2D.h>
+#include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
 #include "game/alg/losprocessor.h"
-#include "game/base/gamecontroller.h"
-#include "game/base/gametile.h"
 #include "utils/utils.h"
 
 // Using
-using ugdk::Vector2D;
+using ugdk::math::Integer2D;
 using namespace game::alg::enums;
-using game::base::GameTile;
 using namespace utils::enums;
-
-// Defines
-#define TILE_VEC(tile) Vector2D(static_cast<double>((tile)->x()),static_cast<double>((tile)->y()))
 
 namespace game {
 namespace alg {
 
-LoSCone::LoSCone(const EqLine& steep, const EqLine& shallow, int octant,
-                 const LoSProcessor* owner)
-  : orientation_(octant), steep_(steep), shallow_(shallow),
-    owner_(owner) {}
+LoSCone::LoSCone(const EquationalLine& upper, const EquationalLine& lower)
+  : upper_(upper), lower_(lower) {}
 
-bump::BumpType LoSCone::ComputeBumpType(const base::GameTile* focus, int ydir) {
-    const Array9Vec2D& offs = owner_->control_offsets().at(orientation_);
-    Vector2D foc = TILE_VEC(focus);
-    /*
-#ifdef DEBUG
-    fprintf(stderr,"(%f,%f), (%f,%f)\n",offs[0].x,offs[0].y,offs[2].x,offs[2].y);
-#endif
-    */
-    ord::Ord cmp = steep_.CompareWithVector(foc + offs[0]);
-    if(ydir == -1) {
-        if( cmp == ord::GT || cmp == ord::EQ )
-            return bump::ABV;
+bump::BumpType LoSCone::ComputeBumpType(const ugdk::math::Integer2D& up_left) {
 
-        cmp = shallow_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::LT || cmp == ord::EQ )
-            return bump::BLW;
+    Integer2D upper_corner = up_left;
+    Integer2D lower_corner = upper_corner + Integer2D(1,1);
 
-        cmp = steep_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::GT ) {
-            cmp = shallow_.CompareWithVector(foc + offs[0]);
-            if( cmp == ord::LT ) return bump::BLK;
-            /* the following compare is useless due to case bump::ABV :
-             * cmp = steep_.CompareWithVector(foc + offs[0]);
-             * if( cmp == ord::LT || cmp == ord::EQ ) */
-            return bump::STP;
-        }
-        cmp = shallow_.CompareWithVector(foc + offs[0]);
-        if( cmp == ord::LT ) return bump::SHL;
-    } else {
-        if( cmp == ord::LT || cmp == ord::EQ )
-            return bump::ABV;
+    // cases above bump, and below bump.
 
-        cmp = shallow_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::GT || cmp == ord::EQ )
-            return bump::BLW;
+    ord::Ord cmp = upper_.CompareWithInteger2D(lower_corner);
+    if( cmp == ord::LT || cmp == ord::EQ )
+        return bump::ABV;
 
-        cmp = steep_.CompareWithVector(foc + offs[2]);
-        if( cmp == ord::LT ) {
-            cmp = shallow_.CompareWithVector(foc + offs[0]);
-            if( cmp == ord::GT ) return bump::BLK;
-            /* the following compare is useless due to case bump::ABV :
-             * cmp = steep_.CompareWithVector(foc + offs[0]);
-             * if( cmp == ord::GT || cmp == ord::EQ ) */
-            return bump::STP;
-        }
-        cmp = shallow_.CompareWithVector(foc + offs[0]);
-        if( cmp == ord::GT ) return bump::SHL;
+    cmp = lower_.CompareWithInteger2D(upper_corner);
+    if( cmp == ord::GT || cmp == ord::EQ )
+        return bump::BLW;
+
+    // in all cases below, the cone intersects the target.
+
+    cmp = upper_.CompareWithInteger2D(upper_corner);
+    if( cmp == ord::LT ) {
+        // in this case, upper_ intersects the tile strictly.
+        // we need to decide whether it's a block or an upper bump.
+        cmp = lower_.CompareWithInteger2D(lower_corner);
+        if( cmp == ord::GT )
+            return bump::BLK;
+
+        return bump::UPR;
     }
+
+    // in all cases below, upper_ is above the upper_corner.
+
+    cmp = lower_.CompareWithInteger2D(lower_corner);
+    if( cmp == ord::GT )
+        return bump::LWR;
+
     return bump::MDL;
 }
 
-#ifdef DEBUG
-void LoSCone::TestCmpBumpType(const LoSProcessor* owner) {
-    const base::GameController* gamecontroller = base::GameController::reference();
+void LoSCone::UpperBump(const ugdk::math::Integer2D& up_left) {
+    Integer2D limit = up_left;
 
-    EqLine shallow = EqLine(Vector2D(0.0,1.0),Vector2D(40.0,5.0));
-    EqLine steep = EqLine(Vector2D(1.0,0.0),Vector2D(5.0,40.0));
-    LoSCone cone = LoSCone(steep,shallow,4,owner);
-
-    GameTile* tile1 = gamecontroller->GetTileFromCoordinates(0,40);
-    GameTile* tile2 = gamecontroller->GetTileFromCoordinates(1,5);
-    GameTile* tile3 = gamecontroller->GetTileFromCoordinates(30,30);
-    GameTile* tile4 = gamecontroller->GetTileFromCoordinates(1,1);
-    GameTile* tile5 = gamecontroller->GetTileFromCoordinates(5,1);
-    GameTile* tile6 = gamecontroller->GetTileFromCoordinates(40,0);
-
-    fprintf(stderr,"LoSCone TestCmpBumpType: %d,",cone.ComputeBumpType(tile1,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile2,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile3,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile4,1));
-    fprintf(stderr,"%d,",cone.ComputeBumpType(tile5,1));
-    fprintf(stderr,"%d",cone.ComputeBumpType(tile6,1));
-    fprintf(stderr,"\n");
-}
-#endif
-
-void LoSCone::SteepBump(const base::GameTile* tile, int ydir) {
-    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[0];
-
-    steep_.set_target(limit);
-    for(auto st = shallow_bumps_.end(); st != shallow_bumps_.begin();) {
+    // fix the problem at hand:
+    upper_.set_target(limit);
+    /*TODO:REACTIVATE!
+    // check if we didn't introduce any errors:
+    for(auto st = lower_bumps_.end(); st != lower_bumps_.begin();) {
         --st;
-        if( (ydir == -1 && steep_.CompareWithVector(*st) == ord::GT) 
-            || (ydir == 1 && steep_.CompareWithVector(*st) == ord::LT) ) {
-            steep_.set_origin(*st);
-            //TODO: testar essa prox linha em mais detalhe.
-            //shallow_bumps_.erase(shallow_bumps_.begin(),++st);
+        if( upper_.CompareWithInteger2D(*st) == ord::LT ) {
+            upper_.set_origin(*st);
             break;
         }
     }
-    steep_bumps_.push_back(limit);
+    */
+    // update the upper bumps list.
+    upper_bumps_.push_back(limit);
 }
 
-void LoSCone::ShallowBump(const base::GameTile* tile, int ydir) {
-    Vector2D limit = TILE_VEC(tile) + owner_->control_offsets().at(orientation_)[2];
+void LoSCone::LowerBump(const ugdk::math::Integer2D& up_left) {
+    Integer2D limit = up_left + Integer2D(1,1);
 
-    shallow_.set_target(limit);
-    for(auto st = steep_bumps_.end(); st != steep_bumps_.begin();) {
+    lower_.set_target(limit);
+    /*TODO:REACTIVATE!
+    for(auto st = upper_bumps_.end(); st != upper_bumps_.begin();) {
         --st;
-        if( (ydir == -1 && shallow_.CompareWithVector(*st) == ord::LT)
-            || (ydir == 1 && shallow_.CompareWithVector(*st) == ord::GT) ) {
-            shallow_.set_origin(*st);
-            //TODO: testar essa prox linha em mais detalhe.
-            //steep_bumps_.erase(steep_bumps_.begin(),++st);
+        if( lower_.CompareWithInteger2D(*st) == ord::GT ) {
+            lower_.set_origin(*st);
+            //TODO: remove old bumps from the list?
             break;
         }
     }
-    shallow_bumps_.push_back(limit);
+    */
+    lower_bumps_.push_back(limit);
 }
 
 

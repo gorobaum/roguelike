@@ -14,37 +14,37 @@
 #include <ugdk/math.h>
 #include "utils/utils.h"
 
-
 namespace game {
 namespace alg {
 
 class EquationalLineImpl;
     
 class EquationalLine {
+  // Lacks operator=
+  EquationalLine& operator=(const EquationalLine&);
+
   public:
     // constructors and destructors
-    EquationalLine(const ugdk::Vector2D& origin, const ugdk::Vector2D& target, bool use_left_as_up = true);
+    EquationalLine(const ugdk::math::Integer2D& origin, const ugdk::math::Integer2D& target, bool use_left_as_up = true);
     ~EquationalLine();
 
     // getters
     double a() const;
     double b() const;
     bool use_left_as_up() const;
-    const ugdk::Vector2D& origin() const;
-    const ugdk::Vector2D& target() const;
+    const ugdk::math::Integer2D& origin() const;
+    const ugdk::math::Integer2D& target() const;
 
     // setters
-    void set_origin(const ugdk::Vector2D& origin);
-    void set_target(const ugdk::Vector2D& target);
+    void set_origin(const ugdk::math::Integer2D& origin);
+    void set_target(const ugdk::math::Integer2D& target);
     void set_use_left_as_up(bool use_left_as_up);
 
     // methods
     double YAt(double x) const;
-    utils::enums::ord::Ord CompareWithVector(const ugdk::Vector2D& vec);
+    utils::enums::ord::Ord CompareWithInteger2D(const ugdk::math::Integer2D& vec);
 
   private:
-    EquationalLine& operator=(const EquationalLine&);
-
     EquationalLineImpl*const pimpl_;
 };
 

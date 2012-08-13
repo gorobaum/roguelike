@@ -8,7 +8,7 @@
 #include <list>
 
 // Internal Dependencies
-#include "game/alg/eqline.h"
+#include "game/alg/equationalline.h"
 
 // Forward Declarations
 #include <ugdk/math.h>
@@ -19,51 +19,39 @@ namespace game {
 namespace alg {
 
 namespace enums {
-namespace bump {
 
+namespace bump {
 enum BumpType {
     ABV = 0, // tile está completamente acima do cone de visão
-    STP = 1, // tile colide com a steep line do cone apenas
+    UPR = 1, // tile colide com a upper line do cone apenas
     MDL = 2, // tile está dentro do cone de visão, sem colidir com nenhuma linha
     BLK = 3, // tile bloqueia o campo de visão completamente (colide com as duas linhas)
-    SHL = 4, // tile colide com a shallow line do cone apenas
+    LWR = 4, // tile colide com a lower line do cone apenas
     BLW = 5  // tile está completamente abaixo do cone de visão
 };
 }
-}
+
+} // namespace enums
 
 class LoSCone {
+  // Lacks operator=
+  LoSCone& operator=(const LoSCone&);
+
   public:
-    LoSCone(const EqLine& steep, const EqLine& shallow, int octant,
-            const LoSProcessor* owner);
-
-    const EqLine& steep()   const { return   steep_; }
-    const EqLine& shallow() const { return shallow_; }
-
-    const int orientation() const { return orientation_; }
+    LoSCone(const EquationalLine& upper, const EquationalLine& lower);
+    ~LoSCone() {};
     
-    const std::list<ugdk::Vector2D>&   steep_bumps() const { return   steep_bumps_; }
-    const std::list<ugdk::Vector2D>& shallow_bumps() const { return shallow_bumps_; }
+    enums::bump::BumpType ComputeBumpType(const ugdk::math::Integer2D& up_left);
 
-    void   SteepBump(const base::GameTile* tile, int ydir);
-    void ShallowBump(const base::GameTile* tile, int ydir);
-
-    enums::bump::BumpType ComputeBumpType(const base::GameTile* focus, int ydir);
-
-#ifdef DEBUG
-    void LoSCone::TestCmpBumpType(const LoSProcessor* owner);
-#endif
+    void UpperBump(const ugdk::math::Integer2D& up_left);
+    void LowerBump(const ugdk::math::Integer2D& up_left);
 
   private:
-    LoSCone& operator=(const LoSCone&);
-
-    EqLine steep_;
-    EqLine shallow_;
-    const int orientation_; // measured as 1,2,4,5,7,8,10 and 11 o'clock.
-    const LoSProcessor* owner_;
-
-    std::list<ugdk::Vector2D>   steep_bumps_;
-    std::list<ugdk::Vector2D> shallow_bumps_;
+    EquationalLine upper_;
+    EquationalLine lower_;
+    
+    std::list<ugdk::math::Integer2D> upper_bumps_;
+    std::list<ugdk::math::Integer2D> lower_bumps_;
 };
 
 } // namespace alg
