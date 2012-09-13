@@ -26,6 +26,7 @@ class EquationalLine {
   public:
     // constructors and destructors
     EquationalLine(const ugdk::math::Integer2D& origin, const ugdk::math::Integer2D& target, bool use_left_as_up = true);
+    EquationalLine(const EquationalLine& copy);
     ~EquationalLine();
 
     // getters

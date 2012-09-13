@@ -5,11 +5,11 @@
 // (none)
 
 // Internal Dependencies
-#include "game/components/controller.h"
-#include "game/components/vision.h"
-#include "game/components/damageable.h"
-#include "game/components/shape.h"
-#include "game/components/graphic.h"
+#include "game/component/controller.h"
+#include "game/component/vision.h"
+#include "game/component/damageable.h"
+#include "game/component/shape.h"
+#include "game/component/graphic.h"
 
 // Using
 using game::component::Controller;

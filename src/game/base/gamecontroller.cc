@@ -13,10 +13,10 @@
 #include "game/action/movement.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
-#include "game/builders/objectbuilder.h"
-#include "game/components/controller_player.h"
-#include "game/components/graphic.h"
-#include "game/components/shape_rectangular.h"
+#include "game/builder/objectbuilder.h"
+#include "game/component/controller_player.h"
+#include "game/component/graphic.h"
+#include "game/component/shape_rectangular.h"
 
 // Using
 using std::list;

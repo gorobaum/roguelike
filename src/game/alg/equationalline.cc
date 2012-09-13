@@ -106,6 +106,8 @@ class EquationalLineImpl {
 EquationalLine::EquationalLine(const Integer2D& origin, const Integer2D& target, bool use_left_as_up)
   : pimpl_(new EquationalLineImpl(origin,target,use_left_as_up)) {}
 
+EquationalLine::EquationalLine(const EquationalLine& copy) : pimpl_(new EquationalLineImpl(*(copy.pimpl_))) {}
+
 EquationalLine::~EquationalLine() { delete pimpl_; }
 
 // getters
