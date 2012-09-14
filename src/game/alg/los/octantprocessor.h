@@ -6,6 +6,7 @@
 
 // External Dependencies
 #include <list>
+#include "ugdk/math/integer2D.h"
 
 // Internal Dependencies
 #include "game/alg/los/octant.h"
@@ -26,6 +27,8 @@ class OctantProcessor {
     ~OctantProcessor();
 
     void ProcessOctant();
+
+	void set_origin(const ugdk::math::Integer2D& origin) { octant_.set_origin(origin); }
 
   private:
     bool process_cone_here(Cone* cone);

@@ -39,7 +39,7 @@ class Vision : public ComponentBase {
 
     void MarkVisible(const base::GameTile* tile);
 
-    void Update(double dt);
+    void Update(double);
     void See();
 
     void CycleOctant();

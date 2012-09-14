@@ -44,11 +44,13 @@ void OctantProcessor::ProcessOctant() {
     int int_range = static_cast<int>(vision_->range()) + 1;
 
     octant_.set_origin(vision_->eye());
-
+	octant_.iterator()->reset();
+	
+    // Setup the startup cones.
+	/*
     Cone* upper_cone = nullptr;
     Cone* lower_cone = nullptr;
 
-    // Setup the startup cones.
     if( octant_.parity() == 0 ) {
         EquationalLine upper_upper(Integer2D(1,1), Integer2D(1,-int_range));
         EquationalLine upper_lower(Integer2D(0,0), Integer2D(int_range+1, -int_range));
@@ -71,6 +73,14 @@ void OctantProcessor::ProcessOctant() {
 
     cones_.push_back(upper_cone);
     cones_.push_back(lower_cone);
+	*/
+
+	EquationalLine upper_line(Integer2D(1,1), Integer2D(         1, -int_range ));
+	EquationalLine lower_line(Integer2D(0,0), Integer2D( int_range,          0 ));
+
+	Cone* startup_cone = new Cone(upper_line,lower_line);
+
+	cones_.push_back(startup_cone);
 
     // Iterate through the octant.
     while(!octant_.iterator()->end()) {
@@ -104,7 +114,7 @@ bool OctantProcessor::process_cone_here(Cone* cone) {
         return false;
 
     // Otherwise,
-    //Cone* newcone;
+    Cone* newcone = nullptr;
     switch(bt) {
         case bump::BLK: // do nothing and kill this cone.
             return true;
@@ -115,10 +125,10 @@ bool OctantProcessor::process_cone_here(Cone* cone) {
             cone->LowerBump(fake_coords);
             break;
         case bump::MDL: // split the cone in two, and make an upper bump and a lower bump respectively.
-            //newcone = new Cone(*cone); 
+            newcone = new Cone(*cone); 
             cone->UpperBump(fake_coords);
-            //newcone->LowerBump(fake_coords);
-            //cones_.push_back(newcone);
+            newcone->LowerBump(fake_coords);
+            cones_.push_back(newcone);
             break;
         case bump::ABV: // ignore these cases
         case bump::BLW: break;

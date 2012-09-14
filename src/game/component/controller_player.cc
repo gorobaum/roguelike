@@ -79,7 +79,7 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Pause();
 
         owner_->shape_component()->Step(where_to_);
-        //owner_->vision_component()->See();
+        owner_->vision_component()->See();
         where_to_ = Movement::NONE;
     }
     else if ( ( input->KeyDown(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_LEFT) ||
@@ -89,7 +89,7 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
         if(where_to_ != Movement::NONE) {
             owner_->shape_component()->Step(where_to_);
-            //owner_->vision_component()->See();
+            owner_->vision_component()->See();
         }
     }
 

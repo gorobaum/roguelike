@@ -35,9 +35,6 @@ enum BumpType {
 } // namespace enums
 
 class Cone {
-  // Lacks operator=
-  Cone& operator=(const Cone&);
-
   public:
     Cone(const EquationalLine& upper, const EquationalLine& lower);
     ~Cone() {};
