@@ -13,7 +13,6 @@
 #include "game/alg/los/octant.h"
 #include "game/alg/equationalline.h"
 #include "game/base/gamecontroller.h"
-#include "game/base/gameobject.h"
 #include "game/base/gametile.h"
 #include "game/component/vision.h"
 
@@ -26,7 +25,6 @@ using ugdk::math::Integer2D;
 using namespace game::alg::los::enums;
 using game::alg::EquationalLine;
 using game::base::GameController;
-using game::base::GameObject;
 using game::base::GameTile;
 using game::component::Vision;
 
@@ -40,46 +38,35 @@ OctantProcessor::OctantProcessor(int octant_id, Vision* vision)
 OctantProcessor::~OctantProcessor() { clean_cones(); }
 
 void OctantProcessor::ProcessOctant() {
+    const GameController* gamecontroller = GameController::reference();
 
-    int int_range = static_cast<int>(vision_->range()) + 1;
+    int int_range = static_cast<int>(vision_->range());
+	int int_range_squared = int_range*int_range;
+	++int_range;
 
-    octant_.set_origin(vision_->eye());
-	octant_.iterator()->reset();
+	Integer2D eye = vision_->eye();
+    octant_.set_origin(eye); // Adjust the octant for a
+	octant_.iterator()->reset(); // new processing routine.
+
+	// Preprocess the relevant straight line:
+	Integer2D blocking = eye;
+	const Integer2D& straight_dir = octant_.straight_dir();
+
+	// Find the first blocking tile,
+	do {
+		vision_->MarkVisible(gamecontroller->GetTileFromCoordinates(blocking));
+		blocking += straight_dir;
+
+	} while( (blocking-eye).LengthSquared() < int_range_squared &&
+		     !vision_->BlocksVision(gamecontroller->GetTileFromCoordinates(blocking)) );
+
+	vision_->MarkVisible(gamecontroller->GetTileFromCoordinates(blocking));
 	
     // Setup the startup cones.
-	/*
-    Cone* upper_cone = nullptr;
-    Cone* lower_cone = nullptr;
-
-    if( octant_.parity() == 0 ) {
-        EquationalLine upper_upper(Integer2D(1,1), Integer2D(1,-int_range));
-        EquationalLine upper_lower(Integer2D(0,0), Integer2D(int_range+1, -int_range));
-
-        EquationalLine lower_upper(Integer2D(1,1), Integer2D(2,-2));
-        EquationalLine lower_lower(Integer2D(0,1), Integer2D(int_range+1, -int_range));
-
-        upper_cone = new Cone(upper_upper,upper_lower);
-        lower_cone = new Cone(lower_upper,lower_lower);
-    } else {
-        EquationalLine upper_upper(Integer2D(0,1), Integer2D(int_range+1, -int_range));
-        EquationalLine upper_lower(Integer2D(0,0), Integer2D(2,-1));
-
-        EquationalLine lower_upper(Integer2D(1,1), Integer2D(int_range+1, -int_range));
-        EquationalLine lower_lower(Integer2D(0,0), Integer2D(int_range, 0));
-        
-        upper_cone = new Cone(upper_upper,upper_lower);
-        lower_cone = new Cone(lower_upper,lower_lower);
-    }
-
-    cones_.push_back(upper_cone);
-    cones_.push_back(lower_cone);
-	*/
-
 	EquationalLine upper_line(Integer2D(1,1), Integer2D(         1, -int_range ));
 	EquationalLine lower_line(Integer2D(0,0), Integer2D( int_range,          0 ));
 
 	Cone* startup_cone = new Cone(upper_line,lower_line);
-
 	cones_.push_back(startup_cone);
 
     // Iterate through the octant.

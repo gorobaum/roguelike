@@ -30,9 +30,8 @@ Processor::~Processor() {
 void Processor::Process() {
     set<int> relevant_octants = vision_->relevant_octants();
 
-    for(auto ot = relevant_octants.begin(); ot != relevant_octants.end(); ++ot) {
-        octants_[*ot]->ProcessOctant();
-    }
+    for(auto rt = relevant_octants.begin(); rt != relevant_octants.end(); ++rt)
+        octants_[*rt]->ProcessOctant();
 }
 
 } // namespace los

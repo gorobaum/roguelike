@@ -18,7 +18,11 @@ namespace game {
 namespace alg {
 namespace los {
 
-Octant::Octant(int id, double range_squared) : parity_(id%2), rotations_(id/2), origin_(-42,-42) {
+Octant::Octant(int id, double range_squared)
+  : parity_(id%2), rotations_(id/2),
+    straight_dir_( abs(2-(((id+7)%8)/2))-1, 1-abs(2-(((id+9)%8)/2)) ), 
+	origin_(42,42) {
+
     if( parity_ == 0 )
         iterator_ = new EvenOctantIterator(range_squared);
     else

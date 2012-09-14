@@ -23,7 +23,7 @@ using game::alg::los::Processor;
 namespace game {
 namespace component {
 
-Vision::Vision(game::base::GameObject* owner) : super(owner), range_(29.5), initialized_(false) {}
+Vision::Vision(game::base::GameObject* owner) : super(owner), range_(20.5), initialized_(false) {}
 
 Vision::~Vision() {
     if(initialized_)
@@ -43,8 +43,9 @@ void Vision::Initialize() {
 }
 
 void Vision::MarkVisible(const GameTile* tile) {
-    tile->node()->modifier()->set_visible(true);
     //TODO: use visible_tiles_
+	if( tile != nullptr ) 
+		tile->node()->modifier()->set_visible(true);
 }
 
 void Vision::Update(double) {}
@@ -68,6 +69,7 @@ void Vision::CycleOctant() {
 }
 
 bool Vision::BlocksVision(const GameTile* tile) {
+	if( tile == nullptr ) return true;
     //TODO: POARR NAO TUDO BLOCA VISAO NEH
     const list<GameObject*> stuff = tile->objects_here();
     for(auto ot = stuff.begin(); ot != stuff.end(); ++ot) {
