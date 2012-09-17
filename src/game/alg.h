@@ -3,12 +3,17 @@
 
 namespace game {
 namespace alg {
+namespace los {
 
-class LoSProcessor;
-class LoSOctant;
-class LoSCone;
+class Cone;
+class Processor;
+class OctantProcessor;
+class Octant;
+class OctantIterator;
 
-class EqLine;
+} // namespace los
+
+class EquationalLine;
 
 } // namespace base
 } // namespace game

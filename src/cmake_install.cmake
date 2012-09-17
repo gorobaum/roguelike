@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src
+# Install script for directory: D:/Users/brocoli/Documents/Visual Studio 2010/Projects/roguelike/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

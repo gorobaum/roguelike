@@ -3,13 +3,9 @@ PROJECT(roguelike CXX C)
 set(roguelike_VERSION_MAJOR 0)
 set(roguelike_VERSION_MINOR 0)
 set(roguelike_VERSION_SUBMINOR 0)
-SET(roguelike_FULL_VERSION
-	"${roguelike_VERSION_MAJOR}.${roguelike_VERSION_MINOR}.${roguelike_VERSION_SUBMINOR} Alpha")
+SET(roguelike_FULL_VERSION "${roguelike_VERSION_MAJOR}.${roguelike_VERSION_MINOR}.${roguelike_VERSION_SUBMINOR} Alpha")
 
 MESSAGE("== Roguelike -- version ${roguelike_FULL_VERSION} ==")
-
-# TODO: document why we need this.
-cmake_policy(SET CMP0015 NEW)
 
 IF (UNIVERSAL)
   # Necessary for a Mac Universal Binary
@@ -22,8 +18,19 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND UNIVERSAL)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mmacosx-version-min=10.5")
 ENDIF()
 
-# FindUGDK
-add_subdirectory(externals/ugdk)
-include_directories ("externals/ugdk/src")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
-add_subdirectory(src) # The game binary.
+# FindUGDK
+option (USE_EMBBEDED_UGDK "" OFF)
+find_package(UGDK REQUIRED)
+include_directories(${UGDK_INCLUDE_DIRS})
+set(UGDK_EXTERNAL_LIBRARIES ${UGDK_LIBRARIES})
+
+# Required for managing DLLS and LIBS in windows in subdirectory src
+if(WIN32)
+	file(GLOB dlls RELATIVE ${CMAKE_SOURCE_DIR} *.dll)
+	file(GLOB libs RELATIVE ${CMAKE_SOURCE_DIR} *.lib)
+endif(WIN32)
+	
+# The game binary.
+add_subdirectory(src)

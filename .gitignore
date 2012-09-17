@@ -31,3 +31,5 @@ Debug
 *.filters
 cmake_install.cmake
 *.sln
+/*.psess
+/*.vsp

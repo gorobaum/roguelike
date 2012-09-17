@@ -1,7 +1,6 @@
 
 #include <cmath>
 #include <limits>
-#include <assert.h>
 #include "utils/utils.h"
 
 using namespace utils::enums;
@@ -11,7 +10,7 @@ namespace utils {
 #undef D_EPS
 #undef D_INF
 
-static double D_EPS = std::numeric_limits<double>::epsilon();
+static double D_EPS = std::numeric_limits<double>::epsilon() * 8;
 static double D_INF = std::numeric_limits<double>::infinity();
 
 ord::Ord CompareDoubles(double a, double b) {
@@ -27,6 +26,17 @@ ord::Ord CompareDoubles(double a, double b) {
         else return ord::GT;
     } else if( b == D_INF ) return ord::LT; 
 
+	// if a or b are 0.0, frexp behaves differently, and our treatment with exponentials wouldn't work.
+	if(a == 0.0) {
+		if( b <= D_EPS && b >= -D_EPS ) return ord::EQ;
+		if( b>0 ) return ord::LT;
+		return ord::GT;
+	} else if(b == 0.0) {
+		if( a <= D_EPS && a >= -D_EPS ) return ord::EQ;
+		if(a>0) return ord::GT;
+		return ord::LT;
+	}
+
     // extract negativeness
     if(a<0) { neg += 1; }
     if(b<0) { neg += 2; }
@@ -34,9 +44,6 @@ ord::Ord CompareDoubles(double a, double b) {
     // extract exponents and significands
     a = std::frexp(a, &expa);
     b = std::frexp(b, &expb);
-
-    // wtf happened?
-    assert( !(a == 1.0 || b == 1.0 || (a == 0.0 && expa != 0) || (b == 0.0 && expb != 0)) );
 
     // we need to compare expoents now.
     expa -= expb;
@@ -58,6 +65,13 @@ ord::Ord CompareDoubles(double a, double b) {
     if( a <= D_EPS && a >= -D_EPS ) return ord::EQ;
     if(a>0) return ord::GT;
     return ord::LT;
+}
+
+ord::Ord CompareInts(int a, int b) {
+    a -= b;
+    if(a > 0) return ord::GT;
+    if(a < 0) return ord::LT;
+    return ord::EQ;
 }
 
 } // utils

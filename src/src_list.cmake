@@ -1,14 +1,23 @@
 SET(GAME_SRCS 
     ./game/action/movement.h 
     ./game/action.h 
-    ./game/alg/eqline.cc 
-    ./game/alg/eqline.h 
-    ./game/alg/loscone.cc 
-    ./game/alg/loscone.h 
-    ./game/alg/losoctant.cc 
-    ./game/alg/losoctant.h 
-    ./game/alg/losprocessor.cc 
-    ./game/alg/losprocessor.h 
+    ./game/alg/equationalline.cc 
+    ./game/alg/equationalline.h 
+    ./game/alg/equationallinedouble.cc 
+    ./game/alg/equationallinedouble.h 
+    ./game/alg/los/cone.cc 
+    ./game/alg/los/cone.h 
+    ./game/alg/los/evenoctantiterator.cc 
+    ./game/alg/los/evenoctantiterator.h 
+    ./game/alg/los/octant.cc 
+    ./game/alg/los/octant.h 
+    ./game/alg/los/octantiterator.h 
+    ./game/alg/los/octantprocessor.cc 
+    ./game/alg/los/octantprocessor.h 
+    ./game/alg/los/oddoctantiterator.cc 
+    ./game/alg/los/oddoctantiterator.h 
+    ./game/alg/los/processor.cc 
+    ./game/alg/los/processor.h 
     ./game/alg.h 
     ./game/base/gamecontroller.cc 
     ./game/base/gamecontroller.h 
@@ -17,29 +26,29 @@ SET(GAME_SRCS
     ./game/base/gametile.cc 
     ./game/base/gametile.h 
     ./game/base.h 
+    ./game/builder/objectbuilder.cc 
+    ./game/builder/objectbuilder.h 
     ./game/builder.h 
-    ./game/builders/objectbuilder.cc 
-    ./game/builders/objectbuilder.h 
+    ./game/component/componentbase.h 
+    ./game/component/controller.h 
+    ./game/component/controller_ai.cc 
+    ./game/component/controller_ai.h 
+    ./game/component/controller_idle.cc 
+    ./game/component/controller_idle.h 
+    ./game/component/controller_player.cc 
+    ./game/component/controller_player.h 
+    ./game/component/damageable.cc 
+    ./game/component/damageable.h 
+    ./game/component/graphic.cc 
+    ./game/component/graphic.h 
+    ./game/component/graphic_rectangular.cc 
+    ./game/component/graphic_rectangular.h 
+    ./game/component/shape.h 
+    ./game/component/shape_rectangular.cc 
+    ./game/component/shape_rectangular.h 
+    ./game/component/vision.cc 
+    ./game/component/vision.h 
     ./game/component.h 
-    ./game/components/componentbase.h 
-    ./game/components/controller.h 
-    ./game/components/controller_ai.cc 
-    ./game/components/controller_ai.h 
-    ./game/components/controller_idle.cc 
-    ./game/components/controller_idle.h 
-    ./game/components/controller_player.cc 
-    ./game/components/controller_player.h 
-    ./game/components/damageable.cc 
-    ./game/components/damageable.h 
-    ./game/components/graphic.cc 
-    ./game/components/graphic.h 
-    ./game/components/graphic_rectangular.cc 
-    ./game/components/graphic_rectangular.h 
-    ./game/components/shape.h 
-    ./game/components/shape_rectangular.cc 
-    ./game/components/shape_rectangular.h 
-    ./game/components/vision.cc 
-    ./game/components/vision.h 
     ./game/config.h 
     ./main.cc 
     ./utils/utils.cc 
