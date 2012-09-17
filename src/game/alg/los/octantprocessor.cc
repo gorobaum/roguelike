@@ -40,8 +40,6 @@ OctantProcessor::OctantProcessor(int octant_id, Vision* vision)
 OctantProcessor::~OctantProcessor() { clean_cones(); }
 
 void OctantProcessor::ProcessOctant() {
-    const GameController* gamecontroller = GameController::reference();
-
     double range = vision_->range() + 1.0;
 
 	// Reset the octant.
