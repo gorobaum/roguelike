@@ -8,7 +8,7 @@
 #include <list>
 
 // Internal Dependencies
-#include "game/alg/equationalline.h"
+#include "game/alg/equationallinedouble.h"
 
 // Forward Declarations
 #include <ugdk/math.h>
@@ -36,20 +36,20 @@ enum BumpType {
 
 class Cone {
   public:
-    Cone(const EquationalLine& upper, const EquationalLine& lower);
+    Cone(const EquationalLineDouble& upper, const EquationalLineDouble& lower);
     ~Cone() {};
     
-    enums::bump::BumpType ComputeBumpType(const ugdk::math::Integer2D& up_left);
+    enums::bump::BumpType ComputeBumpType(const ugdk::Vector2D& up_left);
 
-    void UpperBump(const ugdk::math::Integer2D& up_left);
-    void LowerBump(const ugdk::math::Integer2D& up_left);
+    void UpperBump(const ugdk::Vector2D& up_left);
+    void LowerBump(const ugdk::Vector2D& up_left);
 
   private:
-    EquationalLine upper_;
-    EquationalLine lower_;
+    EquationalLineDouble upper_;
+    EquationalLineDouble lower_;
     
-    std::list<ugdk::math::Integer2D> upper_bumps_;
-    std::list<ugdk::math::Integer2D> lower_bumps_;
+    std::list<ugdk::Vector2D> upper_bumps_;
+    std::list<ugdk::Vector2D> lower_bumps_;
 };
 
 } // namespace los

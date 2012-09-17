@@ -3,6 +3,8 @@ SET(GAME_SRCS
     ./game/action.h 
     ./game/alg/equationalline.cc 
     ./game/alg/equationalline.h 
+    ./game/alg/equationallinedouble.cc 
+    ./game/alg/equationallinedouble.h 
     ./game/alg/los/cone.cc 
     ./game/alg/los/cone.h 
     ./game/alg/los/evenoctantiterator.cc 

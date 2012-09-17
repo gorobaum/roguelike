@@ -8,6 +8,7 @@
 #include FROM_TR1(functional)
 #include <list>
 #include <ugdk/math/integer2D.h>
+#include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
 #include "game/alg/los/octant.h"
@@ -21,6 +22,7 @@ using std::list;
 using std::tr1::bind;
 using std::tr1::function;
 using std::tr1::placeholders::_1;
+using ugdk::Vector2D;
 using ugdk::math::Integer2D;
 using namespace game::alg::los::enums;
 using game::alg::EquationalLine;
@@ -44,27 +46,13 @@ void OctantProcessor::ProcessOctant() {
 	int int_range_squared = int_range*int_range;
 	++int_range;
 
-	Integer2D eye = vision_->eye();
-    octant_.set_origin(eye); // Adjust the octant for a
-	octant_.iterator()->reset(); // new processing routine.
+	// Reset the octant.
+    octant_.set_origin(vision_->eye()); 
+	octant_.iterator()->reset();
 
-	// Preprocess the relevant straight line:
-	Integer2D blocking = eye;
-	const Integer2D& straight_dir = octant_.straight_dir();
-
-	// Find the first blocking tile,
-	do {
-		vision_->MarkVisible(gamecontroller->GetTileFromCoordinates(blocking));
-		blocking += straight_dir;
-
-	} while( (blocking-eye).LengthSquared() < int_range_squared &&
-		     !vision_->BlocksVision(gamecontroller->GetTileFromCoordinates(blocking)) );
-
-	vision_->MarkVisible(gamecontroller->GetTileFromCoordinates(blocking));
-	
     // Setup the startup cones.
-	EquationalLine upper_line(Integer2D(1,1), Integer2D(         1, -int_range ));
-	EquationalLine lower_line(Integer2D(0,0), Integer2D( int_range,          0 ));
+	EquationalLineDouble upper_line(Vector2D(0.95, 0.95), Vector2D(      0.95, -int_range ));
+	EquationalLineDouble lower_line(Vector2D(0.05, 0.05), Vector2D( int_range,       0.05 ));
 
 	Cone* startup_cone = new Cone(upper_line,lower_line);
 	cones_.push_back(startup_cone);

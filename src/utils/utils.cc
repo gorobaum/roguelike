@@ -38,6 +38,17 @@ ord::Ord CompareDoubles(double a, double b) {
     // wtf happened?
     assert( !(a == 1.0 || b == 1.0 || (a == 0.0 && expa != 0) || (b == 0.0 && expb != 0)) );
 
+	// if a or b are 0.0, frexp behaves differently, and our treatment with exponentials wouldn't work.
+	if(a == 0.0) {
+		if( b <= D_EPS && b >= -D_EPS ) return ord::EQ;
+		if( b>0 ) return ord::LT;
+		return ord::GT;
+	} else if(b == 0.0) {
+		if( a <= D_EPS && a >= -D_EPS ) return ord::EQ;
+		if(a>0) return ord::GT;
+		return ord::LT;
+	}
+
     // we need to compare expoents now.
     expa -= expb;
     

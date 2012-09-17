@@ -3,7 +3,7 @@
 
 // External Dependencies
 #include <list>
-// (none)
+
 #include <ugdk/graphic/node.h>  //TODO rem.
 #include <ugdk/graphic/modifier.h> //TODO rem.
 
@@ -33,7 +33,7 @@ Vision::~Vision() {
 void Vision::Initialize() {
     if(initialized_) return;
 
-    for(int i = 0; i < 8; ++i)
+    for(int i = 0; i < 6; ++i)
         relevant_octants_.insert(i);
     
     losprocessor_ = new Processor(this);
@@ -59,12 +59,16 @@ void Vision::See() {
 }
 
 void Vision::CycleOctant() {
-    auto rt = relevant_octants_.begin();
-
-    int i = (*rt) + 1;
-    if(i == 8) i = 0;
-    relevant_octants_.clear();
-    relevant_octants_.insert(i);
+	auto rt = relevant_octants_.begin();
+	int i = *rt;
+	while( (++rt != relevant_octants_.end()) && i+1 == *(rt) )
+		++i;
+	if( rt != relevant_octants_.end() )
+		relevant_octants_.erase(*rt);
+	else
+		relevant_octants_.erase(*(relevant_octants_.begin()));
+	
+	relevant_octants_.insert((i+1)%8);
     See();
 }
 

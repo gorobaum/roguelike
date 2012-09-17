@@ -15,7 +15,7 @@ namespace game {
 namespace alg {
 namespace los {
 
-OddOctantIterator::OddOctantIterator(double range_squared) : super(range_squared, Integer2D(0,-1)) {}
+OddOctantIterator::OddOctantIterator(double range_squared) : super(range_squared, Integer2D(0,0)) {}
 
 OddOctantIterator& OddOctantIterator::operator++() {
 
@@ -28,17 +28,19 @@ OddOctantIterator& OddOctantIterator::operator++() {
         --(focus_.y);
         // gotta check for the range, and force an outer step in that case.
         if( end() ) {
-            focus_.y = -1;
+            focus_.y = 0;
             ++(focus_.x);
         }
     } else { // outer step case.
-        focus_.y = -1;
+        focus_.y = 0;
         ++(focus_.x);
     }
+
+	return *this;
 }
 
 void OddOctantIterator::reset() {
-    focus_ = Integer2D(0,-1);
+    focus_ = Integer2D(0,0);
 }
 
 } // namespace los
