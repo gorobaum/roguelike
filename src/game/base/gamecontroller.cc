@@ -111,9 +111,9 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     wall_1->shape_component()->PlaceAt(tiles_[15][10]);
     wall_2->shape_component()->PlaceAt(tiles_[16][10]);
     wall_3->shape_component()->PlaceAt(tiles_[17][10]);
-    wall_4->shape_component()->PlaceAt(tiles_[13][13]);
-    wall_5->shape_component()->PlaceAt(tiles_[13][14]);
-    wall_6->shape_component()->PlaceAt(tiles_[10][16]);
+    wall_4->shape_component()->PlaceAt(tiles_[15][12]);
+    wall_5->shape_component()->PlaceAt(tiles_[16][12]);
+    wall_6->shape_component()->PlaceAt(tiles_[17][12]);
     wall_7->shape_component()->PlaceAt(tiles_[11][16]);
     wall_8->shape_component()->PlaceAt(tiles_[10][25]);
     wall_9->shape_component()->PlaceAt(tiles_[11][24]);

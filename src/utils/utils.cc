@@ -10,7 +10,7 @@ namespace utils {
 #undef D_EPS
 #undef D_INF
 
-static double D_EPS = std::numeric_limits<double>::epsilon();
+static double D_EPS = std::numeric_limits<double>::epsilon() * 8;
 static double D_INF = std::numeric_limits<double>::infinity();
 
 ord::Ord CompareDoubles(double a, double b) {

@@ -28,7 +28,6 @@ class Octant {
     ugdk::math::Integer2D FocusCoordinates() const;
     bool FocusIsOutOfBounds() const;
     ugdk::math::Integer2D FakeCoordinates() const { return **iterator_; }
-	const ugdk::math::Integer2D& straight_dir() const { return straight_dir_; }
 
     int parity() const { return parity_; }
     OctantIterator* iterator() { return iterator_; }
@@ -38,7 +37,6 @@ class Octant {
   private:
     const int parity_;
     const int rotations_;
-	const ugdk::math::Integer2D straight_dir_;
     ugdk::math::Integer2D origin_;
     OctantIterator* iterator_;
 

@@ -51,8 +51,8 @@ void OctantProcessor::ProcessOctant() {
 	octant_.iterator()->reset();
 
     // Setup the startup cones.
-	EquationalLineDouble upper_line(Vector2D(0.55, 0.55), Vector2D(  0.55, -range ));
-	EquationalLineDouble lower_line(Vector2D(0.45, 0.45), Vector2D( range,   0.45 ));
+	EquationalLineDouble upper_line(Vector2D(0.70, 0.70), Vector2D(  0.70, -range ));
+	EquationalLineDouble lower_line(Vector2D(0.30, 0.30), Vector2D( range,   0.30 ));
 
 	Cone* startup_cone = new Cone(upper_line,lower_line);
 	cones_.push_back(startup_cone);
