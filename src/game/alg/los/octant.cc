@@ -45,6 +45,10 @@ bool Octant::FocusIsOutOfBounds() const {
     return gamecontroller->TileOutOfBounds(FocusCoordinates());
 }
 
+bool Octant::FocusIsControlTile() const {
+	return iterator_->FocusIsControlTile();
+}
+
 } // namespace los
 } // namespace alg
 } // namespace game

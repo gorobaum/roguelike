@@ -24,7 +24,7 @@ OddOctantIterator& OddOctantIterator::operator++() {
         return *this;
 
     // normal step case.
-    if( -(focus_.y) - 1 < focus_.x ) {
+    if( -(focus_.y) <= focus_.x ) {
         --(focus_.y);
         // gotta check for the range, and force an outer step in that case.
         if( end() ) {
@@ -39,8 +39,14 @@ OddOctantIterator& OddOctantIterator::operator++() {
 	return *this;
 }
 
-void OddOctantIterator::reset() {
+void OddOctantIterator::Reset() {
     focus_ = Integer2D(0,0);
+}
+
+bool OddOctantIterator::FocusIsControlTile() const {
+	if(-(focus_.y) - 1 == focus_.x )
+		return true;
+	return false;
 }
 
 } // namespace los

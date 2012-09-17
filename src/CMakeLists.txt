@@ -28,35 +28,34 @@ include_directories(${SDLMIXER_INCLUDE_DIR})
 add_executable(roguelike ${GAME_SRCS})
 target_link_libraries(roguelike ugdk)
 
-add_custom_command(TARGET roguelike PRE_BUILD
-	COMMAND ${CMAKE_COMMAND} -E remove "./*.dll")
-	
-add_custom_command(TARGET roguelike PRE_BUILD
-	COMMAND ${CMAKE_COMMAND} -E remove "./*.lib")
-
-IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
-	add_custom_command(TARGET roguelike POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib64/" "./"
-	WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
-ELSE()
-	add_custom_command(TARGET roguelike POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib/" "./"
-	WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
-ENDIF()
-
-#if(WIN32)
-#    add_custom_command(TARGET roguelike POST_BUILD 
-#    COMMAND xcopy externals\\ugdk\\src\\generated\\*.py data\\scripts\\ugdk\\ /q /k /y
-#    WORKING_DIRECTORY ../ COMMENT "Python scripts")
-#else()
-#    add_custom_command(TARGET roguelike POST_BUILD 
-#    COMMAND cp -v externals/ugdk/src/generated/*.py data/scripts/ugdk
-#    WORKING_DIRECTORY ../ COMMENT "Python scripts")
-#endif()
-
 set(GAME_LOCAL_DIR "./data")
 
 CONFIGURE_FILE(
     "game/config.h.in"
     "game/config.h"
 )
+
+#Libs and dlls stuff
+if(WIN32)
+	foreach(it ${dlls})
+		add_custom_command(TARGET roguelike POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E remove -f "${CMAKE_SOURCE_DIR}/${it}"
+			WORKING_DIRECTORY ../ COMMENT "Removing ${it} from the root.")
+	endforeach(it ${dlls})
+		
+	foreach(it ${libs})
+		add_custom_command(TARGET roguelike POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E remove -f "${CMAKE_SOURCE_DIR}/${it}"
+			WORKING_DIRECTORY ../ COMMENT "Removing ${it} from the root.")
+	endforeach(it ${libs})
+
+	IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		add_custom_command(TARGET roguelike POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib64/" "./"
+			WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
+	ELSE()
+		add_custom_command(TARGET roguelike POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory "./lib/" "./"
+			WORKING_DIRECTORY ../ COMMENT "Copying relevant libs to the root")
+	ENDIF()
+endif(WIN32)

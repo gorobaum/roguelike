@@ -26,8 +26,10 @@ class OctantIterator {
 
     ugdk::math::Integer2D operator*() const { return focus_; }
     bool end() const { return focus_.x*focus_.x + focus_.y*focus_.y > range_squared_; }
+
     virtual OctantIterator& operator++() = 0;
-    virtual void reset() = 0;
+    virtual void Reset() = 0;
+	virtual bool FocusIsControlTile() const = 0;
 
   protected:
     double range_squared_;

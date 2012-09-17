@@ -42,13 +42,11 @@ OctantProcessor::~OctantProcessor() { clean_cones(); }
 void OctantProcessor::ProcessOctant() {
     const GameController* gamecontroller = GameController::reference();
 
-    int range = vision_->range();
-	int range_squared = range*range;
-	++range;
+    double range = vision_->range() + 1.0;
 
 	// Reset the octant.
     octant_.set_origin(vision_->eye()); 
-	octant_.iterator()->reset();
+	octant_.iterator()->Reset();
 
     // Setup the startup cones.
 	EquationalLineDouble upper_line(Vector2D(0.70, 0.70), Vector2D(  0.70, -range ));
@@ -82,7 +80,8 @@ bool OctantProcessor::process_cone_here(Cone* cone) {
 
     // If the cone intersects with it, it is visible.
     if( bt != bump::ABV && bt != bump::BLW )
-        vision_->MarkVisible(focus_tile);
+		if( !octant_.FocusIsControlTile() )
+			vision_->MarkVisible(focus_tile);
 
     // If it doesn't block the vision, then we move on and keep the cone alive.
     if(!vision_->BlocksVision(focus_tile))

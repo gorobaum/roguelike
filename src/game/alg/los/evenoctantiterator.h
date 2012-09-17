@@ -25,7 +25,8 @@ class EvenOctantIterator : public OctantIterator {
     ~EvenOctantIterator() {}
 
     EvenOctantIterator& operator++();
-    void reset();
+    void Reset();
+	bool FocusIsControlTile() const;
 
 };
 

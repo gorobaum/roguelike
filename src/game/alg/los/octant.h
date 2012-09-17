@@ -27,6 +27,7 @@ class Octant {
 
     ugdk::math::Integer2D FocusCoordinates() const;
     bool FocusIsOutOfBounds() const;
+	bool FocusIsControlTile() const;
     ugdk::math::Integer2D FakeCoordinates() const { return **iterator_; }
 
     int parity() const { return parity_; }

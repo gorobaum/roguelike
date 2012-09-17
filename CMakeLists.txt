@@ -26,4 +26,8 @@ ENDIF()
 add_subdirectory(externals/ugdk)
 include_directories ("externals/ugdk/src")
 
-add_subdirectory(src) # The game binary.
+file(GLOB dlls RELATIVE ${CMAKE_SOURCE_DIR} *.dll)
+file(GLOB libs RELATIVE ${CMAKE_SOURCE_DIR} *.lib)
+
+# The game binary.
+add_subdirectory(src)

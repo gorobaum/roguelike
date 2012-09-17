@@ -25,7 +25,8 @@ class OddOctantIterator : public OctantIterator {
     ~OddOctantIterator() {}
 
     OddOctantIterator& operator++();
-    void reset();
+    void Reset();
+	bool FocusIsControlTile() const;
 
 };
 

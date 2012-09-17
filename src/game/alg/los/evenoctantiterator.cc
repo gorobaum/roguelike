@@ -24,7 +24,7 @@ EvenOctantIterator& EvenOctantIterator::operator++() {
         return *this;
 
     // normal step case.
-    if( focus_.x - 1 < -(focus_.y) ) {
+    if( focus_.x <= -(focus_.y) ) {
         ++(focus_.x);
         // gotta check for the range, and force an outer step in that case.
         if( end() ) {
@@ -39,8 +39,14 @@ EvenOctantIterator& EvenOctantIterator::operator++() {
 	return *this;
 }
 
-void EvenOctantIterator::reset() {
+void EvenOctantIterator::Reset() {
     focus_ = Integer2D(0,0);
+}
+
+bool EvenOctantIterator::FocusIsControlTile() const {
+	if(focus_.x - 1 == -(focus_.y) )
+		return true;
+	return false;
 }
 
 } // namespace los
