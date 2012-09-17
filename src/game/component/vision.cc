@@ -75,7 +75,7 @@ void Vision::CycleOctant() {
 bool Vision::BlocksVision(const GameTile* tile) {
 	if( tile == nullptr ) return true;
     //TODO: POARR NAO TUDO BLOCA VISAO NEH
-    const list<GameObject*> stuff = tile->objects_here();
+    const list<GameObject*>& stuff = tile->objects_here();
     for(auto ot = stuff.begin(); ot != stuff.end(); ++ot) {
         if(*ot != owner_) return true;
     }
