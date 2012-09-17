@@ -42,17 +42,17 @@ OctantProcessor::~OctantProcessor() { clean_cones(); }
 void OctantProcessor::ProcessOctant() {
     const GameController* gamecontroller = GameController::reference();
 
-    int int_range = static_cast<int>(vision_->range());
-	int int_range_squared = int_range*int_range;
-	++int_range;
+    int range = vision_->range();
+	int range_squared = range*range;
+	++range;
 
 	// Reset the octant.
     octant_.set_origin(vision_->eye()); 
 	octant_.iterator()->reset();
 
     // Setup the startup cones.
-	EquationalLineDouble upper_line(Vector2D(0.95, 0.95), Vector2D(      0.95, -int_range ));
-	EquationalLineDouble lower_line(Vector2D(0.05, 0.05), Vector2D( int_range,       0.05 ));
+	EquationalLineDouble upper_line(Vector2D(0.55, 0.55), Vector2D(  0.55, -range ));
+	EquationalLineDouble lower_line(Vector2D(0.45, 0.45), Vector2D( range,   0.45 ));
 
 	Cone* startup_cone = new Cone(upper_line,lower_line);
 	cones_.push_back(startup_cone);
