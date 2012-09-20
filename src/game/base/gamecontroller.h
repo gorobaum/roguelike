@@ -12,7 +12,7 @@
 #include <ugdk/math/vector2D.h>  // needed for map_size_
 
 // Internal Dependencies
-#include "game/action/movement.h" // needed for Movement::Direction
+// (none)
 
 // Forward Declarations
 #include "game/base.h"
