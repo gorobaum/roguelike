@@ -6,7 +6,9 @@
 
 // External Dependencies
 #include <list>
-#include "ugdk/math/integer2D.h"
+#include <ugdk/portable/tr1.h>
+#include FROM_TR1(functional)
+#include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
 #include "game/alg/los/octant.h"
@@ -14,7 +16,6 @@
 
 // Forward Declarations
 #include "game/alg.h"
-#include "game/base.h"
 #include "game/component.h"
 
 namespace game {
@@ -38,6 +39,7 @@ class OctantProcessor {
     std::list<Cone*> cones_;
     component::Vision* vision_;
 
+	std::tr1::function<bool (Cone*)> cone_processor_; // process_cone_here's incarnation as a non-method function.
 };
 
 } // namespace los

@@ -2,6 +2,7 @@
 #include "game/base/gamecontroller.h"
 
 // External Dependencies
+#include <cassert>
 #include <cstdlib>
 #include <ugdk/base/engine.h>
 #include <ugdk/graphic/drawable/text.h>
@@ -10,7 +11,6 @@
 #include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
-#include "game/action/movement.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
 #include "game/builder/objectbuilder.h"
@@ -21,9 +21,9 @@
 // Using
 using std::list;
 using std::vector;
+using ugdk::math::Integer2D;
 using ugdk::Vector2D;
 using game::builder::ObjectBuilder;
-using game::action::Movement;
 
 namespace game {
 namespace base {
@@ -34,6 +34,9 @@ namespace base {
 }*/
 
 static bool objectIsDead (const GameObject* value) {
+	assert(value != nullptr);
+	if( value == nullptr )
+		return false;
     bool is_dead = value->dead();
     if (is_dead) {
         delete value;
@@ -100,24 +103,24 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     AddGameObject(wall_0);
 
     // Add them to the Scene.
-    // AddPendingGameObjects(-) reparents the nodes to the root node,
+    // AddPendingGameObjects() reparents the nodes to the root node,
     //   so we need to call it before placing them on the map.
     addPendingGameObjects();
 
     // Place them on the map.
-    hero_->shape_component()->PlaceAt(tiles_[10][4]);
-    enemy->shape_component()->PlaceAt(tiles_[25][10]);
-    item->shape_component()->PlaceAt(tiles_[2][2]);
-    wall_1->shape_component()->PlaceAt(tiles_[15][10]);
-    wall_2->shape_component()->PlaceAt(tiles_[16][10]);
-    wall_3->shape_component()->PlaceAt(tiles_[17][10]);
-    wall_4->shape_component()->PlaceAt(tiles_[15][12]);
-    wall_5->shape_component()->PlaceAt(tiles_[16][12]);
-    wall_6->shape_component()->PlaceAt(tiles_[17][12]);
-    wall_7->shape_component()->PlaceAt(tiles_[11][16]);
-    wall_8->shape_component()->PlaceAt(tiles_[10][25]);
-    wall_9->shape_component()->PlaceAt(tiles_[11][24]);
-    wall_0->shape_component()->PlaceAt(tiles_[20][24]);
+    hero_->shape_component()->PlaceAt(Integer2D(10,4));
+    enemy->shape_component()->PlaceAt(Integer2D(25,10));
+    item->shape_component()->PlaceAt(Integer2D(2,2));
+    wall_1->shape_component()->PlaceAt(Integer2D(15,10));
+    wall_2->shape_component()->PlaceAt(Integer2D(16,10));
+    wall_3->shape_component()->PlaceAt(Integer2D(17,10));
+    wall_4->shape_component()->PlaceAt(Integer2D(15,13));
+    wall_5->shape_component()->PlaceAt(Integer2D(16,13));
+    wall_6->shape_component()->PlaceAt(Integer2D(17,13));
+    wall_7->shape_component()->PlaceAt(Integer2D(12,10));
+    wall_8->shape_component()->PlaceAt(Integer2D(12,11));
+    wall_9->shape_component()->PlaceAt(Integer2D(12,12));
+    wall_0->shape_component()->PlaceAt(Integer2D(12,13));
 }
 
 GameController::~GameController() {
@@ -135,8 +138,6 @@ void GameController::Update(double dt) {
 
     clearDeadGameObjects();
     addPendingGameObjects();
-
-
 }
 
 void GameController::AddGameObject(GameObject* game_object) {
@@ -165,42 +166,6 @@ void GameController::addPendingGameObjects() {
         this->AddEntity(*it);
     }
     pending_game_objects_.clear();
-}
-
-GameTile* GameController::GetTileByDirectionFromTile(GameTile* tile, Movement::Direction d) const {
-
-    if(tile == nullptr) return nullptr;
-
-    int x = tile->x(), y = tile->y();
-    switch(d) {
-		case Movement::UP:              --y; break;
-		case Movement::DOWN:            ++y; break;
-		case Movement::LEFT:       --x;      break;
-        case Movement::UP_LEFT:    --x; --y; break;
-        case Movement::DOWN_LEFT:  --x; ++y; break;
-		case Movement::RIGHT:      ++x;      break;
-        case Movement::UP_RIGHT:   ++x; --y; break;
-        case Movement::DOWN_RIGHT: ++x; ++y; break;
-		default: break;
-	}
-
-	if( (y < 0) || (y >=    tiles_.size() ) ) return nullptr;
-	if( (x < 0) || (x >= tiles_[y].size() ) ) return nullptr;
-
-	return GetTileFromCoordinates(x,y);
-}
-
-GameTile* GameController::GetTileByMovementFromTile(GameTile* tile, Movement& mov) const {
-
-    if(tile == nullptr || mov.dirs.size() == 0 ) return tile;
-    auto it = mov.dirs.begin();
-	for( ; it != mov.dirs.end() && (++it != mov.dirs.end()); ++it) {
-        --it;
-		GetTileByDirectionFromTile(tile, *it);
-	}
-    --it;
-
-	return GetTileByDirectionFromTile(tile, (*it));
 }
 
 } // namespace base

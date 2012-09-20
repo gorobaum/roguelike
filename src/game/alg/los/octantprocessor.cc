@@ -4,17 +4,16 @@
 
 // External Dependencies
 #include <cassert>
+#include <list>
 #include <ugdk/portable/tr1.h>
 #include FROM_TR1(functional)
-#include <list>
+#include <ugdk/math/frame.h>
 #include <ugdk/math/integer2D.h>
 #include <ugdk/math/vector2D.h>
 
 // Internal Dependencies
 #include "game/alg/los/octant.h"
 #include "game/alg/equationalline.h"
-#include "game/base/gamecontroller.h"
-#include "game/base/gametile.h"
 #include "game/component/vision.h"
 
 // Using
@@ -22,12 +21,11 @@ using std::list;
 using std::tr1::bind;
 using std::tr1::function;
 using std::tr1::placeholders::_1;
-using ugdk::Vector2D;
+using ugdk::Frame;
 using ugdk::math::Integer2D;
+using ugdk::Vector2D;
 using namespace game::alg::los::enums;
 using game::alg::EquationalLine;
-using game::base::GameController;
-using game::base::GameTile;
 using game::component::Vision;
 
 namespace game {
@@ -35,20 +33,23 @@ namespace alg {
 namespace los {
 
 OctantProcessor::OctantProcessor(int octant_id, Vision* vision)
-  : octant_(octant_id, vision->range()*vision->range()), vision_(vision) {}
+  : octant_(octant_id, vision->range()*vision->range()), vision_(vision) {
+    cone_processor_ = bind( &OctantProcessor::process_cone_here, this, _1 );
+}
 
 OctantProcessor::~OctantProcessor() { clean_cones(); }
 
 void OctantProcessor::ProcessOctant() {
     double range = vision_->range() + 1.0;
+    Frame eye = vision_->eye_frame();
 
 	// Reset the octant.
-    octant_.set_origin(vision_->eye()); 
+    octant_.set_origin(vision_->eye_coords()); 
 	octant_.iterator()->Reset();
 
     // Setup the startup cones.
-	EquationalLineDouble upper_line(Vector2D(0.70, 0.70), Vector2D(  0.70, -range ));
-	EquationalLineDouble lower_line(Vector2D(0.30, 0.30), Vector2D( range,   0.30 ));
+    EquationalLineDouble upper_line( Vector2D(eye.right(), eye.bottom()), Vector2D(eye.right(),   -range ) );
+	EquationalLineDouble lower_line( Vector2D(eye.left() , eye.top()   ), Vector2D(      range, eye.top()) );
 
 	Cone* startup_cone = new Cone(upper_line,lower_line);
 	cones_.push_back(startup_cone);
@@ -58,8 +59,7 @@ void OctantProcessor::ProcessOctant() {
 
         if(!octant_.FocusIsOutOfBounds()) {
             // iterate through the cone list, verifying the current focused tile.
-            function<bool (Cone*)> predicate = bind( &OctantProcessor::process_cone_here, this, _1 );
-            cones_.remove_if( predicate );
+            cones_.remove_if( cone_processor_ );
         }
 
         ++*(octant_.iterator());
@@ -68,10 +68,9 @@ void OctantProcessor::ProcessOctant() {
 }
 
 bool OctantProcessor::process_cone_here(Cone* cone) {
-    const GameController* gamecontroller = GameController::reference();
-
+    // Get the stuffs.
     Integer2D fake_coords = octant_.FakeCoordinates();
-    GameTile* focus_tile = gamecontroller->GetTileFromCoordinates(octant_.FocusCoordinates());
+    Integer2D focus_tile = octant_.FocusCoordinates();
 
     // First analyse how this tile relates to this cone.
     bump::BumpType bt = cone->ComputeBumpType(fake_coords);

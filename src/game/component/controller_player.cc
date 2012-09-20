@@ -3,6 +3,7 @@
 
 // External Dependencies
 #include <ugdk/base/engine.h>
+#include <ugdk/math/integer2D.h>
 #include <ugdk/input/inputmanager.h>
 #include <ugdk/input/keys.h>
 
@@ -13,9 +14,9 @@
 
 // Using
 using ugdk::input::InputManager;
+using ugdk::math::Integer2D;
 using ugdk::time::TimeAccumulator;
 using game::base::GameObject;
-using game::action::Movement;
 
 namespace game {
 namespace component {
@@ -27,7 +28,7 @@ namespace component {
 //#define KeyReleased(key) KeyUp(key)
 
 ControllerPlayer::ControllerPlayer(GameObject* owner)
-  : super(owner), where_to_(Movement::NONE), time_held_(DELAY_HOLD), hold_tick_(HOLD_TICK_INTERVAL) {
+  : super(owner), where_to_(Integer2D(0,0)), time_held_(DELAY_HOLD), hold_tick_(HOLD_TICK_INTERVAL) {
     time_held_.Pause();
     hold_tick_.Pause();
 }
@@ -49,24 +50,24 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
 
         if(input->KeyPressed(ugdk::input::K_RIGHT)) {
-            if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Movement::UP_RIGHT;
-            else if(input->KeyDown(ugdk::input::K_DOWN)) where_to_ = Movement::DOWN_RIGHT;
-            else where_to_ = Movement::RIGHT;
+            if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Integer2D( 1,-1);
+            else if(input->KeyDown(ugdk::input::K_DOWN)) where_to_ = Integer2D( 1, 1);
+            else where_to_ = Integer2D( 1, 0);
         }
         else if(input->KeyPressed(ugdk::input::K_LEFT)) {
-            if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Movement::UP_LEFT;
-            else if(input->KeyDown(ugdk::input::K_DOWN)) where_to_ = Movement::DOWN_LEFT;
-            else where_to_ = Movement::LEFT;
+            if(     input->KeyDown(ugdk::input::K_UP)  ) where_to_ = Integer2D(-1,-1);
+            else if(input->KeyDown(ugdk::input::K_DOWN)) where_to_ = Integer2D(-1, 1);
+            else where_to_ = Integer2D(-1, 0);
         }
         else if(input->KeyPressed(ugdk::input::K_UP)) {
-            if(     input->KeyDown(ugdk::input::K_LEFT) ) where_to_ = Movement::UP_LEFT;
-            else if(input->KeyDown(ugdk::input::K_RIGHT)) where_to_ = Movement::UP_RIGHT;
-            else where_to_ = Movement::UP;
+            if(     input->KeyDown(ugdk::input::K_LEFT) ) where_to_ = Integer2D(-1,-1);
+            else if(input->KeyDown(ugdk::input::K_RIGHT)) where_to_ = Integer2D( 1,-1);
+            else where_to_ = Integer2D( 0,-1);
         }
         else { // if(input->KeyPressed(ugdk::input::K_DOWN)) {
-            if(     input->KeyDown(ugdk::input::K_LEFT) ) where_to_ = Movement::DOWN_LEFT;
-            else if(input->KeyDown(ugdk::input::K_RIGHT)) where_to_ = Movement::DOWN_RIGHT;
-            else where_to_ = Movement::DOWN;
+            if(     input->KeyDown(ugdk::input::K_LEFT) ) where_to_ = Integer2D(-1, 1);
+            else if(input->KeyDown(ugdk::input::K_RIGHT)) where_to_ = Integer2D( 1, 1);
+            else where_to_ = Integer2D( 0, 1);
         }
     }
 
@@ -80,14 +81,14 @@ void ControllerPlayer::Update(double) {
 
         owner_->shape_component()->Step(where_to_);
         owner_->vision_component()->See();
-        where_to_ = Movement::NONE;
+        where_to_ = Integer2D(0,0);
     }
     else if ( ( input->KeyDown(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_LEFT) ||
                 input->KeyDown(ugdk::input::K_UP)    || input->KeyDown(ugdk::input::K_DOWN) )
               && time_held_.Expired() && hold_tick_.Expired() ) {
 
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
-        if(where_to_ != Movement::NONE) {
+        if(where_to_.x != 0 || where_to_.y != 0) {
             owner_->shape_component()->Step(where_to_);
             owner_->vision_component()->See();
         }

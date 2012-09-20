@@ -6,9 +6,10 @@
 
 // External Dependencies
 #include <list> // template class
+#include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
-#include "game/action/movement.h"   // needed for Movement::Direction
+// (none)
 
 // Forward Declarations
 #include "game/base.h"
@@ -30,17 +31,18 @@ class Shape : public ComponentBase {
     double stay_sizeclass()  const { return stay_sizeclass_;  }
     double pass_sizeclass()  const { return pass_sizeclass_;  }
     double enter_sizeclass() const { return enter_sizeclass_; }
-    const std::list<game::base::GameTile*>& occupying_tiles() const { return occupying_tiles_; } 
+    const std::list<ugdk::math::Integer2D>& occupying_tiles() const { return occupying_tiles_; } 
+    std::list<ugdk::math::Integer2D>& occupying_tiles()             { return occupying_tiles_; }
 
-    virtual game::base::GameTile* PlaceAt(game::base::GameTile* tile) = 0;
-    virtual game::base::GameTile* Move(game::action::Movement& mov) = 0;
-    virtual game::base::GameTile* Step(game::action::Movement::Direction dir) = 0;
+    virtual const ugdk::math::Integer2D& PlaceAt(const ugdk::math::Integer2D& tile) = 0;
+    virtual const ugdk::math::Integer2D& Move(const std::list<ugdk::math::Integer2D>& mov) = 0;
+    virtual const ugdk::math::Integer2D& Step(const ugdk::math::Integer2D& dir) = 0;
 
   protected:
     double stay_sizeclass_;
     double pass_sizeclass_;
     double enter_sizeclass_;
-	std::list<game::base::GameTile*> occupying_tiles_;
+	std::list<ugdk::math::Integer2D> occupying_tiles_;
 };
 
 } // namespace component

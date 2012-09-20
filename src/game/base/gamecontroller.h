@@ -5,9 +5,10 @@
 #include <ugdk/action/scene.h>
 
 // External Dependencies
+#include <cassert>
 #include <list>                  // template class, also needed for push_back(-)
 #include <vector>                // template class, also needed for size(-)
-#include <ugdk/math/integer2D.h> // needed for GetTileFromCoordinates
+#include <ugdk/math/integer2D.h> // needed for Tile
 #include <ugdk/math/vector2D.h>  // needed for map_size_
 
 // Internal Dependencies
@@ -25,8 +26,10 @@ class GameController : public ugdk::action::Scene {
 
   public:
     static const GameController* reference() { return reference_; }
-
-    GameController();
+	static GameController* Initialize() {
+		assert(reference_ == nullptr);
+		return reference_ == nullptr ? new GameController() : nullptr;
+	}
     ~GameController();
 
     void Update(double dt);
@@ -42,20 +45,20 @@ class GameController : public ugdk::action::Scene {
         return TileOutOfBounds(coords.x, coords.y);
     }
 
-    GameTile* GetTileFromCoordinates(int x, int y) const {
+    GameTile* Tile(int x, int y) const {
         if( !TileOutOfBounds(x,y) )
             return tiles_[y][x];
         return nullptr;
     }
-    GameTile* GetTileFromCoordinates(const ugdk::math::Integer2D& coords) const {
-        return GetTileFromCoordinates(coords.x, coords.y);
+    GameTile* Tile(const ugdk::math::Integer2D& coords) const {
+        return Tile(coords.x, coords.y);
     }
-    GameTile* GetTileByDirectionFromTile(GameTile* tile, game::action::Movement::Direction d) const;
-    GameTile* GetTileByMovementFromTile(GameTile* tile, game::action::Movement&) const;
 
     void BlackoutTiles() const;
 
   private:
+    GameController();
+
     void clearDeadGameObjects();
     void addPendingGameObjects();
     

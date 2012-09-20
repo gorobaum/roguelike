@@ -5,7 +5,7 @@
 // (none)
 
 // External Dependencies
-#include <list> // template class
+#include <set> // template class
 #include <ugdk/math/integer2D.h> // coords_
 
 // Internal Dependencies
@@ -24,9 +24,9 @@ class GameTile {
 
   public:
 	static const ugdk::Vector2D TILE_SIZE;
-
-	GameTile(int x, int y);
-    GameTile(const ugdk::math::Integer2D& coords);
+    
+	GameTile(const ugdk::math::Integer2D& coords);
+    GameTile(int x, int y);
 	~GameTile();
 
 	ugdk::graphic::Node* node() const { return node_; }
@@ -42,15 +42,16 @@ class GameTile {
 
 	ugdk::graphic::Node* node() { return node_; }
     
-    const std::list<GameObject*>& objects_here() const { return objects_here_; }
-          std::list<GameObject*>& objects_here()       { return objects_here_; }
+    const std::set<GameObject*>& objects_here() const { return objects_here_; }
+          std::set<GameObject*>& objects_here()       { return objects_here_; }
 
   private:
+	const ugdk::math::Integer2D coords_;
+
 	ugdk::graphic::Node* node_;
-	std::list<GameObject*> objects_here_;
+	std::set<GameObject*> objects_here_;
 	ugdk::graphic::Drawable* ground_;
 
-	const ugdk::math::Integer2D coords_;
 };
 
 } // namespace base

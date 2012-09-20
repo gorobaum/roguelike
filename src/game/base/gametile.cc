@@ -25,12 +25,12 @@ namespace base {
 
 const Vector2D GameTile::TILE_SIZE = Vector2D(23.0, 23.0);
 
-GameTile::GameTile(int x, int y) : node_(new Node), coords_(x,y) {
+GameTile::GameTile(const Integer2D& coords) : coords_(coords), node_(new Node) {
 	ground_ = new TexturedRectangle( ResourceManager::GetTextureFromFile("data/images/white.png") );
 	node_->set_drawable(ground_);
     node_->modifier()->set_scale(Vector2D(0.382));
 }
-GameTile::GameTile(const Integer2D& coords) : node_(new Node), coords_(coords) {
+GameTile::GameTile(int x, int y) : coords_(x,y), node_(new Node) {
 	ground_ = new TexturedRectangle( ResourceManager::GetTextureFromFile("data/images/white.png") );
 	node_->set_drawable(ground_);
     node_->modifier()->set_scale(Vector2D(0.382));
@@ -42,11 +42,11 @@ GameTile::~GameTile() {
 }
 
 void GameTile::PushObject(GameObject* obj) {
-	objects_here_.push_back(obj);
+	objects_here_.insert(obj);
 }
 
 void GameTile::RemoveObject(GameObject* obj) {
-	objects_here_.remove(obj);
+	objects_here_.erase(obj);
 }
 
 } // namespace base

@@ -11,6 +11,7 @@
 // (none)
 
 // Forward Declarations
+#include <ugdk/math.h>
 #include "game/base.h"
 
 namespace game {
@@ -24,7 +25,7 @@ class GraphicRectangular : public Graphic {
 
     void Update(double dt);
 
-	void NodeLogic(const std::list<game::base::GameTile*>& occupying_tiles);
+	void NodeLogic(const std::list<ugdk::math::Integer2D>& occupying_tiles);
 };
 
 } // namespace component

@@ -37,7 +37,7 @@ GameObject* ObjectBuilder::BuildHero() {
         new   ControllerPlayer(hero),
         new             Vision(hero),
         new         Damageable(hero, 10.0),
-        new   ShapeRectangular(hero, 1, 1, 1.0, 0.25, 1.0e-9),
+        new   ShapeRectangular(hero, 2, 2, 1.0, 0.25, 1.0e-9),
         new GraphicRectangular(hero, "@", 3.0)
     );
 

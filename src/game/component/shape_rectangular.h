@@ -10,7 +10,7 @@
 #include <ugdk/math/integer2D.h> // needed for dimensions_
 
 // Internal Dependencies
-#include "game/action/movement.h" // needed for Movement::Direction
+// (none)
 
 // Forward Declarations
 #include "game/base.h"
@@ -22,20 +22,20 @@ class ShapeRectangular : public Shape {
   typedef Shape super;
   public:
     ShapeRectangular(
-        game::base::GameObject* owner,
-        double size_x = 1, double size_y = 1,
+        game::base::GameObject* owner, int size_x = 1, int size_y = 1,
         double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5
     );
     ~ShapeRectangular();
 
-    game::base::GameTile* PlaceAt(game::base::GameTile* destination);
-    game::base::GameTile* Move(game::action::Movement& mov);
-    game::base::GameTile* Step(game::action::Movement::Direction dir);
+	const ugdk::math::Integer2D& PlaceAt(const ugdk::math::Integer2D& destination);
+    const ugdk::math::Integer2D& Move(const std::list<ugdk::math::Integer2D>& mov);
+    const ugdk::math::Integer2D& Step(const ugdk::math::Integer2D& dir);
 
-    bool CheckForOob(game::base::GameTile* destination);
-    bool TryPlace(game::base::GameTile* destination);
-    game::action::Movement::Direction TryStep(game::action::Movement::Direction dir);
-    void EvalBumpsAt(game::base::GameTile* destination);
+    bool CheckForOob(const ugdk::math::Integer2D& destination);
+    bool TryPlace(const ugdk::math::Integer2D& destination);
+    ugdk::math::Integer2D TryStep(const ugdk::math::Integer2D& dir);
+
+    void EvalBumpsAt(const ugdk::math::Integer2D& destination);
 
     const ugdk::math::Integer2D& dimensions() const { return dimensions_; }
 

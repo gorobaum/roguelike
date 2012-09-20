@@ -4,9 +4,9 @@
 // External Dependencies
 #include <list>
 #include <set>
+#include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
-#include "game/action/movement.h"
 #include "game/base/gamecontroller.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
@@ -16,7 +16,7 @@
 // Using
 using std::list;
 using std::set;
-using game::action::Movement;
+using ugdk::math::Integer2D;
 using game::base::GameController;
 using game::base::GameObject;
 using game::base::GameTile;
@@ -27,76 +27,82 @@ namespace game {
 namespace component {
 
 ShapeRectangular::ShapeRectangular(
-        game::base::GameObject* owner, double size_x, double size_y,
+        game::base::GameObject* owner, int size_x, int size_y,
         double stay_sizeclass, double pass_sizeclass, double enter_sizeclass
     )
   : super(owner, stay_sizeclass, pass_sizeclass, enter_sizeclass),
-    dimensions_(ugdk::Vector2D(size_x,size_y)),
+    dimensions_(Integer2D(size_x,size_y)),
     bumps_() {
     bumps_.resize(4);
 }
 ShapeRectangular::~ShapeRectangular() {}
 
-GameTile* ShapeRectangular::PlaceAt(GameTile* destination) {
+const Integer2D& ShapeRectangular::PlaceAt(const Integer2D& destination) {
 
-    // we'll need to access the tiles.
+    // we'll need to access the tiles (to remove and add ourselves to the tiles).
     const GameController* gamecontroller = GameController::reference();
 
-    // Better safe than sorry.
-    if(!TryPlace(destination)) { if(!occupying_tiles_.empty()) return occupying_tiles_.front(); else return nullptr; }
+    if(!TryPlace(destination)) {
+        assert(!occupying_tiles_.empty());
+        return occupying_tiles_.front();
+    }
 
     // Remove yourself from the map.
     for( auto ot = occupying_tiles_.begin() ; ot != occupying_tiles_.end() ; ++ot )
-        (*ot)->RemoveObject(this->owner_);
+		gamecontroller->Tile(*ot)->RemoveObject(this->owner_);
     occupying_tiles_.clear();
 
     // Add yourself to the new location.
     for( int j = 0 ; j < dimensions_.y ; ++j ) {
         for( int i = 0 ; i < dimensions_.x ; ++i ) {
-            GameTile* tile = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j);
-            occupying_tiles_.push_back(tile);
+			Integer2D dest_tile(destination.x+i, destination.y+j);
+
+            GameTile* tile = gamecontroller->Tile(dest_tile);
+            occupying_tiles_.push_back(dest_tile);
             tile->PushObject(owner_);
         }
     }
 
     // Update the nodes on the graphic component.
-    this->owner_->graphic_component()->NodeLogic(occupying_tiles_);
+    owner_->graphic_component()->NodeLogic(occupying_tiles_);
 
     return destination;
 }
 
-GameTile* ShapeRectangular::Move(Movement& mov) {
-    // Steps the movement one direction at a time, aborts on nullptr or returns the last Step(-).
+const Integer2D& ShapeRectangular::Move(const list<Integer2D>& mov) {
+    // Steps the movement one direction at a time, aborts on nullptr or returns the last Step().
 
-    // you're nowhere? there's nothing I can do.
-    if(occupying_tiles_.empty()) return nullptr;
+    assert(!occupying_tiles_.empty());
 
     // for with lookahead.
-    if( mov.dirs.size() == 0 ) return occupying_tiles_.front(); // make sure ++di exists.
-    auto di = mov.dirs.begin();
-    for( ; (++di) != mov.dirs.end() ; ++di ) {
+    if( mov.size() == 0 ) return occupying_tiles_.front(); // make sure ++di exists.
+    auto di = mov.begin();
+    for( ; (++di) != mov.end() ; ++di ) {
         --di;
-        if( Step(*di) == nullptr ) return nullptr;
+        //TODO: use a better ugdk.
+        Integer2D cmp = occupying_tiles_.front() - Step(*di);
+        if( cmp.x == 0 && cmp.y == 0 ) return Step(*di);
     }
     --di;
     return Step(*di);
 }
 
-GameTile* ShapeRectangular::Step(Movement::Direction dir) {
+const Integer2D& ShapeRectangular::Step(const Integer2D& dir) {
     
-    // you're nowhere? there's nothing I can do.
-    if(occupying_tiles_.empty()) return nullptr;
+    assert(!occupying_tiles_.empty());
 
     // no movement? no Place.
-    if( TryStep(dir) == Movement::NONE ) return occupying_tiles_.front();
+    //TODO: use a better ugdk
+    Integer2D cmp = TryStep(dir); // - Integer2D(0,0);
+    if( cmp.x == 0 && cmp.y == 0 ) return occupying_tiles_.front();
 
     //TODO: Step logic. (sound, sensoryfield adjustments, etc...)
 
-    const GameController* gamecontroller = GameController::reference();
-    return PlaceAt(gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), TryStep(dir)));
+    Integer2D destination = occupying_tiles_.front() + TryStep(dir);
+    return PlaceAt(destination);
 }
 
-bool ShapeRectangular::TryPlace(GameTile* destination) {
+bool ShapeRectangular::TryPlace(const Integer2D& destination) {
 
     if(!CheckForOob(destination)) return false;
 
@@ -112,60 +118,39 @@ bool ShapeRectangular::TryPlace(GameTile* destination) {
     return true;
 }
 
-Movement::Direction ShapeRectangular::TryStep(Movement::Direction dir) {
+Integer2D ShapeRectangular::TryStep(const Integer2D& dir) {
 
-    // you're nowhere? there's nothing I can do.
-    if(occupying_tiles_.empty()) return Movement::NONE;
-
-    // we'll need to access the tiles.
-    const GameController* gamecontroller = GameController::reference();
-
-    GameTile* destination = gamecontroller->GetTileByDirectionFromTile(occupying_tiles_.front(), dir);
-
-    // Trying to stand still doesn't move you.
+    assert(!occupying_tiles_.empty());
+    
     // Moving diagonally requires at least one of the corners free.
-    // Trying to move diagonally will try to deflect your movement to one coord should it fail.
-    switch(dir) {
-        case Movement::NONE: return Movement::NONE;
-        case Movement::UP_LEFT:
-            if( ( TryStep(Movement::UP) || TryStep(Movement::LEFT) ) && TryPlace(destination) ) return Movement::UP_LEFT;
-            else if(TryStep(Movement::UP)    && !TryStep(Movement::LEFT)) return Movement::UP;
-            else if(TryStep(Movement::LEFT)  && !TryStep(Movement::UP)  ) return Movement::LEFT;
-            else return Movement::NONE;
-        case Movement::UP_RIGHT:
-            if( (TryStep(Movement::UP) || TryStep(Movement::RIGHT)) && TryPlace(destination) ) return Movement::UP_RIGHT;
-            else if(TryStep(Movement::UP)    && !TryStep(Movement::RIGHT)) return Movement::UP;
-            else if(TryStep(Movement::RIGHT) && !TryStep(Movement::UP)   ) return Movement::RIGHT;
-            else return Movement::NONE;
-        case Movement::DOWN_LEFT:
-            if( (TryStep(Movement::DOWN) || TryStep(Movement::LEFT)) && TryPlace(destination) ) return Movement::DOWN_LEFT;
-            else if(TryStep(Movement::DOWN) && !TryStep(Movement::LEFT)) return Movement::DOWN;
-            else if(TryStep(Movement::LEFT) && !TryStep(Movement::DOWN)) return Movement::LEFT;
-            else return Movement::NONE;
-        case Movement::DOWN_RIGHT:
-            if( (TryStep(Movement::DOWN) || TryStep(Movement::RIGHT)) && TryPlace(destination) ) return Movement::DOWN_RIGHT;
-            else if(TryStep(Movement::DOWN)  && !TryStep(Movement::RIGHT)) return Movement::DOWN;
-            else if(TryStep(Movement::RIGHT) && !TryStep(Movement::DOWN) ) return Movement::RIGHT;
-            else return Movement::NONE;
-        default: if(TryPlace(destination)) return dir; else return Movement::NONE;
-    }
+    // Trying to move diagonally will try to deflect your movement to one coord should it fail,
+    //   but will never decide between two valid alternatives.
+    Integer2D destination = occupying_tiles_.front() + dir;
+
+    if(dir.x == 0 || dir.y == 0) return TryPlace(destination) ? dir : Integer2D(0,0);
+
+    Integer2D dir_x = Integer2D(dir.x, 0);
+    Integer2D dir_y = Integer2D(0, dir.y);
+
+    if( (TryStep(dir_x).x != 0 || TryStep(dir_y).y != 0) && TryPlace(destination) ) return dir;
+    else if( TryStep(dir_x).x != 0 && TryStep(dir_y).y == 0 ) return TryStep(dir_x);
+    else if( TryStep(dir_x).x == 0 && TryStep(dir_y).y != 0 ) return TryStep(dir_y);
+    return Integer2D(0,0);
 }
 
-bool ShapeRectangular::CheckForOob(GameTile* destination) {
+bool ShapeRectangular::CheckForOob(const ugdk::math::Integer2D& destination) {
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
     // Check for out of bounds.
-    if(destination == nullptr || gamecontroller->GetTileFromCoordinates(
-                                     destination->x()+dimensions_.x-1,
-                                     destination->y()+dimensions_.y-1
-                                 ) == nullptr ) {
+    if( gamecontroller->TileOutOfBounds(destination)
+		|| gamecontroller->TileOutOfBounds(destination + dimensions_ - Integer2D(1,1)) ) {
         return false;
     }
     return true;
 }
 
-void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
+void ShapeRectangular::EvalBumpsAt(const ugdk::math::Integer2D& destination) {
 
     // !WARNING! //
     // Make sure to CheckForOob(-) before calling this!!!! //
@@ -184,7 +169,7 @@ void ShapeRectangular::EvalBumpsAt(GameTile* destination) {
     // Let's find out what we're bumping into.
     for( int j = 0 ; j < dimensions_.y ; ++j ) {
         for( int i = 0 ; i < dimensions_.x ; ++i ) {
-            const list<GameObject*> stuff = gamecontroller->GetTileFromCoordinates(destination->x()+i,destination->y()+j)->objects_here();
+            const set<GameObject*> stuff = gamecontroller->Tile(destination + Integer2D(i,j))->objects_here();
             for( auto ot = stuff.begin() ; ot != stuff.end() ; ++ot ) {
                 if((*ot) != owner_) { // can't bump into self
                     their_pass = (*ot)->shape_component()->pass_sizeclass();

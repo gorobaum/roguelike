@@ -12,6 +12,7 @@
 
 // Forward Declarations
 #include <ugdk/graphic.h>
+#include <ugdk/math.h>
 #include "game/base.h"
 
 namespace game {
@@ -25,7 +26,7 @@ class Graphic : public ComponentBase {
 
     virtual void Update(double dt) = 0;
 
-	virtual void NodeLogic(const std::list<game::base::GameTile*>& occupying_tiles_) = 0;
+    virtual void NodeLogic(const std::list<ugdk::math::Integer2D>& occupying_tiles) = 0;
 
           ugdk::graphic::Node* node()       { return node_; }
     const ugdk::graphic::Node* node() const { return node_; }

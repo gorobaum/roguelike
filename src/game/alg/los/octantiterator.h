@@ -5,14 +5,13 @@
 // (none)
 
 // External Dependencies
-#include <list>
 #include <ugdk/math/integer2D.h>
 
 // Internal Dependencies
 // (none)
 
 // Forward Declarations
-#include "game/base.h"
+// (none)
 
 namespace game {
 namespace alg {

@@ -4,7 +4,7 @@
 namespace game {
 namespace action {
 
-struct Movement;
+    //TODO:remove this.
 
 } // namespace base
 } // namespace game

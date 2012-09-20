@@ -5,15 +5,16 @@
 #include "game/component/componentbase.h"
 
 // External Dependencies
-#include <list> // eye()
+#include <list> // eye_coords()
 #include <set> // relevant_octants_
+#include <ugdk/math/frame.h> // eye_frame_
 
 // Internal Dependencies
 #include "game/base/gameobject.h"
-#include "game/base/gametile.h" //TODO: remove
 #include "game/component/shape.h"
 
 // Forward Declarations
+#include <ugdk/math.h>
 #include "game/base.h"
 #include "game/alg.h"
 
@@ -29,30 +30,33 @@ class Vision : public ComponentBase {
     void Initialize();
 
     const base::GameObject* owner() const { return owner_; }
-    //TODO: transform into return const.
-    ugdk::math::Integer2D eye() const {
-        base::GameTile* tile = owner_->shape_component()->occupying_tiles().front();
-        return ugdk::math::Integer2D(tile->x(),tile->y());
+    const ugdk::math::Integer2D& eye_coords() const {
+        return owner_->shape_component()->occupying_tiles().front();
     }
+    const ugdk::Frame& eye_frame() const { return eye_frame_; }
     double range() const { return range_; }
     const std::set<int>& relevant_octants() const { return relevant_octants_; }
 
-    void MarkVisible(const base::GameTile* tile);
+    void MarkVisible(const ugdk::math::Integer2D& tile);
+    bool BlocksVision(const ugdk::math::Integer2D& tile);
 
     void Update(double);
-    void See();
 
+    void See();
     void CycleOctant();
 
-    bool BlocksVision(const base::GameTile* tile);
+
 
   private:
     double range_;
     std::set<int> relevant_octants_;
-    std::list<base::GameTile*> visible_tiles_;
+    std::list<ugdk::math::Integer2D> visible_tiles_;
     alg::los::Processor* losprocessor_;
 
+    ugdk::Frame eye_frame_;
+
     bool initialized_;
+    const game::base::GameController* gamecontroller_;
 };
 
 } // namespace component

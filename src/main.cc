@@ -1,10 +1,9 @@
 // External Dependencies
 #include <ugdk/base/engine.h>           // needed for engine
-#include <ugdk/base/configuration.h>    // needed for engine_config, also implicit from engine.h
-#include <ugdk/graphic/videomanager.h>  // needed for SetVSync(-)
+#include <ugdk/graphic/videomanager.h>  // needed for SetVSync()
 
 // Internal Dependencies
-#include "game/base/gamecontroller.h"   // needed for new GameController(-)
+#include "game/base/gamecontroller.h"   // needed for new GameController::Initialize()
 
 int main(int argc, char **argv) {
 	ugdk::Configuration engine_config;
@@ -16,9 +15,9 @@ int main(int argc, char **argv) {
     engine->Initialize(engine_config);
 	engine->video_manager()->SetVSync(true);
 
-	engine->PushScene(new game::base::GameController());
-
+	engine->PushScene(game::base::GameController::Initialize());
     engine->Run();
+
     engine->Release();
     return 0;
 }

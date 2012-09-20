@@ -5,10 +5,11 @@
 #include "game/component/controller.h"
 
 // External Dependencies
-#include <ugdk/time/timeaccumulator.h> // needed for time_held_
+#include <ugdk/math/integer2D.h> // where_to_
+#include <ugdk/time/timeaccumulator.h> // time_held_
 
 // Internal Dependencies
-#include "game/action/movement.h" // needed for where_to_
+// (none)
 
 // Forward Declarations
 #include <ugdk/time.h>
@@ -26,7 +27,7 @@ class ControllerPlayer : public Controller {
     void Update(double dt);
 
   private:
-    game::action::Movement::Direction where_to_;
+    ugdk::math::Integer2D where_to_;
     ugdk::time::TimeAccumulator time_held_;
     ugdk::time::TimeAccumulator hold_tick_;
 
