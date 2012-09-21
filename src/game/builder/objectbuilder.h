@@ -1,5 +1,5 @@
-#ifndef BADGAME_BUILDER_OBJECTBUILDER_H_
-#define BADGAME_BUILDER_OBJECTBUILDER_H_
+#ifndef ROGUELIKE_BUILDER_OBJECTBUILDER_H_
+#define ROGUELIKE_BUILDER_OBJECTBUILDER_H_
 
 // Inheritance
 // (none)
@@ -30,4 +30,4 @@ class ObjectBuilder {
 } // namespace builder
 } // namespace game
 
-#endif // BADGAME_BUILDER_OBJECTBUILDER_H_
+#endif // ROGUELIKE_BUILDER_OBJECTBUILDER_H_

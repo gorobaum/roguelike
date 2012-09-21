@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_CONTROLLER_AI_H_
-#define BADGAME_COMPONENT_CONTROLLER_AI_H_
+#ifndef ROGUELIKE_COMPONENT_CONTROLLER_AI_H_
+#define ROGUELIKE_COMPONENT_CONTROLLER_AI_H_
 
 // Inheritance
 #include "game/component/controller.h"
@@ -29,4 +29,4 @@ class ControllerAi : public Controller {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_CONTROLLER_AI_H_
+#endif // ROGUELIKE_COMPONENT_CONTROLLER_AI_H_

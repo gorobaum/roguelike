@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_COMPONENTBASE_H_
-#define BADGAME_COMPONENT_COMPONENTBASE_H_
+#ifndef ROGUELIKE_COMPONENT_COMPONENTBASE_H_
+#define ROGUELIKE_COMPONENT_COMPONENTBASE_H_
 
 // Inheritance
 // (none)
@@ -28,4 +28,4 @@ class ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_COMPONENTBASE_H_
+#endif // ROGUELIKE_COMPONENT_COMPONENTBASE_H_

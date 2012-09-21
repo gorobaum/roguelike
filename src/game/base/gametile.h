@@ -1,5 +1,5 @@
-#ifndef BADGAME_BASE_GAMETILE_H_
-#define BADGAME_BASE_GAMETILE_H_
+#ifndef ROGUELIKE_BASE_GAMETILE_H_
+#define ROGUELIKE_BASE_GAMETILE_H_
 
 // Inheritance
 // (none)
@@ -57,4 +57,4 @@ class GameTile {
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_BASE_GAMETILE_H_
+#endif // ROGUELIKE_BASE_GAMETILE_H_

@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_DAMAGEABLE_H_
-#define BADGAME_COMPONENT_DAMAGEABLE_H_
+#ifndef ROGUELIKE_COMPONENT_DAMAGEABLE_H_
+#define ROGUELIKE_COMPONENT_DAMAGEABLE_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
@@ -36,4 +36,4 @@ class Damageable : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_DAMAGEABLE_H_
+#endif // ROGUELIKE_COMPONENT_DAMAGEABLE_H_

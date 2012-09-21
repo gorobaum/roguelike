@@ -1,5 +1,5 @@
-#ifndef BADGAME_UTILS_H_
-#define BADGAME_UTILS_H_
+#ifndef ROGUELIKE_UTILS_H_
+#define ROGUELIKE_UTILS_H_
 
 namespace utils {
 

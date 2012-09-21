@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
-#define BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
+#ifndef ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_
+#define ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_
 
 // Inheritance
 #include "game/component/shape.h"
@@ -47,4 +47,4 @@ class ShapeRectangular : public Shape {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
+#endif // ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_

@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_H_
-#define BADGAME_COMPONENT_H_
+#ifndef ROGUELIKE_COMPONENT_H_
+#define ROGUELIKE_COMPONENT_H_
 
 namespace game {
 namespace component {
@@ -19,4 +19,4 @@ class Damageable;
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_H_
+#endif // ROGUELIKE_COMPONENT_H_

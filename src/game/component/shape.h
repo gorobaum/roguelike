@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_SHAPE_H_
-#define BADGAME_COMPONENT_SHAPE_H_
+#ifndef ROGUELIKE_COMPONENT_SHAPE_H_
+#define ROGUELIKE_COMPONENT_SHAPE_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
@@ -48,4 +48,4 @@ class Shape : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_SHAPE_H_
+#endif // ROGUELIKE_COMPONENT_SHAPE_H_

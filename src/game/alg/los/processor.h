@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_PROCESSOR_H_
-#define BADGAME_ALG_LOS_PROCESSOR_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_PROCESSOR_H_
+#define ROGUELIKE_ALG_LOS_PROCESSOR_H_
 
 // Inheritance
 // (none)
@@ -34,4 +34,4 @@ class Processor {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_PROCESSOR_H_
+#endif // ROGUELIKE_ALG_LOS_PROCESSOR_H_

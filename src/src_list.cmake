@@ -1,4 +1,7 @@
 SET(GAME_SRCS 
+    ./game/action/gameaction.h 
+    ./game/action/skill.h 
+    ./game/action.h 
     ./game/alg/equationalline.cc 
     ./game/alg/equationalline.h 
     ./game/alg/equationallinedouble.cc 

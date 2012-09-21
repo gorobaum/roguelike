@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_COMPONENT_GRAPHIC_H_
-#define BADGAME_COMPONENT_GRAPHIC_H_
+﻿#ifndef ROGUELIKE_COMPONENT_GRAPHIC_H_
+#define ROGUELIKE_COMPONENT_GRAPHIC_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
@@ -38,4 +38,4 @@ class Graphic : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_GRAPHIC_H_
+#endif // ROGUELIKE_COMPONENT_GRAPHIC_H_

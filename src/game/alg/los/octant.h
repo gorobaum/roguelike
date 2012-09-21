@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_OCTANT_H_
-#define BADGAME_ALG_LOS_OCTANT_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_OCTANT_H_
+#define ROGUELIKE_ALG_LOS_OCTANT_H_
 
 // Inheritance
 // (none)
@@ -47,4 +47,4 @@ class Octant {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_OCTANT_H_
+#endif // ROGUELIKE_ALG_LOS_OCTANT_H_
