@@ -1,5 +1,5 @@
-#ifndef ROGUELIKE_ACTION_SKILL_H_
-#define ROGUELIKE_ACTION_SKILL_H_
+#ifndef ROGUELIKE_ACTION_SKILL_SKILL_H_
+#define ROGUELIKE_ACTION_SKILL_SKILL_H_
 
 // Inheritance
 // (none)
@@ -17,6 +17,7 @@
 
 namespace game {
 namespace action {
+namespace skill {
 
 class Skill {
   public:
@@ -29,11 +30,15 @@ class Skill {
     }
     ~Skill() {}
 
-    void operator()(base::GameObject* caster, const std::list<base::GameThing*>& targets) {
+    bool operator()(base::GameObject* caster, const GameTargets& targets) {
         if( target_validator_(caster,targets) ) {
             double power = resource_spender_(caster,targets);
-            if( power != 0.0 ) action_(caster,targets,power);
+            if( power != 0.0 ) {
+                action_(caster,targets,power);
+                return true;
+            }
         }
+        return false;
     }
 
   private:
@@ -42,7 +47,8 @@ class Skill {
     GameAction action_;
 };
 
+} // namespace skill
 } // namespace action
 } // namespace game
 
-#endif /* ROGUELIKE_ACTION_SKILL_H_ */
+#endif /* ROGUELIKE_ACTION_SKILL_SKILL_H_ */

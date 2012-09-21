@@ -7,7 +7,7 @@ namespace base {
 class GameController;
 class GameObject;
 class GameTile;
-struct GameThing;
+class GameThing;
 
 } // namespace base
 } // namespace game
