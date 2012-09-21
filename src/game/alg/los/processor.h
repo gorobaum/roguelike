@@ -12,7 +12,7 @@
 
 // Forward Declarations
 #include "game/alg.h"
-#include "game/component.h"
+#include "game/component.h" // needed for vision_ //TODO: find a way to remove.
 
 namespace game {
 namespace alg {

@@ -44,7 +44,6 @@ void Vision::Initialize() {
     losprocessor_ = new Processor(this);
     
     initialized_ = true;
-    See();
 }
 
 void Vision::MarkVisible(const Integer2D& tile) {

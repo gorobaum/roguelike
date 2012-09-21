@@ -8,7 +8,7 @@
 // Internal Dependencies
 #include "game/alg/los/evenoctantiterator.h"
 #include "game/alg/los/oddoctantiterator.h"
-#include "game/base/gamecontroller.h"
+#include "game/base/gamecontroller.h" // needed for FocusIsOutOfBounds(). //TODO: remove.
 
 // Using
 using ugdk::math::Integer2D;
@@ -19,8 +19,7 @@ namespace alg {
 namespace los {
 
 Octant::Octant(int id, double range_squared)
-  : parity_(id%2), rotations_(id/2),
-	origin_(42,42) {
+  : parity_(id%2), rotations_(id/2), origin_(42,42) {
 
     if( parity_ == 0 )
         iterator_ = new EvenOctantIterator(range_squared);

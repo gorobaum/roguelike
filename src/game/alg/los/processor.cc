@@ -8,7 +8,7 @@
 
 // Internal Dependencies
 #include "game/alg/los/octantprocessor.h"
-#include "game/component/vision.h"
+#include "game/component/vision.h" // needed for relevant_octants() //TODO: find a way to remove
 
 // Using
 using std::set;

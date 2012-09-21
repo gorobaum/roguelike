@@ -27,7 +27,7 @@ class Vision : public ComponentBase {
     Vision(game::base::GameObject* owner);
     ~Vision();
 
-    void Initialize();
+    void Initialize(); //TODO: remove (see the TODOs on the alg::los namespace).
 
     const base::GameObject* owner() const { return owner_; }
     const ugdk::math::Integer2D& eye_coords() const {

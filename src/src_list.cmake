@@ -24,6 +24,7 @@ SET(GAME_SRCS
     ./game/base/gamecontroller.h 
     ./game/base/gameobject.cc 
     ./game/base/gameobject.h 
+    ./game/base/gamething.h 
     ./game/base/gametile.cc 
     ./game/base/gametile.h 
     ./game/base.h 
