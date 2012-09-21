@@ -33,3 +33,6 @@ cmake_install.cmake
 *.sln
 /*.psess
 /*.vsp
+/RelWithDebInfo
+/Release
+/MinSizeRel

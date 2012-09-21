@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_OCTANTPROCESSOR_H_
-#define BADGAME_ALG_LOS_OCTANTPROCESSOR_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_OCTANTPROCESSOR_H_
+#define ROGUELIKE_ALG_LOS_OCTANTPROCESSOR_H_
 
 // Inheritance
 // (none)
@@ -16,7 +16,7 @@
 
 // Forward Declarations
 #include "game/alg.h"
-#include "game/component.h"
+#include "game/component.h" // needed for vision_ //TODO: remove (see .cc)
 
 namespace game {
 namespace alg {
@@ -46,4 +46,4 @@ class OctantProcessor {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_OCTANTPROCESSOR_H_
+#endif // ROGUELIKE_ALG_LOS_OCTANTPROCESSOR_H_

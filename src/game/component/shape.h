@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_SHAPE_H_
-#define BADGAME_COMPONENT_SHAPE_H_
+#ifndef ROGUELIKE_COMPONENT_SHAPE_H_
+#define ROGUELIKE_COMPONENT_SHAPE_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
@@ -22,7 +22,7 @@ class Shape : public ComponentBase {
   public:
     Shape(game::base::GameObject* owner, double stay_sizeclass = 1.0, double pass_sizeclass = 0.25, double enter_sizeclass = 1.0e-5 )
       : super(owner), stay_sizeclass_(stay_sizeclass), pass_sizeclass_(pass_sizeclass), enter_sizeclass_(enter_sizeclass) {}
-    ~Shape() {}
+    virtual ~Shape() {}
 
     void set_stay_sizeclass(  double stay_sizeclass ) { stay_sizeclass_  = stay_sizeclass;  }
     void set_pass_sizeclass(  double pass_sizeclass ) { pass_sizeclass_  = pass_sizeclass;  }
@@ -38,6 +38,8 @@ class Shape : public ComponentBase {
     virtual const ugdk::math::Integer2D& Move(const std::list<ugdk::math::Integer2D>& mov) = 0;
     virtual const ugdk::math::Integer2D& Step(const ugdk::math::Integer2D& dir) = 0;
 
+    virtual bool TryPlace(const ugdk::math::Integer2D& destination) const = 0;
+
   protected:
     double stay_sizeclass_;
     double pass_sizeclass_;
@@ -48,4 +50,4 @@ class Shape : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_SHAPE_H_
+#endif // ROGUELIKE_COMPONENT_SHAPE_H_

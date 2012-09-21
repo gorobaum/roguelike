@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_EQUATIONALLINE_H_
-#define BADGAME_ALG_EQUATIONALLINE_H_
+﻿#ifndef ROGUELIKE_ALG_EQUATIONALLINE_H_
+#define ROGUELIKE_ALG_EQUATIONALLINE_H_
 
 // Inheritance
 // (none)
@@ -52,4 +52,4 @@ class EquationalLine {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_EQUATIONALLINE_H_
+#endif // ROGUELIKE_ALG_EQUATIONALLINE_H_

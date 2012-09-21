@@ -14,7 +14,7 @@
 // Internal Dependencies
 #include "game/alg/los/octant.h"
 #include "game/alg/equationalline.h"
-#include "game/component/vision.h"
+#include "game/component/vision.h" // needed for MarkVisible() and BlocksVision() //TODO: find a way to remove.
 
 // Using
 using std::list;

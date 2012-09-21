@@ -10,6 +10,7 @@ int main(int argc, char **argv) {
 	engine_config.window_title = "Worst. Game. Ever.";
 	engine_config.window_size = ugdk::Vector2D(1200.0, 900.0);
 	engine_config.fullscreen = false;
+    engine_config.base_path = "./data/";
 
     ugdk::Engine* engine = ugdk::Engine::reference();
     engine->Initialize(engine_config);

@@ -1,5 +1,5 @@
-#ifndef BADGAME_BASE_GAMECONTROLLER_H_
-#define BADGAME_BASE_GAMECONTROLLER_H_
+#ifndef ROGUELIKE_BASE_GAMECONTROLLER_H_
+#define ROGUELIKE_BASE_GAMECONTROLLER_H_
 
 // Inheritance
 #include <ugdk/action/scene.h>
@@ -74,4 +74,4 @@ class GameController : public ugdk::action::Scene {
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_BASE_GAMECONTROLLER_H_
+#endif // ROGUELIKE_BASE_GAMECONTROLLER_H_

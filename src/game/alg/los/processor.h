@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_PROCESSOR_H_
-#define BADGAME_ALG_LOS_PROCESSOR_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_PROCESSOR_H_
+#define ROGUELIKE_ALG_LOS_PROCESSOR_H_
 
 // Inheritance
 // (none)
@@ -12,7 +12,7 @@
 
 // Forward Declarations
 #include "game/alg.h"
-#include "game/component.h"
+#include "game/component.h" // needed for vision_ //TODO: find a way to remove.
 
 namespace game {
 namespace alg {
@@ -34,4 +34,4 @@ class Processor {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_PROCESSOR_H_
+#endif // ROGUELIKE_ALG_LOS_PROCESSOR_H_

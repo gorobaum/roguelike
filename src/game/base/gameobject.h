@@ -1,5 +1,5 @@
-#ifndef BADGAME_BASE_GAMEOBJECT_H_
-#define BADGAME_BASE_GAMEOBJECT_H_
+#ifndef ROGUELIKE_BASE_GAMEOBJECT_H_
+#define ROGUELIKE_BASE_GAMEOBJECT_H_
 
 // Inheritance
 #include <ugdk/action/entity.h>
@@ -65,4 +65,4 @@ class GameObject : public ugdk::action::Entity {
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_BASE_GAMEOBJECT_H_
+#endif // ROGUELIKE_BASE_GAMEOBJECT_H_

@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_VISION_H_
-#define BADGAME_COMPONENT_VISION_H_
+#ifndef ROGUELIKE_COMPONENT_VISION_H_
+#define ROGUELIKE_COMPONENT_VISION_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
@@ -25,9 +25,9 @@ class Vision : public ComponentBase {
   typedef ComponentBase super;
   public:
     Vision(game::base::GameObject* owner);
-    ~Vision();
+    virtual ~Vision();
 
-    void Initialize();
+    void Initialize(); //TODO: remove (see the TODOs on the alg::los namespace).
 
     const base::GameObject* owner() const { return owner_; }
     const ugdk::math::Integer2D& eye_coords() const {
@@ -62,4 +62,4 @@ class Vision : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_VISION_H_
+#endif // ROGUELIKE_COMPONENT_VISION_H_

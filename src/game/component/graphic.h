@@ -1,11 +1,12 @@
-﻿#ifndef BADGAME_COMPONENT_GRAPHIC_H_
-#define BADGAME_COMPONENT_GRAPHIC_H_
+﻿#ifndef ROGUELIKE_COMPONENT_GRAPHIC_H_
+#define ROGUELIKE_COMPONENT_GRAPHIC_H_
 
 // Inheritance
 #include "game/component/componentbase.h"
 
 // External Dependencies
-#include <list> // template class
+#include <list>
+#include <string>
 
 // Internal Dependencies
 // (none)
@@ -21,8 +22,8 @@ namespace component {
 class Graphic : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Graphic(game::base::GameObject* owner, std::string visual_representation, double zindex);
-    ~Graphic();
+    Graphic(game::base::GameObject* owner, const std::string& visual_representation, double zindex);
+    virtual ~Graphic();
 
     virtual void Update(double dt) = 0;
 
@@ -38,4 +39,4 @@ class Graphic : public ComponentBase {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_GRAPHIC_H_
+#endif // ROGUELIKE_COMPONENT_GRAPHIC_H_

@@ -1,5 +1,5 @@
-#ifndef BADGAME_ALG_H_
-#define BADGAME_ALG_H_
+#ifndef ROGUELIKE_ALG_H_
+#define ROGUELIKE_ALG_H_
 
 namespace game {
 namespace alg {
@@ -18,4 +18,4 @@ class EquationalLine;
 } // namespace base
 } // namespace game
 
-#endif // BADGAME_ALG_H_
+#endif // ROGUELIKE_ALG_H_

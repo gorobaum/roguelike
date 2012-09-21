@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_CONTROLLER_IDLE_H_
-#define BADGAME_COMPONENT_CONTROLLER_IDLE_H_
+#ifndef ROGUELIKE_COMPONENT_CONTROLLER_IDLE_H_
+#define ROGUELIKE_COMPONENT_CONTROLLER_IDLE_H_
 
 // Inheritance
 #include "game/component/controller.h"
@@ -28,4 +28,4 @@ class ControllerIdle : public Controller {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_CONTROLLER_IDLE_H_
+#endif // ROGUELIKE_COMPONENT_CONTROLLER_IDLE_H_

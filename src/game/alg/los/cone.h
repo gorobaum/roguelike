@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_CONE_H_
-#define BADGAME_ALG_LOS_CONE_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_CONE_H_
+#define ROGUELIKE_ALG_LOS_CONE_H_
 
 // Inheritance
 // (none)
@@ -54,4 +54,4 @@ class Cone {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_CONE_H_
+#endif // ROGUELIKE_ALG_LOS_CONE_H_

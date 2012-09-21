@@ -1,5 +1,5 @@
-#ifndef BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
-#define BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
+#ifndef ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_
+#define ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_
 
 // Inheritance
 #include "game/component/shape.h"
@@ -31,20 +31,21 @@ class ShapeRectangular : public Shape {
     const ugdk::math::Integer2D& Move(const std::list<ugdk::math::Integer2D>& mov);
     const ugdk::math::Integer2D& Step(const ugdk::math::Integer2D& dir);
 
-    bool CheckForOob(const ugdk::math::Integer2D& destination);
-    bool TryPlace(const ugdk::math::Integer2D& destination);
-    ugdk::math::Integer2D TryStep(const ugdk::math::Integer2D& dir);
+    bool CheckForOob(const ugdk::math::Integer2D& destination) const;
 
-    void EvalBumpsAt(const ugdk::math::Integer2D& destination);
+    bool TryPlace(const ugdk::math::Integer2D& destination) const;
+    const ugdk::math::Integer2D TryStep(const ugdk::math::Integer2D& dir) const;
+
+    void EvalBumpsAt(const ugdk::math::Integer2D& destination) const;
 
     const ugdk::math::Integer2D& dimensions() const { return dimensions_; }
 
   private:
     ugdk::math::Integer2D dimensions_;
-    std::vector<const std::set<game::base::GameObject*>> bumps_;
+    std::vector<std::set<game::base::GameObject*>> bumps_;
 };
 
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_SHAPE_RECTANGULAR_H_
+#endif // ROGUELIKE_COMPONENT_SHAPE_RECTANGULAR_H_

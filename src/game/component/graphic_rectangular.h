@@ -1,11 +1,12 @@
-﻿#ifndef BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
-#define BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
+﻿#ifndef ROGUELIKE_COMPONENT_GRAPHIC_RECTANGULAR_H_
+#define ROGUELIKE_COMPONENT_GRAPHIC_RECTANGULAR_H_
 
 // Inheritance
 #include "game/component/graphic.h"
 
 // External Dependencies
 #include <list> // template class
+#include <string>
 
 // Internal Dependencies
 // (none)
@@ -20,7 +21,7 @@ namespace component {
 class GraphicRectangular : public Graphic {
   typedef Graphic super;
   public:
-    GraphicRectangular(game::base::GameObject* owner, std::string visual_representation, double zindex);
+    GraphicRectangular(game::base::GameObject* owner, const std::string& visual_representation, double zindex);
     ~GraphicRectangular();
 
     void Update(double dt);
@@ -31,4 +32,4 @@ class GraphicRectangular : public Graphic {
 } // namespace component
 } // namespace game
 
-#endif // BADGAME_COMPONENT_GRAPHIC_RECTANGULAR_H_
+#endif // ROGUELIKE_COMPONENT_GRAPHIC_RECTANGULAR_H_

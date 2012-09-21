@@ -3,6 +3,7 @@
 
 // External Dependencies
 #include <list>
+#include <limits> //TODO: remove.
 #include <set>
 #include <ugdk/math/integer2D.h>
 
@@ -102,7 +103,7 @@ const Integer2D& ShapeRectangular::Step(const Integer2D& dir) {
     return PlaceAt(destination);
 }
 
-bool ShapeRectangular::TryPlace(const Integer2D& destination) {
+bool ShapeRectangular::TryPlace(const Integer2D& destination) const {
 
     if(!CheckForOob(destination)) return false;
 
@@ -118,7 +119,7 @@ bool ShapeRectangular::TryPlace(const Integer2D& destination) {
     return true;
 }
 
-Integer2D ShapeRectangular::TryStep(const Integer2D& dir) {
+const Integer2D ShapeRectangular::TryStep(const Integer2D& dir) const {
 
     assert(!occupying_tiles_.empty());
     
@@ -138,7 +139,7 @@ Integer2D ShapeRectangular::TryStep(const Integer2D& dir) {
     return Integer2D(0,0);
 }
 
-bool ShapeRectangular::CheckForOob(const ugdk::math::Integer2D& destination) {
+bool ShapeRectangular::CheckForOob(const ugdk::math::Integer2D& destination) const {
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
 
@@ -150,14 +151,16 @@ bool ShapeRectangular::CheckForOob(const ugdk::math::Integer2D& destination) {
     return true;
 }
 
-void ShapeRectangular::EvalBumpsAt(const ugdk::math::Integer2D& destination) {
+void ShapeRectangular::EvalBumpsAt(const ugdk::math::Integer2D& destination) const {
 
     // !WARNING! //
-    // Make sure to CheckForOob(-) before calling this!!!! //
+    // Make sure to CheckForOob() before calling this!!!! //
     // !WARNING! //
+
+    ShapeRectangular* lolthis = const_cast<ShapeRectangular*>(this);
 
     set<GameObject*> impassable_bumps, larger_bumps, equal_bumps, smaller_bumps;
-    bumps_.clear();
+    lolthis->bumps_.clear();
     
     // we'll need to access the tiles.
     const GameController* gamecontroller = GameController::reference();
@@ -197,10 +200,10 @@ void ShapeRectangular::EvalBumpsAt(const ugdk::math::Integer2D& destination) {
         }
     }
 
-    bumps_.push_back(impassable_bumps);
-    bumps_.push_back(larger_bumps);
-    bumps_.push_back(equal_bumps);
-    bumps_.push_back(smaller_bumps);
+    lolthis->bumps_.push_back(impassable_bumps);
+    lolthis->bumps_.push_back(larger_bumps);
+    lolthis->bumps_.push_back(equal_bumps);
+    lolthis->bumps_.push_back(smaller_bumps);
 }
 
 } // namespace component

@@ -1,5 +1,5 @@
-﻿#ifndef BADGAME_ALG_LOS_ODDOCTANTITERATOR_H_
-#define BADGAME_ALG_LOS_ODDOCTANTITERATOR_H_
+﻿#ifndef ROGUELIKE_ALG_LOS_ODDOCTANTITERATOR_H_
+#define ROGUELIKE_ALG_LOS_ODDOCTANTITERATOR_H_
 
 // Inheritance
 #include "game/alg/los/octantiterator.h"
@@ -34,4 +34,4 @@ class OddOctantIterator : public OctantIterator {
 } // namespace alg
 } // namespace game
 
-#endif // BADGAME_ALG_LOS_ODDOCTANTITERATOR_H_
+#endif // ROGUELIKE_ALG_LOS_ODDOCTANTITERATOR_H_
