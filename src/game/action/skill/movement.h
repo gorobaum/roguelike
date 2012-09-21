@@ -48,7 +48,7 @@ class Movement : public Skill {
                }
         ) {
     }
-    ~Movement() {}
+    virtual ~Movement() {}
 
   private:
     ugdk::math::Integer2D mov_;

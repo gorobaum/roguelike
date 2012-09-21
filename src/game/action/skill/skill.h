@@ -28,7 +28,7 @@ class Skill {
         resource_spender_(resource_spender),
         action_(action) {
     }
-    ~Skill() {}
+    virtual ~Skill() {}
 
     bool operator()(base::GameObject* caster, const GameTargets& targets) {
         if( target_validator_(caster,targets) ) {

@@ -41,7 +41,7 @@ class ShapeRectangular : public Shape {
 
   private:
     ugdk::math::Integer2D dimensions_;
-    std::vector<const std::set<game::base::GameObject*>> bumps_;
+    std::vector<std::set<game::base::GameObject*>> bumps_;
 };
 
 } // namespace component

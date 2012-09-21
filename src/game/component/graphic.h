@@ -22,7 +22,7 @@ class Graphic : public ComponentBase {
   typedef ComponentBase super;
   public:
     Graphic(game::base::GameObject* owner, std::string visual_representation, double zindex);
-    ~Graphic();
+    virtual ~Graphic();
 
     virtual void Update(double dt) = 0;
 

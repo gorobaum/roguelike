@@ -20,7 +20,7 @@ class Controller : public ComponentBase {
   typedef ComponentBase super;
   public:
     Controller(game::base::GameObject* owner) : super(owner) {}
-    ~Controller() {}
+    virtual ~Controller() {}
 
     virtual void Update(double dt) = 0;
 };

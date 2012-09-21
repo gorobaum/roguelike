@@ -25,7 +25,7 @@ class Vision : public ComponentBase {
   typedef ComponentBase super;
   public:
     Vision(game::base::GameObject* owner);
-    ~Vision();
+    virtual ~Vision();
 
     void Initialize(); //TODO: remove (see the TODOs on the alg::los namespace).
 
