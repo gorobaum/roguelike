@@ -2,21 +2,29 @@
 #include "game/component/controller_player.h"
 
 // External Dependencies
+#include <list>
 #include <ugdk/base/engine.h>
 #include <ugdk/math/integer2D.h>
 #include <ugdk/input/inputmanager.h>
 #include <ugdk/input/keys.h>
 
 // Internal Dependencies
+#include "game/action/skill/skill.h"
+#include "game/action/skill/movement_step.h"
 #include "game/base/gameobject.h"
+#include "game/base/gamething.h"
 #include "game/component/shape.h"
 #include "game/component/vision.h"
 
 // Using
+using std::list;
 using ugdk::input::InputManager;
 using ugdk::math::Integer2D;
 using ugdk::time::TimeAccumulator;
+using game::action::skill::Skill;
+using game::action::skill::MovementStep;
 using game::base::GameObject;
+using game::base::GameThing;
 
 namespace game {
 namespace component {
@@ -79,7 +87,13 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
         hold_tick_.Pause();
 
-        owner_->shape_component()->Step(where_to_);
+        Skill& step = MovementStep::reference();
+        list<GameThing*> args;
+        args.push_back(new GameThing(where_to_));
+        step(owner_,args);
+        delete args.front();
+
+        //owner_->shape_component()->Step(where_to_);
         owner_->vision_component()->See();
         where_to_ = Integer2D(0,0);
     }
@@ -89,7 +103,13 @@ void ControllerPlayer::Update(double) {
 
         hold_tick_.Restart(HOLD_TICK_INTERVAL);
         if(where_to_.x != 0 || where_to_.y != 0) {
-            owner_->shape_component()->Step(where_to_);
+
+            Skill& step = MovementStep::reference();
+            list<GameThing*> args;
+            args.push_back(new GameThing(where_to_));
+            step(owner_,args);
+            delete args.front();
+
             owner_->vision_component()->See();
         }
     }

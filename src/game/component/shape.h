@@ -38,6 +38,8 @@ class Shape : public ComponentBase {
     virtual const ugdk::math::Integer2D& Move(const std::list<ugdk::math::Integer2D>& mov) = 0;
     virtual const ugdk::math::Integer2D& Step(const ugdk::math::Integer2D& dir) = 0;
 
+    virtual bool TryPlace(const ugdk::math::Integer2D& destination) const = 0;
+
   protected:
     double stay_sizeclass_;
     double pass_sizeclass_;

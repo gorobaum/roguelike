@@ -21,14 +21,7 @@ namespace skill {
 
 class Skill {
   public:
-    Skill( const TargetValidator& target_validator,
-           const ResourceSpender& resource_spender,
-           const GameAction& action )
-      : target_validator_(target_validator),
-        resource_spender_(resource_spender),
-        action_(action) {
-    }
-    virtual ~Skill() {}
+    virtual ~Skill() { if(reference_) delete reference_; }
 
     bool operator()(base::GameObject* caster, const GameTargets& targets) {
         if( target_validator_(caster,targets) ) {
@@ -40,6 +33,18 @@ class Skill {
         }
         return false;
     }
+
+  protected:
+    Skill( const TargetValidator& target_validator,
+           const ResourceSpender& resource_spender,
+           const GameAction& action )
+      : target_validator_(target_validator),
+        resource_spender_(resource_spender),
+        action_(action) {
+        reference_ = this;
+    }
+
+    static Skill* reference_;
 
   private:
     TargetValidator target_validator_;

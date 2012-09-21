@@ -20,8 +20,10 @@ namespace skill {
 class MovementStep : public Movement {
   typedef Movement super;
   public:
+    static Skill& reference() { return reference_ == nullptr ? *(new MovementStep) : *reference_; }
+    ~MovementStep() { delete reference_; }
+  private:
     MovementStep();
-    ~MovementStep();
 
 };
 

@@ -1,10 +1,12 @@
 SET(GAME_SRCS 
     ./game/action/gameaction.h 
+    ./game/action/skill/movement.cc 
     ./game/action/skill/movement.h 
     ./game/action/skill/movement_place.cc 
     ./game/action/skill/movement_place.h 
     ./game/action/skill/movement_step.cc 
     ./game/action/skill/movement_step.h 
+    ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
     ./game/action.h 
     ./game/alg/equationalline.cc 

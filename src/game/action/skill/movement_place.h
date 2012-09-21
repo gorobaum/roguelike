@@ -3,6 +3,7 @@
 
 // Inheritance
 #include "game/action/skill/movement.h"
+#include "game/action/skill/skill.h"
 
 // External Dependencies
 // (none)
@@ -11,17 +12,24 @@
 // (none)
 
 // Forward Declarations
-// (none)
+#include <ugdk/math.h>
+#include "game/base.h"
 
 namespace game {
 namespace action {
 namespace skill {
 
+ugdk::math::Integer2D calculate_mov_place(const base::GameObject* caster, const ugdk::math::Integer2D& target);
+double spend_mov_place(base::GameObject* caster, const ugdk::math::Integer2D& target);
+void act_mov_place(base::GameObject* caster, const ugdk::math::Integer2D& target, double power);
+
 class MovementPlace : public Movement {
   typedef Movement super;
   public:
+    static Skill& reference() { return reference_ == nullptr ? *(new MovementPlace) : *reference_; }
+    ~MovementPlace() {}
+  private:
     MovementPlace();
-    ~MovementPlace();
 
 };
 
