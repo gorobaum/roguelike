@@ -6,6 +6,7 @@
 
 // External Dependencies
 #include <list> // template class
+#include <string>
 
 // Internal Dependencies
 // (none)
@@ -20,7 +21,7 @@ namespace component {
 class GraphicRectangular : public Graphic {
   typedef Graphic super;
   public:
-    GraphicRectangular(game::base::GameObject* owner, std::string visual_representation, double zindex);
+    GraphicRectangular(game::base::GameObject* owner, const std::string& visual_representation, double zindex);
     ~GraphicRectangular();
 
     void Update(double dt);

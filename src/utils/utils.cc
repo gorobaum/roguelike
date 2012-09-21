@@ -18,7 +18,7 @@ ord::Ord CompareDoubles(double a, double b) {
     int expa = 0, expb = 0; // exponent values of a and b
 
     // check for NaNs
-    if( a != a || b != b ) return ord::NAN;
+    if( a != a || b != b ) return ord::ERR;
 
     // check for infinites
     if( a == D_INF ) {

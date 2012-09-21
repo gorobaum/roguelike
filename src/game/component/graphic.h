@@ -5,7 +5,8 @@
 #include "game/component/componentbase.h"
 
 // External Dependencies
-#include <list> // template class
+#include <list>
+#include <string>
 
 // Internal Dependencies
 // (none)
@@ -21,7 +22,7 @@ namespace component {
 class Graphic : public ComponentBase {
   typedef ComponentBase super;
   public:
-    Graphic(game::base::GameObject* owner, std::string visual_representation, double zindex);
+    Graphic(game::base::GameObject* owner, const std::string& visual_representation, double zindex);
     virtual ~Graphic();
 
     virtual void Update(double dt) = 0;

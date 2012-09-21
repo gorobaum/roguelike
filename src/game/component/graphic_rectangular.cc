@@ -26,7 +26,7 @@ using ugdk::math::Integer2D;
 namespace game {
 namespace component {
 
-GraphicRectangular::GraphicRectangular(GameObject* owner, string visual_representation, double zindex)
+GraphicRectangular::GraphicRectangular(GameObject* owner, const string& visual_representation, double zindex)
   : super(owner, visual_representation, zindex) {}
 GraphicRectangular::~GraphicRectangular() {}
 

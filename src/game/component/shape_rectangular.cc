@@ -3,6 +3,7 @@
 
 // External Dependencies
 #include <list>
+#include <limits> //TODO: remove.
 #include <set>
 #include <ugdk/math/integer2D.h>
 
