@@ -5,7 +5,6 @@
 // (none)
 
 // External Dependencies
-#include <list>
 #include <ugdk/portable/tr1.h>
 #include FROM_TR1(functional)
 
@@ -13,6 +12,7 @@
 #include "game/action/gameaction.h"
 
 // Forward Declarations
+#include <ugdk/math.h>
 #include "game/base.h"
 
 namespace game {
@@ -21,20 +21,15 @@ namespace skill {
 
 class Skill {
   public:
-    virtual ~Skill() { if(reference_) delete reference_; }
+    virtual ~Skill() { if(reference_ == nullptr) delete reference_; }
 
-    bool operator()(base::GameObject* caster, const GameTargets& targets) {
-        if( target_validator_(caster,targets) ) {
-            double power = resource_spender_(caster,targets);
-            if( power != 0.0 ) {
-                action_(caster,targets,power);
-                return true;
-            }
-        }
-        return false;
-    }
+    bool operator()(base::GameObject* caster, const GameTargets& targets);
+    bool operator()(base::GameObject* caster, const ugdk::math::Integer2D& target);
+    bool operator()(base::GameObject* caster, base::GameObject* target);
 
   protected:
+    static Skill* reference_;
+
     Skill( const TargetValidator& target_validator,
            const ResourceSpender& resource_spender,
            const GameAction& action )
@@ -43,8 +38,6 @@ class Skill {
         action_(action) {
         reference_ = this;
     }
-
-    static Skill* reference_;
 
   private:
     TargetValidator target_validator_;

@@ -19,7 +19,7 @@ namespace game {
 namespace action {
 
 // Generalized ordered list of targets.
-typedef std::list<base::GameThing*> GameTargets;
+typedef std::list<base::GameThing> GameTargets;
 
 // Arguments: caster, targets.
 // Return value: true if valid, false if not valid.

@@ -36,3 +36,6 @@ cmake_install.cmake
 /RelWithDebInfo
 /Release
 /MinSizeRel
+/src/RelWithDebInfo
+/src/Release
+/src/MinSizeRel

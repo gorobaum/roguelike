@@ -16,7 +16,7 @@ if (UNIX OR MINGW)
     # se for o g++ para *nix ou o MinGW para Windows:
     add_definitions(-Wall -ansi -U_FORTIFY_SOURCE -msse2 -std=c++11)
 elseif (MSVC) 
-    add_definitions(/D_CRT_SECURE_NO_WARNINGS /W4 /wd4100 /wd4127 /wd4201 /wd4211 /wd4250 /wd4706 /arch:SSE2 /fp:fast /MP)
+    add_definitions(/D_CRT_SECURE_NO_WARNINGS /W4 /wd4100 /wd4127 /wd4201 /wd4211 /wd4250 /wd4355 /wd4706 /arch:SSE2 /fp:fast /MP)
 endif ()
 
 include_directories (${CMAKE_CURRENT_SOURCE_DIR})

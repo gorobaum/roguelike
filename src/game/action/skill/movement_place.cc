@@ -26,7 +26,7 @@ Integer2D calculate_mov_place(const GameObject* caster, const Integer2D& target)
     return shape->occupying_tiles().front();
 }
 
-double spend_mov_place(GameObject* caster, const Integer2D& target) {
+static double spend_mov_place(GameObject* caster, const Integer2D& target) {
     return 1.0;
 }
 

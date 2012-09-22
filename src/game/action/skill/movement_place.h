@@ -20,7 +20,6 @@ namespace action {
 namespace skill {
 
 ugdk::math::Integer2D calculate_mov_place(const base::GameObject* caster, const ugdk::math::Integer2D& target);
-double spend_mov_place(base::GameObject* caster, const ugdk::math::Integer2D& target);
 void act_mov_place(base::GameObject* caster, const ugdk::math::Integer2D& target, double power);
 
 class MovementPlace : public Movement {

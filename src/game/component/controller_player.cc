@@ -88,10 +88,7 @@ void ControllerPlayer::Update(double) {
         hold_tick_.Pause();
 
         Skill& step = MovementStep::reference();
-        list<GameThing*> args;
-        args.push_back(new GameThing(where_to_));
-        step(owner_,args);
-        delete args.front();
+        step(owner_,where_to_);
 
         //owner_->shape_component()->Step(where_to_);
         owner_->vision_component()->See();
@@ -105,10 +102,7 @@ void ControllerPlayer::Update(double) {
         if(where_to_.x != 0 || where_to_.y != 0) {
 
             Skill& step = MovementStep::reference();
-            list<GameThing*> args;
-            args.push_back(new GameThing(where_to_));
-            step(owner_,args);
-            delete args.front();
+            step(owner_,where_to_);
 
             owner_->vision_component()->See();
         }

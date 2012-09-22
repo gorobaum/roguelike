@@ -18,27 +18,20 @@ namespace game {
 namespace base {
 
 class GameThing {
-  private:
-    bool is_obj_;
-    union {
-        GameObject* obj_;  
-        ugdk::math::Integer2D* tile_;
-    } it_;
-
   public:
-    GameThing(GameObject* obj) : is_obj_(true) {
-        it_.obj_ = obj;
-    }
-    GameThing(const ugdk::math::Integer2D& tile) : is_obj_(false) {
-        it_.tile_ = new ugdk::math::Integer2D(tile);
-    }
-    ~GameThing() { if(!is_obj_) delete it_.tile_; }
+    GameThing(GameObject* obj) : obj_(obj), tile_() {}
+    GameThing(const ugdk::math::Integer2D& tile) : obj_(nullptr), tile_(tile) {}
+    ~GameThing() {}
 
-    bool is_obj() { return is_obj_; }
-    const GameObject* obj() const { return it_.obj_; }
-          GameObject* obj()       { return it_.obj_; }
-    const ugdk::math::Integer2D& tile() const { return *it_.tile_; }
-          ugdk::math::Integer2D& tile()       { return *it_.tile_; }
+    bool is_obj() const { return obj_ != nullptr; }
+    const GameObject* obj() const { return obj_; }
+          GameObject* obj()       { return obj_; }
+    const ugdk::math::Integer2D& tile() const { return tile_; }
+          ugdk::math::Integer2D& tile()       { return tile_; }
+
+  private:
+    GameObject* obj_;
+    ugdk::math::Integer2D tile_;
 };
 
 } // namespace base
