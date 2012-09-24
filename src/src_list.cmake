@@ -11,6 +11,8 @@ SET(GAME_SRCS
     ./game/action/skill/sensory.h 
     ./game/action/skill/sensory_light.cc 
     ./game/action/skill/sensory_light.h 
+    ./game/action/skill/sensory_selfdamage.cc 
+    ./game/action/skill/sensory_selfdamage.h 
     ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
     ./game/action.h 

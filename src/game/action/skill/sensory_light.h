@@ -12,7 +12,7 @@
 // (none)
 
 // Forward Declarations
-#include "game/base.h"
+// (none)
 
 namespace game {
 namespace action {

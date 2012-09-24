@@ -5,6 +5,8 @@
 #include <ugdk/action/entity.h>
 
 // External Dependencies
+#include <ugdk/portable/tr1.h>
+#include FROM_TR1(functional)
 #include <list>                 // template class
 #include <ugdk/math/vector2D.h> // needed for dimensions_
 
@@ -29,7 +31,9 @@ class GameObject : public ugdk::action::Entity {
         game::component::Vision*         vision_component,
         game::component::Damageable* damageable_component,
         game::component::Shape*           shape_component,
-        game::component::Graphic*       graphic_component
+        game::component::Graphic*       graphic_component,
+
+        const std::tr1::function<void (void)>& die = std::tr1::function<void (void)>()
     );
 
     void Update(double dt);
@@ -47,8 +51,8 @@ class GameObject : public ugdk::action::Entity {
           component::Graphic*       graphic_component()       { return    graphic_component_; }
     const component::Graphic*       graphic_component() const { return    graphic_component_; }
 
-    void Die() { dead_ = true; }
-    bool dead() const { return dead_; }
+    void Die() { die_(); to_be_removed_ = true; }
+    bool dead() const { return to_be_removed_; }
 
   private:
     component::Controller* controller_component_;
@@ -58,8 +62,8 @@ class GameObject : public ugdk::action::Entity {
     component::Shape*           shape_component_;
 
     component::Graphic*       graphic_component_;
-    
-    bool dead_;
+
+    std::tr1::function<void (void)> die_;
 };
 
 } // namespace base

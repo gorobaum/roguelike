@@ -22,14 +22,10 @@ namespace base {
 
 class GameController : public ugdk::action::Scene {
   typedef ugdk::action::Scene super;
-  static const GameController* reference_;
+  static GameController* reference_;
 
   public:
-    static const GameController* reference() { return reference_; }
-	static GameController* Initialize() {
-		assert(reference_ == nullptr);
-		return reference_ == nullptr ? new GameController() : nullptr;
-	}
+    static GameController* reference();
     ~GameController();
 
     void Update(double dt);
@@ -54,7 +50,9 @@ class GameController : public ugdk::action::Scene {
         return Tile(coords.x, coords.y);
     }
 
-    void BlackoutTiles() const;
+    void BlackoutTiles();
+
+    void set_hero(GameObject* hero) { hero_ = hero; }
 
   private:
     GameController();

@@ -44,11 +44,14 @@ static bool objectIsDead (const GameObject* value) {
     return is_dead;
 }
 
-const GameController* GameController::reference_ = nullptr;
+GameController* GameController::reference_ = nullptr;
+
+GameController* GameController::reference() {
+    return reference_ == nullptr ? new GameController() : reference_;
+}
 
 GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullptr) {
-	reference_ = this;
-
+    reference_ = this;
 	TEXT_MANAGER()->AddFont("MAH FONTI", "fonts/FUTRFW.TTF", 15, 0, 0);
 
 	Vector2D pos = Vector2D();
@@ -125,6 +128,7 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
 
 GameController::~GameController() {
     if(hero_) delete hero_;
+    reference_ = nullptr;
 }
 
 void GameController::Update(double dt) {
@@ -152,7 +156,7 @@ void GameController::clearDeadGameObjects() {
     game_objects_.remove_if(objectIsDead);
 }
 
-void GameController::BlackoutTiles() const {
+void GameController::BlackoutTiles() {
     for(auto j = tiles_.begin(); j != tiles_.end(); ++j)
         for(auto i = (*j).begin(); i != (*j).end(); ++i)
             (*i)->node()->modifier()->set_visible(false);

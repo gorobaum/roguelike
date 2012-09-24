@@ -56,7 +56,7 @@ class Vision : public ComponentBase {
     ugdk::Frame eye_frame_;
 
     bool initialized_;
-    const game::base::GameController* gamecontroller_;
+    game::base::GameController* gamecontroller_;
 };
 
 } // namespace component

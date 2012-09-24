@@ -6,6 +6,7 @@
 #include <limits>
 
 // Internal Dependencies
+#include "game/base/gamecontroller.h"
 #include "game/base/gameobject.h"
 #include "game/base/gametile.h"
 #include "game/component/controller_ai.h"
@@ -18,6 +19,7 @@
 
 // Using
 using std::numeric_limits;
+using game::base::GameController;
 using game::base::GameObject;
 using game::component::ControllerAi;
 using game::component::ControllerIdle;
@@ -38,7 +40,8 @@ GameObject* ObjectBuilder::BuildHero() {
         new             Vision(hero),
         new         Damageable(hero, 10.0),
         new   ShapeRectangular(hero, 2, 2, 1.0, 0.25, 1.0e-9),
-        new GraphicRectangular(hero, "@", 3.0)
+        new GraphicRectangular(hero, "@", 3.0),
+        [=](void)->void{ GameController::reference()->set_hero(nullptr); }
     );
 
     return hero;

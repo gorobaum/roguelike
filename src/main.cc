@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     engine->Initialize(engine_config);
 	engine->video_manager()->SetVSync(true);
 
-	engine->PushScene(game::base::GameController::Initialize());
+	engine->PushScene(game::base::GameController::reference());
     engine->Run();
 
     engine->Release();

@@ -2,7 +2,8 @@
 #include "game/base/gameobject.h"
 
 // External Dependencies
-// (none)
+#include <ugdk/portable/tr1.h>
+#include FROM_TR1(functional)
 
 // Internal Dependencies
 #include "game/component/controller.h"
@@ -12,6 +13,7 @@
 #include "game/component/graphic.h"
 
 // Using
+using std::tr1::function;
 using game::component::Controller;
 using game::component::Vision;
 using game::component::Damageable;
@@ -27,8 +29,7 @@ GameObject::GameObject()
     vision_component_(nullptr),
 	damageable_component_(nullptr),
     shape_component_(nullptr),
-    graphic_component_(nullptr),
-	dead_(false) {}
+    graphic_component_(nullptr) {}
 
 GameObject::~GameObject() {
 	if(controller_component_) delete controller_component_;
@@ -43,13 +44,15 @@ void GameObject::Initialize(
         Vision*         vision_component,
         Damageable* damageable_component,
         Shape*           shape_component,
-        Graphic*       graphic_component ) {
+        Graphic*       graphic_component,
+        const function<void (void)>& die ) {
 
     controller_component_ = controller_component;
     vision_component_     =     vision_component;
     damageable_component_ = damageable_component;
     shape_component_      =      shape_component;
     graphic_component_    =    graphic_component;
+    die_ = die;
 }
 
 void GameObject::Update(double dt) {

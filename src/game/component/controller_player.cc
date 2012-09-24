@@ -12,6 +12,7 @@
 #include "game/action/skill/skill.h"
 #include "game/action/skill/movement_step.h"
 #include "game/action/skill/sensory_light.h"
+#include "game/action/skill/sensory_selfdamage.h"
 #include "game/base/gameobject.h"
 #include "game/base/gamething.h"
 #include "game/component/shape.h"
@@ -25,6 +26,7 @@ using ugdk::time::TimeAccumulator;
 using game::action::skill::Skill;
 using game::action::skill::MovementStep;
 using game::action::skill::SensoryLight;
+using game::action::skill::SensorySelfDamage;
 using game::base::GameObject;
 using game::base::GameThing;
 
@@ -33,9 +35,6 @@ namespace component {
 
 #define DELAY_HOLD 250
 #define HOLD_TICK_INTERVAL 25
-
-//TODO: REMOVE THIS GAMBS
-//#define KeyReleased(key) KeyUp(key)
 
 ControllerPlayer::ControllerPlayer(GameObject* owner)
   : super(owner), where_to_(Integer2D(0,0)), time_held_(DELAY_HOLD), hold_tick_(HOLD_TICK_INTERVAL) {
@@ -53,6 +52,12 @@ void ControllerPlayer::Update(double) {
     if( input->KeyPressed(ugdk::input::K_p) ) {
         Skill& see = SensoryLight::reference();
         see(owner_);
+    }
+
+    // Derp stuff
+    if( input->KeyPressed(ugdk::input::K_z) ) {
+        Skill& ouch = SensorySelfDamage::reference();
+        ouch(owner_);
     }
 
     // Movement
