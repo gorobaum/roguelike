@@ -11,6 +11,7 @@
 // Internal Dependencies
 #include "game/action/skill/skill.h"
 #include "game/action/skill/movement_step.h"
+#include "game/action/skill/sensory_light.h"
 #include "game/base/gameobject.h"
 #include "game/base/gamething.h"
 #include "game/component/shape.h"
@@ -23,6 +24,7 @@ using ugdk::math::Integer2D;
 using ugdk::time::TimeAccumulator;
 using game::action::skill::Skill;
 using game::action::skill::MovementStep;
+using game::action::skill::SensoryLight;
 using game::base::GameObject;
 using game::base::GameThing;
 
@@ -48,7 +50,10 @@ void ControllerPlayer::Update(double) {
     // Vision stuff
     if( input->KeyPressed(ugdk::input::K_i) ) owner_->vision_component()->Initialize();
     if( input->KeyPressed(ugdk::input::K_o) ) owner_->vision_component()->CycleOctant();
-    if( input->KeyPressed(ugdk::input::K_p) ) owner_->vision_component()->See();
+    if( input->KeyPressed(ugdk::input::K_p) ) {
+        Skill& see = SensoryLight::reference();
+        see(owner_);
+    }
 
     // Movement
     if( input->KeyPressed(ugdk::input::K_RIGHT) || input->KeyPressed(ugdk::input::K_LEFT) ||
@@ -90,8 +95,9 @@ void ControllerPlayer::Update(double) {
         Skill& step = MovementStep::reference();
         step(owner_,where_to_);
 
-        //owner_->shape_component()->Step(where_to_);
-        owner_->vision_component()->See();
+        Skill& see = SensoryLight::reference();
+        see(owner_);
+
         where_to_ = Integer2D(0,0);
     }
     else if ( ( input->KeyDown(ugdk::input::K_RIGHT) || input->KeyDown(ugdk::input::K_LEFT) ||
@@ -103,8 +109,9 @@ void ControllerPlayer::Update(double) {
 
             Skill& step = MovementStep::reference();
             step(owner_,where_to_);
-
-            owner_->vision_component()->See();
+            
+            Skill& see = SensoryLight::reference();
+            see(owner_);
         }
     }
 

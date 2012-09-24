@@ -1,11 +1,16 @@
 SET(GAME_SRCS 
-    ./game/action/gameaction.h 
+    ./game/action/skill/generic.cc 
+    ./game/action/skill/generic.h 
     ./game/action/skill/movement.cc 
     ./game/action/skill/movement.h 
     ./game/action/skill/movement_place.cc 
     ./game/action/skill/movement_place.h 
     ./game/action/skill/movement_step.cc 
     ./game/action/skill/movement_step.h 
+    ./game/action/skill/sensory.cc 
+    ./game/action/skill/sensory.h 
+    ./game/action/skill/sensory_light.cc 
+    ./game/action/skill/sensory_light.h 
     ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
     ./game/action.h 

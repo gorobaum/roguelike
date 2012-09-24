@@ -73,6 +73,8 @@ static void act_mov_step(GameObject* caster, const Integer2D& direction, double 
     return act_mov_place(caster,position+direction,power);
 }
 
+MovementStep* MovementStep::reference_ = nullptr;
+
 MovementStep::MovementStep()
   : super(true, calculate_mov_step, spend_mov_step, act_mov_step) {}
 

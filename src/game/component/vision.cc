@@ -20,7 +20,6 @@ using std::set;
 using ugdk::math::Integer2D;
 using game::base::GameController;
 using game::base::GameObject;
-//using game::base::GameTile;
 using game::alg::los::Processor;
 
 namespace game {
@@ -53,7 +52,7 @@ void Vision::MarkVisible(const Integer2D& tile) {
 
 void Vision::Update(double) {}
 
-void Vision::See() {    
+void Vision::See() {
     //TODO: use visible_tiles_
     gamecontroller_->BlackoutTiles();
     losprocessor_->Process();

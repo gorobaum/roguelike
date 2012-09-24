@@ -29,7 +29,7 @@ class MovementPlace : public Movement {
     ~MovementPlace() {}
   private:
     MovementPlace();
-
+    static MovementPlace* reference_;
 };
 
 } // namespace skill

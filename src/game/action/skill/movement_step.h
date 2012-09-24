@@ -24,6 +24,7 @@ class MovementStep : public Movement {
     ~MovementStep() { delete reference_; }
   private:
     MovementStep();
+    static MovementStep* reference_;
 
 };
 
