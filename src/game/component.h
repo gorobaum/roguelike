@@ -5,16 +5,25 @@ namespace game {
 namespace component {
 
 class ComponentBase;
+
+// Controller components
 class Controller;
 class ControllerAi;
 class ControllerIdle;
 class ControllerPlayer;
 class Vision;
-class Graphic;
-class GraphicRectangular;
+
+// Model components
+class Damageable;
+class Energy;
 class Shape;
 class ShapeRectangular;
-class Damageable;
+
+// View components
+class Graphic;
+class GraphicRectangular;
+
+
 
 } // namespace component
 } // namespace game

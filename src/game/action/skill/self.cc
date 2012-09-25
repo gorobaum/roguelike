@@ -10,7 +10,7 @@
 
 // Using
 using game::base::GameObject;
-using game::action::GameTargets;
+using game::action::skill::GameTargets;
 
 namespace game {
 namespace action {

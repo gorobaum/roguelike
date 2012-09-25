@@ -9,7 +9,7 @@
 #include "game/base/gamething.h"
 
 // Using
-using game::action::GameTargets;
+using game::action::skill::GameTargets;
 using game::base::GameThing;
 
 namespace game {

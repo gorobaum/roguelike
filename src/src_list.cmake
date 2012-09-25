@@ -15,6 +15,8 @@ SET(GAME_SRCS
     ./game/action/skill/self_selfdamage.h 
     ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
+    ./game/action/time/timemanager.cc 
+    ./game/action/time/timemanager.h 
     ./game/action.h 
     ./game/alg/equationalline.cc 
     ./game/alg/equationalline.h 
@@ -55,6 +57,7 @@ SET(GAME_SRCS
     ./game/component/controller_player.h 
     ./game/component/damageable.cc 
     ./game/component/damageable.h 
+    ./game/component/energy.h 
     ./game/component/graphic.cc 
     ./game/component/graphic.h 
     ./game/component/graphic_rectangular.cc 

@@ -39,9 +39,10 @@ GameObject* ObjectBuilder::BuildHero() {
         new   ControllerPlayer(hero),
         new             Vision(hero),
         new         Damageable(hero, 10.0),
+        nullptr,
         new   ShapeRectangular(hero, 2, 2, 1.0, 0.25, 1.0e-9),
         new GraphicRectangular(hero, "@", 3.0),
-        [=](void)->void{ GameController::reference()->set_hero(nullptr); }
+        [](void)->void{ GameController::reference()->set_hero(nullptr); }
     );
 
     return hero;
@@ -54,6 +55,7 @@ GameObject* ObjectBuilder::BuildEnemy() {
         new       ControllerAi(enemy),
         /*new             Vision(enemy),*/nullptr,
         new         Damageable(enemy, 4.0),
+        nullptr,
         new   ShapeRectangular(enemy, 5, 6, 3.0, 0.8, 1.0e-9),
         new GraphicRectangular(enemy, "E", 2.0)
     );
@@ -68,6 +70,7 @@ GameObject* ObjectBuilder::BuildItem() {
         new     ControllerIdle(item),
         nullptr,
         nullptr,
+        nullptr,
         new   ShapeRectangular(item, 1, 1, 0.1, 0.025, 0.0),
         new GraphicRectangular(item, "!", 1.0)
     );
@@ -80,6 +83,7 @@ GameObject* ObjectBuilder::BuildWall() {
     GameObject* wall = new GameObject();
     wall->Initialize(
         new     ControllerIdle(wall),
+        nullptr,
         nullptr,
         nullptr,
         new   ShapeRectangular(wall, 1, 1, numeric_limits<double>::infinity(), 0.0, 0.0 ),

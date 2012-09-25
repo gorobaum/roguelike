@@ -30,6 +30,7 @@ class GameObject : public ugdk::action::Entity {
         game::component::Controller* controller_component,
         game::component::Vision*         vision_component,
         game::component::Damageable* damageable_component,
+        game::component::Energy*         energy_component,
         game::component::Shape*           shape_component,
         game::component::Graphic*       graphic_component,
 
@@ -45,6 +46,8 @@ class GameObject : public ugdk::action::Entity {
 
           component::Damageable* damageable_component()       { return damageable_component_; }
     const component::Damageable* damageable_component() const { return damageable_component_; }
+          component::Energy*         energy_component()       { return     energy_component_; }
+    const component::Energy*         energy_component() const { return     energy_component_; }
           component::Shape*           shape_component()       { return      shape_component_; }
     const component::Shape*           shape_component() const { return      shape_component_; }
 
@@ -59,6 +62,7 @@ class GameObject : public ugdk::action::Entity {
     component::Vision*         vision_component_;
 
     component::Damageable* damageable_component_;
+    component::Energy*         energy_component_;
     component::Shape*           shape_component_;
 
     component::Graphic*       graphic_component_;

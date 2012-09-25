@@ -12,7 +12,7 @@
 
 // Using
 using ugdk::math::Integer2D;
-using game::action::GameTargets;
+using game::action::skill::GameTargets;
 using game::base::GameObject;
 using game::base::GameThing;
 
