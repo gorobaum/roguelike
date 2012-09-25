@@ -5,7 +5,9 @@
 // (none)
 
 // External Dependencies
-// (none)
+#include <list>
+#include <ugdk/portable/tr1.h>
+#include FROM_TR1(functional)
 
 // Internal Dependencies
 // (none)
@@ -13,11 +15,14 @@
 // Forward Declarations
 #include <ugdk/math.h>
 #include "game/base.h"
-#include "game/action.h"
 
 namespace game {
 namespace action {
 namespace skill {
+
+typedef std::list<base::GameThing> GameTargets;
+typedef std::tr1::function<void (base::GameObject*, const GameTargets&, double)>
+        GameAction;
 
 class Skill {
   public:

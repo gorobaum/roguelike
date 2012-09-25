@@ -1,6 +1,6 @@
 
 // Header File
-#include "game/action/skill/sensory_light.h"
+#include "game/action/skill/self_light.h"
 
 // External Dependencies
 // (none)
@@ -24,9 +24,9 @@ static void act_sense_light(GameObject* caster, double power) {
     caster->vision_component()->See();
 }
 
-SensoryLight* SensoryLight::reference_ = nullptr;
+SelfLight* SelfLight::reference_ = nullptr;
 
-SensoryLight::SensoryLight()
+SelfLight::SelfLight()
   : super(spend_sense_light, act_sense_light) {}
 
 } // namespace skill

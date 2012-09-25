@@ -13,7 +13,6 @@
 
 // Forward Declarations
 #include <ugdk/math.h>
-#include "game/action.h"
 #include "game/base.h"
 
 namespace game {

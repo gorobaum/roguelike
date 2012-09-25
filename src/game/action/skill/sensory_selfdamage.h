@@ -1,8 +1,8 @@
-﻿#ifndef ROGUELIKE_ACTION_SKILL_SENSORY_SELFDAMAGE_H_
-#define ROGUELIKE_ACTION_SKILL_SENSORY_SELFDAMAGE_H_
+﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_
+#define ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_
 
 // Inheritance
-#include "game/action/skill/sensory.h"
+#include "game/action/skill/self.h"
 #include "game/action/skill/skill.h"
 
 // External Dependencies
@@ -18,18 +18,18 @@ namespace game {
 namespace action {
 namespace skill {
 
-class SensorySelfDamage : public Sensory {
-  typedef Sensory super;
+class SelfSelfDamage : public Self {
+  typedef Self super;
   public:
-    static Skill& reference() { return reference_ == nullptr ? *(new SensorySelfDamage) : *reference_; }
-    ~SensorySelfDamage() {}
+    static Skill& reference() { return reference_ == nullptr ? *(new SelfSelfDamage) : *reference_; }
+    ~SelfSelfDamage() {}
   private:
-    SensorySelfDamage();
-    static SensorySelfDamage* reference_;
+    SelfSelfDamage();
+    static SelfSelfDamage* reference_;
 };
 
 } // namespace skill
 } // namespace action
 } // namespace game
 
-#endif // ROGUELIKE_ACTION_SKILL_SENSORY_SELFDAMAGE_H_
+#endif // ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_

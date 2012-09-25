@@ -1,6 +1,6 @@
 
 // Header File
-#include "game/action/skill/sensory.h"
+#include "game/action/skill/self.h"
 
 // External Dependencies
 // (none)
@@ -16,10 +16,10 @@ namespace game {
 namespace action {
 namespace skill {
     
-Sensory::Sensory( const SenseSpender& spender, const  SenseAction& action )
+Self::Self( const SenseSpender& spender, const  SenseAction& action )
   : spender_(spender), action_(action) {}
 
-bool Sensory::operator()(GameObject* caster, const GameTargets& targets) {
+bool Self::operator()(GameObject* caster, const GameTargets& targets) {
     double power = spender_(caster);
     if(power != 0.0) {
         action_(caster,power);

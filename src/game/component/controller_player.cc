@@ -11,8 +11,8 @@
 // Internal Dependencies
 #include "game/action/skill/skill.h"
 #include "game/action/skill/movement_step.h"
-#include "game/action/skill/sensory_light.h"
-#include "game/action/skill/sensory_selfdamage.h"
+#include "game/action/skill/self_light.h"
+#include "game/action/skill/self_selfdamage.h"
 #include "game/base/gameobject.h"
 #include "game/base/gamething.h"
 #include "game/component/shape.h"
@@ -25,8 +25,8 @@ using ugdk::math::Integer2D;
 using ugdk::time::TimeAccumulator;
 using game::action::skill::Skill;
 using game::action::skill::MovementStep;
-using game::action::skill::SensoryLight;
-using game::action::skill::SensorySelfDamage;
+using game::action::skill::SelfLight;
+using game::action::skill::SelfSelfDamage;
 using game::base::GameObject;
 using game::base::GameThing;
 
@@ -50,13 +50,13 @@ void ControllerPlayer::Update(double) {
     if( input->KeyPressed(ugdk::input::K_i) ) owner_->vision_component()->Initialize();
     if( input->KeyPressed(ugdk::input::K_o) ) owner_->vision_component()->CycleOctant();
     if( input->KeyPressed(ugdk::input::K_p) ) {
-        Skill& see = SensoryLight::reference();
+        Skill& see = SelfLight::reference();
         see(owner_);
     }
 
     // Derp stuff
     if( input->KeyPressed(ugdk::input::K_z) ) {
-        Skill& ouch = SensorySelfDamage::reference();
+        Skill& ouch = SelfSelfDamage::reference();
         ouch(owner_);
     }
 
@@ -100,7 +100,7 @@ void ControllerPlayer::Update(double) {
         Skill& step = MovementStep::reference();
         step(owner_,where_to_);
 
-        Skill& see = SensoryLight::reference();
+        Skill& see = SelfLight::reference();
         see(owner_);
 
         where_to_ = Integer2D(0,0);
@@ -115,7 +115,7 @@ void ControllerPlayer::Update(double) {
             Skill& step = MovementStep::reference();
             step(owner_,where_to_);
             
-            Skill& see = SensoryLight::reference();
+            Skill& see = SelfLight::reference();
             see(owner_);
         }
     }

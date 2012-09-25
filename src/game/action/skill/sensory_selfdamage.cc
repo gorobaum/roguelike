@@ -1,6 +1,6 @@
 
 // Header File
-#include "game/action/skill/sensory_selfdamage.h"
+#include "game/action/skill/self_selfdamage.h"
 
 // External Dependencies
 // (none)
@@ -25,9 +25,9 @@ static void act_selfdamage(GameObject* caster, double power) {
     caster->damageable_component()->TakeDamage(9001.1337042);
 }
 
-SensorySelfDamage* SensorySelfDamage::reference_ = nullptr;
+SelfSelfDamage* SelfSelfDamage::reference_ = nullptr;
 
-SensorySelfDamage::SensorySelfDamage()
+SelfSelfDamage::SelfSelfDamage()
   : super(spend_selfdamage, act_selfdamage) {}
 
 } // namespace skill

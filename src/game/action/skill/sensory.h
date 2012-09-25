@@ -1,5 +1,5 @@
-﻿#ifndef ROGUELIKE_ACTION_SKILL_SENSORY_H_
-#define ROGUELIKE_ACTION_SKILL_SENSORY_H_
+﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_H_
+#define ROGUELIKE_ACTION_SKILL_SELF_H_
 
 // Inheritance
 #include "game/action/skill/skill.h"
@@ -13,7 +13,6 @@
 
 // Forward Declarations
 #include <ugdk/math.h>
-#include "game/action.h"
 #include "game/base.h"
 
 namespace game {
@@ -26,12 +25,12 @@ typedef std::tr1::function<double (base::GameObject*)>
 typedef std::tr1::function<void (base::GameObject*, double)>
         SenseAction;
 
-class Sensory : public Skill {
+class Self : public Skill {
   typedef Skill super;
   public:
-    Sensory( const SenseSpender& spender,
+    Self( const SenseSpender& spender,
              const  SenseAction&  action  );
-    virtual ~Sensory() {}
+    virtual ~Self() {}
 
     bool operator()(base::GameObject* caster, const GameTargets& targets);
 
@@ -44,4 +43,4 @@ class Sensory : public Skill {
 } // namespace action
 } // namespace game
 
-#endif // ROGUELIKE_ACTION_SKILL_SENSORY_H_
+#endif // ROGUELIKE_ACTION_SKILL_SELF_H_
