@@ -32,8 +32,8 @@ class TimeManager {
   public:
     static TimeManager* reference() {
         return reference_ == nullptr
-            ? (reference_ = new TimeManager())
-            : reference_ ;
+          ? (reference_ = new TimeManager())
+          : reference_ ;
     }
     ~TimeManager();
 

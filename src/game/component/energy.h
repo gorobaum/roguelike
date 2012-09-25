@@ -20,9 +20,10 @@ class Energy : public ComponentBase {
   typedef ComponentBase super;
   public:
     Energy(game::base::GameObject* owner)
-      : super(owner),      arms_(1.0),       legs_(1.0),       eyes_(1.0),
-                       max_arms_(1.0),   max_legs_(1.0),   max_eyes_(1.0),
-                     regen_arms_(1.0), regen_legs_(1.0), regen_eyes_(1.0) {}
+      : super(owner),
+              arms_(1.0),       legs_(1.0),       eyes_(1.0),
+          max_arms_(1.0),   max_legs_(1.0),   max_eyes_(1.0),
+        regen_arms_(1.0), regen_legs_(1.0), regen_eyes_(1.0) {}
     ~Energy() {}
 
     // Getters
