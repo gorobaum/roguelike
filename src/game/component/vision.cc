@@ -26,8 +26,8 @@ namespace game {
 namespace component {
 
 Vision::Vision(game::base::GameObject* owner)
-  : super(owner), range_(20.5), eye_frame_(0.30, 0.30, 0.70, 0.70),
-    initialized_(false), gamecontroller_(GameController::reference()) {}
+  : super(owner), range_(20.5), eye_frame_(0.30, 0.40, 0.40, 0.30),
+    initialized_(false), gamecontroller_(nullptr) {}
 
 Vision::~Vision() {
     if(initialized_)
@@ -37,8 +37,9 @@ Vision::~Vision() {
 void Vision::Initialize() {
     if(initialized_) return;
 
+    gamecontroller_ = GameController::reference();
     for(int i = 0; i < 6; ++i)
-        relevant_octants_.insert(i);
+        relevant_octants_.insert((i+3)%8);
     
     losprocessor_ = new Processor(this);
     

@@ -17,6 +17,34 @@
 #include "game/base.h"
 #include "game/component.h"
 
+// Defines
+#define FORALL_COMPONENTS(action)   \
+    action( controller, Controller) \
+    action(     vision,     Vision) \
+    action( damageable, Damageable) \
+    action(     energy,     Energy) \
+    action(      shape,      Shape) \
+    action(    graphic,    Graphic)
+
+#define FORALL_UPDATEABLE_COMPONENTS(action)    \
+    action( controller, Controller)             \
+    action(     vision,     Vision)             \
+    action(    graphic,    Graphic)
+
+#define FULL_TYPE(type) component::type*
+
+#define INI_FULLTYPE_ARG_DECLARATION(compo,type) FULL_TYPE(type) compo##_component,
+
+#define GETTER_DECLARATION(compo,type)                                              \
+          FULL_TYPE(type) compo##_component()       { return compo##_component_; }  \
+    const FULL_TYPE(type) compo##_component() const { return compo##_component_; }
+
+#define SETTER_DECLARATION(compo,type)                                                                          \
+    void set_##compo##_component(FULL_TYPE(type) compo##_component) { compo##_component_ = compo##_component; }
+
+#define ATTRIBUTES_DECLARATION(compo,type) FULL_TYPE(type) compo##_component_;
+
+
 namespace game {
 namespace base {
 
@@ -27,46 +55,20 @@ class GameObject : public ugdk::action::Entity {
     ~GameObject();
 
     void Initialize(
-        game::component::Controller* controller_component,
-        game::component::Vision*         vision_component,
-        game::component::Damageable* damageable_component,
-        game::component::Energy*         energy_component,
-        game::component::Shape*           shape_component,
-        game::component::Graphic*       graphic_component,
-
+        FORALL_COMPONENTS(INI_FULLTYPE_ARG_DECLARATION) // note lack of ","
         const std::tr1::function<void (void)>& die = std::tr1::function<void (void)>()
     );
 
     void Update(double dt);
     
-          component::Controller* controller_component()       { return controller_component_; }
-    const component::Controller* controller_component() const { return controller_component_; }
-          component::Vision*         vision_component()       { return     vision_component_; }
-    const component::Vision*         vision_component() const { return     vision_component_; }
-
-          component::Damageable* damageable_component()       { return damageable_component_; }
-    const component::Damageable* damageable_component() const { return damageable_component_; }
-          component::Energy*         energy_component()       { return     energy_component_; }
-    const component::Energy*         energy_component() const { return     energy_component_; }
-          component::Shape*           shape_component()       { return      shape_component_; }
-    const component::Shape*           shape_component() const { return      shape_component_; }
-
-          component::Graphic*       graphic_component()       { return    graphic_component_; }
-    const component::Graphic*       graphic_component() const { return    graphic_component_; }
+    FORALL_COMPONENTS(GETTER_DECLARATION) // ends in "}"
+    FORALL_COMPONENTS(SETTER_DECLARATION) // ends in "}"
 
     void Die() { die_(); to_be_removed_ = true; }
     bool dead() const { return to_be_removed_; }
 
   private:
-    component::Controller* controller_component_;
-    component::Vision*         vision_component_;
-
-    component::Damageable* damageable_component_;
-    component::Energy*         energy_component_;
-    component::Shape*           shape_component_;
-
-    component::Graphic*       graphic_component_;
-
+    FORALL_COMPONENTS(ATTRIBUTES_DECLARATION) // note lack of ";"
     std::tr1::function<void (void)> die_;
 };
 
