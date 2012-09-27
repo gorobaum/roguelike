@@ -34,8 +34,6 @@ void act_mov_place(GameObject* caster, const Integer2D& target, double power) {
     caster->shape_component()->PlaceAt(target);
 }
 
-MovementPlace* MovementPlace::reference_ = nullptr;
-
 MovementPlace::MovementPlace()
   : super(false, calculate_mov_place, spend_mov_place, act_mov_place) {}
 

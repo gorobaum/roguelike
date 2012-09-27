@@ -33,7 +33,11 @@ class Skill {
     virtual bool operator()(base::GameObject* caster, const ugdk::math::Integer2D& target);
     virtual bool operator()(base::GameObject* caster, base::GameObject* target);
     virtual bool operator()(base::GameObject* caster);
+
+    // Needed for GenericContainer
+    static Skill* LoadFromFile(const std::string&) { return nullptr; }
 };
+
 
 } // namespace skill
 } // namespace action

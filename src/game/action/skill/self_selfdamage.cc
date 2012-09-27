@@ -25,8 +25,6 @@ static void act_selfdamage(GameObject* caster, double power) {
     caster->damageable_component()->TakeDamage(9001.1337042);
 }
 
-SelfSelfDamage* SelfSelfDamage::reference_ = nullptr;
-
 SelfSelfDamage::SelfSelfDamage()
   : super(spend_selfdamage, act_selfdamage) {}
 

@@ -117,13 +117,13 @@ GameController::GameController() : super(), map_size_(500.0, 500.0), hero_(nullp
     wall_1->shape_component()->PlaceAt(Integer2D(17,8));
     wall_2->shape_component()->PlaceAt(Integer2D(18,8));
     wall_3->shape_component()->PlaceAt(Integer2D(19,8));
-    wall_4->shape_component()->PlaceAt(Integer2D(15,13));
-    wall_5->shape_component()->PlaceAt(Integer2D(16,20));
-    wall_6->shape_component()->PlaceAt(Integer2D(17,21));
-    wall_7->shape_component()->PlaceAt(Integer2D(16,22));
-    wall_8->shape_component()->PlaceAt(Integer2D(13,15));
-    wall_9->shape_component()->PlaceAt(Integer2D(12,16));
-    wall_0->shape_component()->PlaceAt(Integer2D(13,17));
+    wall_4->shape_component()->PlaceAt(Integer2D(30,0));
+    wall_5->shape_component()->PlaceAt(Integer2D(18,20));
+    wall_6->shape_component()->PlaceAt(Integer2D(19,21));
+    wall_7->shape_component()->PlaceAt(Integer2D(18,22));
+    wall_8->shape_component()->PlaceAt(Integer2D(18,15));
+    wall_9->shape_component()->PlaceAt(Integer2D(17,16));
+    wall_0->shape_component()->PlaceAt(Integer2D(18,17));
 }
 
 GameController::~GameController() {

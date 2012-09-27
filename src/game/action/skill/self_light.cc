@@ -24,8 +24,6 @@ static void act_sense_light(GameObject* caster, double power) {
     caster->vision_component()->See();
 }
 
-SelfLight* SelfLight::reference_ = nullptr;
-
 SelfLight::SelfLight()
   : super(spend_sense_light, act_sense_light) {}
 

@@ -21,11 +21,8 @@ namespace skill {
 class SelfLight : public Self {
   typedef Self super;
   public:
-    static Skill& reference() { return reference_ == nullptr ? *(new SelfLight) : *reference_; }
-    ~SelfLight() {}
-  private:
     SelfLight();
-    static SelfLight* reference_;
+    ~SelfLight() {}
 };
 
 } // namespace skill

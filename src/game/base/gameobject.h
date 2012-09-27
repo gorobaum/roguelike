@@ -5,31 +5,32 @@
 #include <ugdk/action/entity.h>
 
 // External Dependencies
+#include <string>
 #include <ugdk/portable/tr1.h>
 #include FROM_TR1(functional)
 #include <list>                 // template class
 #include <ugdk/math/vector2D.h> // needed for dimensions_
 
 // Internal Dependencies
-// (none)
+#include "game/action/skill/skill.h"
 
 // Forward Declarations
 #include "game/base.h"
 #include "game/component.h"
 
 // Defines
-#define FORALL_COMPONENTS(action)   \
-    action( controller, Controller) \
-    action(     vision,     Vision) \
-    action( damageable, Damageable) \
-    action(     energy,     Energy) \
-    action(      shape,      Shape) \
-    action(    graphic,    Graphic)
-
 #define FORALL_UPDATEABLE_COMPONENTS(action)    \
     action( controller, Controller)             \
-    action(     vision,     Vision)             \
     action(    graphic,    Graphic)
+
+#define FORALL_COMPONENTS(action)           \
+    action( controller, Controller)         \
+    action(     vision,     Vision)         \
+    action( damageable, Damageable)         \
+    action(     energy,     Energy)         \
+    action(      shape,      Shape)         \
+    action(    graphic,    Graphic)
+
 
 #define FULL_TYPE(type) component::type*
 
@@ -63,6 +64,11 @@ class GameObject : public ugdk::action::Entity {
     
     FORALL_COMPONENTS(GETTER_DECLARATION) // ends in "}"
     FORALL_COMPONENTS(SETTER_DECLARATION) // ends in "}"
+
+    bool Cast(const std::string& skill, const action::skill::GameTargets& targets);
+    bool Cast(const std::string& skill, const ugdk::math::Integer2D& target);
+    bool Cast(const std::string& skill, base::GameObject* target);
+    bool Cast(const std::string& skill);
 
     void Die() { die_(); to_be_removed_ = true; }
     bool dead() const { return to_be_removed_; }

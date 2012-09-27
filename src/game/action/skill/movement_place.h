@@ -25,11 +25,8 @@ void act_mov_place(base::GameObject* caster, const ugdk::math::Integer2D& target
 class MovementPlace : public Movement {
   typedef Movement super;
   public:
-    static Skill& reference() { return reference_ == nullptr ? *(new MovementPlace) : *reference_; }
-    ~MovementPlace() {}
-  private:
     MovementPlace();
-    static MovementPlace* reference_;
+    ~MovementPlace() {}
 };
 
 } // namespace skill

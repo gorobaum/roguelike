@@ -21,11 +21,8 @@ namespace skill {
 class SelfSelfDamage : public Self {
   typedef Self super;
   public:
-    static Skill& reference() { return reference_ == nullptr ? *(new SelfSelfDamage) : *reference_; }
-    ~SelfSelfDamage() {}
-  private:
     SelfSelfDamage();
-    static SelfSelfDamage* reference_;
+    ~SelfSelfDamage() {}
 };
 
 } // namespace skill

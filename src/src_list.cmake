@@ -15,6 +15,8 @@ SET(GAME_SRCS
     ./game/action/skill/self_selfdamage.h 
     ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
+    ./game/action/skill/skillmanager.cc 
+    ./game/action/skill/skillmanager.h 
     ./game/action/time/timemanager.cc 
     ./game/action/time/timemanager.h 
     ./game/action.h 
