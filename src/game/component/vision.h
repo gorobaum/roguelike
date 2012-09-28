@@ -40,8 +40,6 @@ class Vision : public ComponentBase {
     void MarkVisible(const ugdk::math::Integer2D& tile);
     bool BlocksVision(const ugdk::math::Integer2D& tile);
 
-    void Update(double);
-
     void See();
     void CycleOctant();
 

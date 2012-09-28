@@ -1,4 +1,5 @@
-﻿// Header File
+﻿
+// Header File
 #include "game/builder/objectbuilder.h"
 
 // External Dependencies

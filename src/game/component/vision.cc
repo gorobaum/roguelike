@@ -51,8 +51,6 @@ void Vision::MarkVisible(const Integer2D& tile) {
     gamecontroller_->Tile(tile)->node()->modifier()->set_visible(true);
 }
 
-void Vision::Update(double) {}
-
 void Vision::See() {
     //TODO: use visible_tiles_
     gamecontroller_->BlackoutTiles();
