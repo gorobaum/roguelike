@@ -1,5 +1,5 @@
-﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_LIGHT_H_
-#define ROGUELIKE_ACTION_SKILL_SELF_LIGHT_H_
+﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_LIGHTVISION_H_
+#define ROGUELIKE_ACTION_SKILL_SELF_LIGHTVISION_H_
 
 // Inheritance
 #include "game/action/skill/self.h"
@@ -18,15 +18,15 @@ namespace game {
 namespace action {
 namespace skill {
 
-class SelfLight : public Self {
+class LightVision : public Self {
   typedef Self super;
   public:
-    SelfLight();
-    ~SelfLight() {}
+    LightVision();
+    ~LightVision() {}
 };
 
 } // namespace skill
 } // namespace action
 } // namespace game
 
-#endif // ROGUELIKE_ACTION_SKILL_SELF_LIGHT_H_
+#endif // ROGUELIKE_ACTION_SKILL_SELF_LIGHTVISION_H_

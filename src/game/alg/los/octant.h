@@ -26,12 +26,15 @@ class Octant {
     ~Octant();
 
     ugdk::math::Integer2D FocusCoordinates() const;
+    ugdk::math::Integer2D FakeCoordinates() const { return **iterator_; }
+    
     bool FocusIsOutOfBounds() const;
 	bool FocusIsControlTile() const;
-    ugdk::math::Integer2D FakeCoordinates() const { return **iterator_; }
 
-    int parity() const { return parity_; }
     OctantIterator* iterator() { return iterator_; }
+    
+    int    parity() const { return    parity_; }
+    int rotations() const { return rotations_; }
 
     void set_origin(const ugdk::math::Integer2D& origin) { origin_ = origin; }
 

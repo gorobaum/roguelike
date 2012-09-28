@@ -1,6 +1,6 @@
 
 // Header File
-#include "game/action/skill/self_light.h"
+#include "game/action/skill/self_lightvision.h"
 
 // External Dependencies
 // (none)
@@ -16,16 +16,16 @@ namespace game {
 namespace action {
 namespace skill {
 
-static double spend_sense_light(GameObject* caster) {
+static double spend_sense_lightvision(GameObject* caster) {
     return 1.0;
 }
 
-static void act_sense_light(GameObject* caster, double power) {
+static void act_sense_lightvision(GameObject* caster, double power) {
     caster->vision_component()->See();
 }
 
-SelfLight::SelfLight()
-  : super(spend_sense_light, act_sense_light) {}
+LightVision::LightVision()
+  : super(spend_sense_lightvision, act_sense_lightvision) {}
 
 } // namespace skill
 } // namespace action

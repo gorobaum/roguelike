@@ -6,6 +6,7 @@
 
 // External Dependencies
 #include <list>
+#include <string>
 #include <ugdk/portable/tr1.h>
 #include FROM_TR1(functional)
 

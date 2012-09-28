@@ -9,10 +9,10 @@ SET(GAME_SRCS
     ./game/action/skill/movement_step.h 
     ./game/action/skill/self.cc 
     ./game/action/skill/self.h 
-    ./game/action/skill/self_light.cc 
-    ./game/action/skill/self_light.h 
-    ./game/action/skill/self_selfdamage.cc 
-    ./game/action/skill/self_selfdamage.h 
+    ./game/action/skill/self_lightvision.cc 
+    ./game/action/skill/self_lightvision.h 
+    ./game/action/skill/self_damage.cc 
+    ./game/action/skill/self_damage.h 
     ./game/action/skill/skill.cc 
     ./game/action/skill/skill.h 
     ./game/action/skill/skillmanager.cc 

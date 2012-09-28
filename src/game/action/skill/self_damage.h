@@ -1,5 +1,5 @@
-﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_
-#define ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_
+﻿#ifndef ROGUELIKE_ACTION_SKILL_SELF_DAMAGE_H_
+#define ROGUELIKE_ACTION_SKILL_SELF_DAMAGE_H_
 
 // Inheritance
 #include "game/action/skill/self.h"
@@ -18,15 +18,15 @@ namespace game {
 namespace action {
 namespace skill {
 
-class SelfSelfDamage : public Self {
+class SelfDamage : public Self {
   typedef Self super;
   public:
-    SelfSelfDamage();
-    ~SelfSelfDamage() {}
+    SelfDamage();
+    ~SelfDamage() {}
 };
 
 } // namespace skill
 } // namespace action
 } // namespace game
 
-#endif // ROGUELIKE_ACTION_SKILL_SELF_SELFDAMAGE_H_
+#endif // ROGUELIKE_ACTION_SKILL_SELF_DAMAGE_H_

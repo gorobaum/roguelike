@@ -41,11 +41,26 @@ OctantProcessor::~OctantProcessor() { clean_cones(); }
 
 void OctantProcessor::ProcessOctant() {
     double range = vision_->range() + 1.0;
-    Frame eye = vision_->eye_frame();
+    const Frame& eye_frame = vision_->eye_frame();
 
 	// Reset the octant.
     octant_.set_origin(vision_->eye_coords()); 
 	octant_.iterator()->Reset();
+
+    //TODO: make independent to vision, and delegate this next step to octant.
+    // Find out the true eye frame: flip the y axis, and rotate accordingly.
+    Frame eye;
+    switch(octant_.rotations()) {
+      case 0:  eye.set_left(       eye_frame.left()   );    eye.set_top(       eye_frame.top()    );
+              eye.set_right(       eye_frame.right()  ); eye.set_bottom(       eye_frame.bottom() ); break;
+      case 1:  eye.set_left(       eye_frame.top()    );    eye.set_top( 1.0 - eye_frame.right()  );
+              eye.set_right(       eye_frame.bottom() ); eye.set_bottom( 1.0 - eye_frame.left()   ); break;
+      case 2:  eye.set_left( 1.0 - eye_frame.right()  );    eye.set_top( 1.0 - eye_frame.bottom() );
+              eye.set_right( 1.0 - eye_frame.left()   ); eye.set_bottom( 1.0 - eye_frame.top()    ); break;
+      case 3:  eye.set_left( 1.0 - eye_frame.bottom() );    eye.set_top(       eye_frame.left()   );
+              eye.set_right( 1.0 - eye_frame.top()    ); eye.set_bottom(       eye_frame.right()  ); break;
+      default: break;
+    }
 
     // Setup the startup cones.
     EquationalLineDouble upper_line( Vector2D(eye.right(), eye.bottom()), Vector2D(eye.right(),   -range ) );
